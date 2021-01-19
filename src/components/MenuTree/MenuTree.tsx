@@ -18,7 +18,7 @@ const MenuTree = (props: IMenuTreeProps) => {
       <div
         className="focus-on-usa"
         onClick={() => handleSelection()}
-      >Show Entire US
+      >Show Continental US
       </div>
       <div>resource</div>
     </div>
