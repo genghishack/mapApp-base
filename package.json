@@ -6,7 +6,7 @@
   "repository": "https://github.com/genghishack/goobledysnart.git",
   "license": "GPL-3.0-or-later",
   "private": true,
-  "main": "base.ts",
+  "main": "base.js",
   "dependencies": {
     "@mapbox/geo-viewport": "^0.4.1",
     "@reduxjs/toolkit": "^1.1.0",
