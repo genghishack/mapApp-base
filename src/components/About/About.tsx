@@ -4,9 +4,9 @@ import './About.scss';
 const About = () => {
   return (
     <div className="About">
-      <h1>Goobledysnart Blagglefarg</h1>
+      <h1>MapApp Base</h1>
 
-      <p>Because all the good names were taken.</p>
+      <p>Intended to be a base module included into other map-based apps.</p>
     </div>
   )
 }
