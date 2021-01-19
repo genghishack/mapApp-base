@@ -1,6 +1,4 @@
-# Goobledysnart Blagglefarg
-
-## Because all the good names were taken.
+# MapApp Base
 
 This is a template repo for map-based projects.  
 
