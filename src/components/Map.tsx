@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMapGl, { NavigationControl, ViewportChangeHandler } from 'react-map-gl';
 import { Map as TMap } from 'mapbox-gl';
-
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Config from '../config';
 
 interface IMapProps {
@@ -30,26 +30,21 @@ const Map = (props: IMapProps) => {
   };
 
   return (
-    <ReactMapGl
-      ref={mapRef => {
-        setMap(mapRef?.getMap);
-      }}
-      {...viewport}
-      width="100%"
-      height="100%"
-      mapStyle={mapConf.style}
-      mapboxApiAccessToken={mapConf.accessToken}
-      onViewportChange={setViewport}
-      onLoad={onMapLoad}
-      onMouseMove={handleMouseMove}
-      onClick={handleMapClick}
-    >
-      <div style={{ position: 'absolute', right: 10, top: 10 }}>
-        <NavigationControl
-          onViewportChange={setViewport}
+      <MapContainer
+          center={[38.0, -96.0]}
+          zoom={5}
+          scrollWheelZoom={true}
+          style={{ width: '100%', height: '900px' }}
+      >
+        <TileLayer
+            url={`https://api.mapbox.com/styles/v1/genghishack/cjft3tbmb7qyr2sqclts2rz62/tiles/256/{z}/{x}/{y}@2x?access_token=${mapConf.accessToken}`}
         />
-      </div>
-    </ReactMapGl>
+        <Marker position={[39.988239, -105.081343]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
   );
 }
 
