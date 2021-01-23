@@ -9,13 +9,13 @@ import InfoBox from '../InfoBox/InfoBox';
 
 import './ResourceView.scss';
 
-interface ICongressViewProps {
+interface IResourceViewProps {
   dispatch: Function;
 }
 
 const apiConfig = Config.apiGateway;
 
-const ResourceView = (props: ICongressViewProps) => {
+const ResourceView = (props: IResourceViewProps) => {
   const { dispatch } = props;
 
   const [infoTrayExpanded, setInfoTrayExpanded] = useState(false);
@@ -25,8 +25,8 @@ const ResourceView = (props: ICongressViewProps) => {
   useLayoutEffect(() => {
   }, [dispatch]);
 
-  const handleResourceSelection = (stateAbbr: string, districtNum: string = '') => {
-    setSelectedResource(districtNum);
+  const handleResourceSelection = (stateAbbr: string, resourceId: string = '') => {
+    setSelectedResource(resourceId);
   };
 
   return (

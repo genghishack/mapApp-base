@@ -23,7 +23,7 @@ const InfoBox = (props: IInfoBoxProps) => {
 
   const expandedClass = expanded ? "expanded" : "";
 
-  const renderCongressInfo = () => {
+  const renderResourceInfo = () => {
     if (resource.properties) {
     } else {
       return (
@@ -36,7 +36,7 @@ const InfoBox = (props: IInfoBoxProps) => {
 
   const renderContent = () => (
     <div className="content">
-      {renderCongressInfo()}
+      {renderResourceInfo()}
     </div>
   );
 

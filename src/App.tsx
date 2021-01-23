@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import CongressView from './components/views/ResourceView';
+import ResourceView from './components/views/ResourceView';
 import AboutView from './components/views/AboutView';
 
 import './App.scss';
@@ -15,7 +15,7 @@ const App = (props: IAppProps) => {
       <Router>
         <Switch>
           <Route path="/about" component={AboutView} />
-          <Route path="/" component={CongressView} />
+          <Route path="/" component={ResourceView} />
         </Switch>
       </Router>
     </div>
