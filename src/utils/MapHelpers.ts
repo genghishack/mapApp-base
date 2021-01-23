@@ -7,8 +7,8 @@ const getViewport = (bbox, w, h) => {
   return geoViewport.viewport(
     bbox,
     [w, h],
-    0,   // minZoon
-    20,  // maxZoon
+    0,   // minZoom
+    20,  // maxZoom
     256, // 512 for mapbox tiles, 256 for other (but not really, apparently)
     true // allowFloat
   );

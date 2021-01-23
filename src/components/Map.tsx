@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMapGl, { NavigationControl, ViewportChangeHandler } from 'react-map-gl';
 import { Map as TMap } from 'mapbox-gl';
-
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Config from '../config';
 
 interface IMapProps {
@@ -15,6 +15,9 @@ interface IMapProps {
 }
 
 const mapConf = Config.mapbox;
+const { username, accessToken, keys } = mapConf;
+
+const tileUrl = `https://api.mapbox.com/styles/v1/${username}/${keys.bright}/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`
 
 const Map = (props: IMapProps) => {
   const { map, setMap, setMapFullyLoaded, viewport, setViewport, handleMapClick, handleMouseMove } = props;
@@ -29,27 +32,25 @@ const Map = (props: IMapProps) => {
     }
   };
 
+  const { latitude, longitude, zoom } = viewport;
+
   return (
-    <ReactMapGl
-      ref={mapRef => {
-        setMap(mapRef?.getMap);
-      }}
-      {...viewport}
-      width="100%"
-      height="100%"
-      mapStyle={mapConf.style}
-      mapboxApiAccessToken={mapConf.accessToken}
-      onViewportChange={setViewport}
-      onLoad={onMapLoad}
-      onMouseMove={handleMouseMove}
-      onClick={handleMapClick}
-    >
-      <div style={{ position: 'absolute', right: 10, top: 10 }}>
-        <NavigationControl
-          onViewportChange={setViewport}
+      <MapContainer
+          center={[latitude, longitude]}
+          zoom={zoom}
+          zoomSnap={0.1}
+          scrollWheelZoom={true}
+          style={{ width: '100%', height: 'calc(100vh - 70px)' }}
+      >
+        <TileLayer
+            url={tileUrl}
         />
-      </div>
-    </ReactMapGl>
+        <Marker position={[39.988239, -105.081343]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
   );
 }
 
