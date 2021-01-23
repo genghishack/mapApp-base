@@ -15,6 +15,9 @@ interface IMapProps {
 }
 
 const mapConf = Config.mapbox;
+const { username, accessToken, keys } = mapConf;
+
+const tileUrl = `https://api.mapbox.com/styles/v1/${username}/${keys.bright}/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`
 
 const Map = (props: IMapProps) => {
   const { map, setMap, setMapFullyLoaded, viewport, setViewport, handleMapClick, handleMouseMove } = props;
@@ -29,15 +32,18 @@ const Map = (props: IMapProps) => {
     }
   };
 
+  const { latitude, longitude, zoom } = viewport;
+
   return (
       <MapContainer
-          center={[38.0, -96.0]}
-          zoom={5}
+          center={[latitude, longitude]}
+          zoom={zoom}
+          zoomSnap={0.1}
           scrollWheelZoom={true}
-          style={{ width: '100%', height: '900px' }}
+          style={{ width: '100%', height: 'calc(100vh - 70px)' }}
       >
         <TileLayer
-            url={`https://api.mapbox.com/styles/v1/genghishack/cjft3tbmb7qyr2sqclts2rz62/tiles/256/{z}/{x}/{y}@2x?access_token=${mapConf.accessToken}`}
+            url={tileUrl}
         />
         <Marker position={[39.988239, -105.081343]}>
           <Popup>
