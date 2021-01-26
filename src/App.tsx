@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import ResourceView from './components/views/ResourceView';
 import AboutView from './components/views/AboutView';
+import EnterInfoView from './components/views/EnterInfoView';
 
 import './App.scss';
 
@@ -15,6 +16,7 @@ const App = (props: IAppProps) => {
       <Router>
         <Switch>
           <Route path="/about" component={AboutView} />
+          <Route path="/enter-info" component={EnterInfoView} />
           <Route path="/" component={ResourceView} />
         </Switch>
       </Router>
