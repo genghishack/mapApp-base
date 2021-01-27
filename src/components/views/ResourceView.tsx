@@ -4,6 +4,8 @@ import Header from '../Header/Header';
 import ResourceMap from '../ResourceMap/ResourceMap';
 import Config from '../../config';
 
+import { setResources } from '../../redux/actions/resources';
+import { setError } from '../../redux/actions/errors';
 import MenuTree from '../MenuTree/MenuTree';
 import InfoBox from '../InfoBox/InfoBox';
 
@@ -23,6 +25,16 @@ const ResourceView = (props: IResourceViewProps) => {
   const [selectedResource, setSelectedResource] = useState('');
 
   useLayoutEffect(() => {
+    fetch(`${apiConfig.URL}/public/resource`)
+        .then(res => res.json())
+        .then(
+            (result) => {
+              dispatch(setResources(result.data));
+            },
+            (error) => {
+              dispatch(setError(error))
+            }
+        )
   }, [dispatch]);
 
   const handleResourceSelection = (stateAbbr: string, resourceId: string = '') => {
@@ -54,8 +66,9 @@ const ResourceView = (props: IResourceViewProps) => {
   )
 }
 
-function mapStateToProps(state: { errors: any; }) {
+function mapStateToProps(state: { errors: any; resources: any; }) {
   return {
+    resources: state.resources,
     errors: state.errors,
   };
 }

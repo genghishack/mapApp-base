@@ -9,7 +9,7 @@ const local = {
   },
   apiGateway: {
     REGION: 'us-west-2',
-    URL: 'https://ojt69rmw6b.execute-api.us-west-2.amazonaws.com/dev'
+    URL: 'https://uyg8w8w7le.execute-api.us-west-2.amazonaws.com/dev'
   },
   cognito: {
     REGION: 'us-west-2',
