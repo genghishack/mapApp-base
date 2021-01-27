@@ -12,6 +12,7 @@ interface IMapProps {
   setViewport: ViewportChangeHandler;
   handleMapClick: Function;
   handleMouseMove?: Function;
+  markers?: [any];
 }
 
 const mapConf = Config.mapbox;
@@ -20,8 +21,19 @@ const { username, accessToken, keys } = mapConf;
 const tileUrl = `https://api.mapbox.com/styles/v1/${username}/${keys.bright}/tiles/256/{z}/{x}/{y}@2x?access_token=${accessToken}`
 
 const Map = (props: IMapProps) => {
-  const { map, setMap, setMapFullyLoaded, viewport, setViewport, handleMapClick, handleMouseMove } = props;
+  const {
+    map,
+    setMap,
+    setMapFullyLoaded,
+    viewport,
+    setViewport,
+    handleMapClick,
+    handleMouseMove,
+    markers,
+  } = props;
 
+  console.log({markers});
+  
   const onMapLoad = () => {
     if (map) {
       if (!map.loaded() || !map.isStyleLoaded() || !map.areTilesLoaded()) {
@@ -45,11 +57,11 @@ const Map = (props: IMapProps) => {
         <TileLayer
             url={tileUrl}
         />
-        <Marker position={[39.988239, -105.081343]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        {markers && markers.map((marker) => (
+          <Marker position={marker.latlng}>
+            <Popup>{marker.name}</Popup>
+          </Marker>
+        ))}
       </MapContainer>
   );
 }

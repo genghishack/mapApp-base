@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { connect } from 'react-redux';
-import { Map as TMap } from 'mapbox-gl';
-import { continentalViewport } from '../../utils/MapHelpers';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {connect} from 'react-redux';
+import {Map as TMap} from 'mapbox-gl';
+import {continentalViewport} from '../../utils/MapHelpers';
 import Map from '../Map';
 
 import './ResourceMap.scss';
@@ -10,12 +10,15 @@ interface IResourceMapProps {
   selectedResource: string;
   setResource: Function;
   setInfoTrayExpanded: Function;
+  resources?: any;
 }
 
 const ResourceMap = (props: IResourceMapProps) => {
   const {
+    selectedResource,
     setResource,
     setInfoTrayExpanded,
+    resources,
   } = props;
 
   const mapWindowRef = useRef(null);
@@ -87,6 +90,7 @@ const ResourceMap = (props: IResourceMapProps) => {
         viewport={viewport}
         setViewport={setViewport}
         handleMapClick={handleMapClick}
+        markers={resources}
       />
     </div>
   );
@@ -94,6 +98,7 @@ const ResourceMap = (props: IResourceMapProps) => {
 
 const mapStateToProps = state => {
   return {
+    resources: state.resources,
   };
 };
 
