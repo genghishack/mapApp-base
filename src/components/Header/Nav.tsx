@@ -1,13 +1,18 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { Auth } from 'aws-amplify';
 import NavItem from './NavItem';
 import {useAppContext} from "../../libs/contextLib";
 
 const Nav = () => {
+  const history = useHistory();
   //@ts-ignore
   const { isAuthenticated, userHasAuthenticated } = useAppContext();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await Auth.signOut()
     userHasAuthenticated(false);
+    history.push('/login');
   }
 
   return (

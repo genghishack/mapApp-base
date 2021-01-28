@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import { Form, Button } from 'react-bootstrap';
 import {useAppContext} from "../../libs/contextLib";
@@ -6,6 +7,7 @@ import {useAppContext} from "../../libs/contextLib";
 import './Login.scss';
 
 const Login = () => {
+  const history = useHistory();
   //@ts-ignore
   const { userHasAuthenticated } = useAppContext();
 
@@ -22,6 +24,7 @@ const Login = () => {
     try {
       await Auth.signIn(email, password);
       userHasAuthenticated(true);
+      history.push('/');
     } catch (e) {
       alert(e.message);
     }
