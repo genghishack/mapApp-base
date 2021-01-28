@@ -3,28 +3,31 @@ import { useHistory } from 'react-router-dom';
 import { Auth } from 'aws-amplify';
 import Form from 'react-bootstrap/Form';
 import {useAppContext} from "../../libs/contextLib";
+import {useFormFields} from "../../libs/hooksLib";
 import { onError} from "../../libs/errorLib";
 import LoaderButton from "../LoaderButton";
 
 import './Login.scss';
 
 const Login = () => {
+  const history = useHistory();
   //@ts-ignore
   const { userHasAuthenticated } = useAppContext();
-  const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [fields, handleFieldChange] = useFormFields({
+    email: '',
+    password: ''
+  });
 
   const validateForm = () => {
-    return email.length > 0 && password.length > 0;
+    return fields.email.length > 0 && fields.password.length > 0;
   }
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     setIsLoading(true);
     try {
-      await Auth.signIn(email, password);
+      await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
       history.push('/');
     } catch (e) {
@@ -42,8 +45,8 @@ const Login = () => {
           <Form.Control
             autoFocus
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={fields.email}
+            onChange={handleFieldChange}
           />
         </Form.Group>
         {/*//@ts-ignore*/}
@@ -51,8 +54,8 @@ const Login = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={fields.password}
+            onChange={handleFieldChange}
           />
         </Form.Group>
         <LoaderButton
