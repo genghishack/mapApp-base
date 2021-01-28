@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 
 import {AppContext} from "./libs/contextLib";
+import { onError } from "./libs/errorLib";
 import ResourceView from './components/views/ResourceView';
 import AboutView from './components/views/AboutView';
 import LoginView from './components/views/LoginView';
@@ -27,7 +28,7 @@ const App = (props: IAppProps) => {
       userHasAuthenticated(true);
     } catch (e) {
       if (e !== 'No current user') {
-        alert(e);
+        onError(e);
       }
     }
     setIsAuthenticating(false);
