@@ -1,20 +1,30 @@
 import React from 'react';
-import { useHistory, useLocation } from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 interface INavItemProps {
   label: string;
-  pathname: string;
+  pathname?: string;
+  callback?: Function;
 }
 
 const NavItem = (props: INavItemProps) => {
-  const { label, pathname } = props;
+  const {label, pathname, callback} = props;
   const history = useHistory();
   const location = useLocation();
+
+  const handleClick = () => {
+    if (pathname) {
+      return history.push(pathname);
+    }
+    if (callback) {
+      callback()
+    }
+  }
 
   return (
     <div
       className={`nav-item ${location.pathname === pathname ? 'active' : 'inactive'}`}
-      onClick={() => { history.push(pathname) }}
+      onClick={handleClick}
     >{label}</div>
   )
 }

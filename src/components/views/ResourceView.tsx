@@ -7,8 +7,6 @@ import Config from '../../config';
 import MenuTree from '../MenuTree/MenuTree';
 import InfoBox from '../InfoBox/InfoBox';
 
-import './ResourceView.scss';
-
 interface IResourceViewProps {
   dispatch: Function;
 }
