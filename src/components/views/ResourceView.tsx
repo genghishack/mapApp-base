@@ -1,5 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { API } from 'aws-amplify';
+
 import Header from '../Header/Header';
 import ResourceMap from '../ResourceMap/ResourceMap';
 import Config from '../../config';
@@ -8,6 +10,7 @@ import { setResources } from '../../redux/actions/resources';
 import { setError } from '../../redux/actions/errors';
 import MenuTree from '../MenuTree/MenuTree';
 import InfoBox from '../InfoBox/InfoBox';
+import { useEffect } from 'react';
 
 interface IResourceViewProps {
   dispatch: Function;
@@ -22,17 +25,18 @@ const ResourceView = (props: IResourceViewProps) => {
   const [resource, setResource] = useState({});
   const [selectedResource, setSelectedResource] = useState('');
 
-  useLayoutEffect(() => {
-    fetch(`${apiConfig.URL}/public/resource`)
-        .then(res => res.json())
-        .then(
-            (result) => {
-              dispatch(setResources(result.data));
-            },
-            (error) => {
-              dispatch(setError(error))
-            }
-        )
+  //@ts-ignore
+  useEffect(() => {
+    const getMapMarkers = async () => {
+      let resources = {data: []};
+      try {
+        resources = await API.get('mapapp', '/public/resource', {});
+        dispatch(setResources(resources.data));
+      } catch (e) {
+        dispatch(setError(e));
+      }
+    }
+    getMapMarkers();
   }, [dispatch]);
 
   const handleResourceSelection = (stateAbbr: string, resourceId: string = '') => {

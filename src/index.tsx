@@ -19,7 +19,7 @@ Amplify.configure({
   API: {
     endpoints: [
       {
-        name: 'resource',
+        name: 'mapapp',
         endpoint: Config.apiGateway.URL,
         region: Config.apiGateway.REGION
       },
