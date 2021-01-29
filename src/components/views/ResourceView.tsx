@@ -9,8 +9,6 @@ import { setError } from '../../redux/actions/errors';
 import MenuTree from '../MenuTree/MenuTree';
 import InfoBox from '../InfoBox/InfoBox';
 
-import './ResourceView.scss';
-
 interface IResourceViewProps {
   dispatch: Function;
 }

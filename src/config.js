@@ -13,9 +13,9 @@ const local = {
   },
   cognito: {
     REGION: 'us-west-2',
-    USER_POOL_ID: 'us-west-2_vgch3ExSV',
-    APP_CLIENT_ID: '7epugdlt3hu96s324mk2rl1gba',
-    IDENTITY_POOL_ID: ''
+    USER_POOL_ID: 'us-west-2_ZJQVMR8HA',
+    APP_CLIENT_ID: '1d5skmdk6l5qj9rvd516hsosd4',
+    IDENTITY_POOL_ID: 'us-west-2:e1eb175e-9c5c-4ad1-bf72-8c0ee00b5647'
   }
 };
 
