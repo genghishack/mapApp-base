@@ -36,7 +36,7 @@ const App = (props: IAppProps) => {
     <div className="App">
       {isAuthenticating ? (
         <>
-          {/*  Loading indicator here */}
+          {/*  Loading indicator or null here */}
         </>
       ) : (
         <>
