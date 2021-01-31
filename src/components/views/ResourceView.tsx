@@ -36,7 +36,18 @@ const ResourceView = (props: IResourceViewProps) => {
         dispatch(setError(e));
       }
     }
+    const getListOfMarkers = async () => {
+      let list = {data: ''};
+      try {
+        //@ts-ignore
+        list = await API.get('mapapp', '/resource');
+        console.log(JSON.stringify(list));
+      } catch (e) {
+        dispatch(setError(e));
+      }
+    }
     getMapMarkers();
+    getListOfMarkers();
   }, [dispatch]);
 
   const handleResourceSelection = (stateAbbr: string, resourceId: string = '') => {

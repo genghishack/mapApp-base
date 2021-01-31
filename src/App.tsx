@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 
 import {AppContext} from "./libs/contextLib";
-import { onError } from "./libs/errorLib";
+import {onError} from "./libs/errorLib";
 import ResourceView from './components/views/ResourceView';
 import AboutView from './components/views/AboutView';
 import LoginView from './components/views/LoginView';
@@ -35,8 +35,8 @@ const App = (props: IAppProps) => {
     setIsAuthenticating(false);
   }
 
-  return (
-    !isAuthenticating && (
+  if (!isAuthenticating) {
+    return (
       <div className="App">
         {/*@ts-ignore*/}
         <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}}>
@@ -51,7 +51,11 @@ const App = (props: IAppProps) => {
         </AppContext.Provider>
       </div>
     )
-  )
+  } else {
+    return (
+      <div className="App">foo</div>
+    )
+  }
 }
 
 export default App;
