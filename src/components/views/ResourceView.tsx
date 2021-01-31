@@ -47,7 +47,7 @@ const ResourceView = (props: IResourceViewProps) => {
       }
     }
     getMapMarkers();
-    getListOfMarkers();
+    // getListOfMarkers();
   }, [dispatch]);
 
   const handleResourceSelection = (stateAbbr: string, resourceId: string = '') => {
