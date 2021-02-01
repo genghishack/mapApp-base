@@ -1,21 +1,16 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { API } from 'aws-amplify';
 
-import ResourceMap from '../ResourceMap/ResourceMap';
-import Config from '../../config';
-
 import { setResources } from '../../redux/actions/resources';
 import { setError } from '../../redux/actions/errors';
+import ResourceMap from '../ResourceMap/ResourceMap';
 import MenuTree from '../MenuTree/MenuTree';
 import InfoBox from '../InfoBox/InfoBox';
-import { useEffect } from 'react';
 
 interface IResourceViewProps {
   dispatch: Function;
 }
-
-const apiConfig = Config.apiGateway;
 
 const ResourceView = (props: IResourceViewProps) => {
   const { dispatch } = props;
@@ -35,16 +30,16 @@ const ResourceView = (props: IResourceViewProps) => {
         dispatch(setError(e));
       }
     }
-    const getListOfMarkers = async () => {
-      let list = {data: ''};
-      try {
-        //@ts-ignore
-        list = await API.get('mapapp', '/resource');
-        console.log(JSON.stringify(list));
-      } catch (e) {
-        dispatch(setError(e));
-      }
-    }
+    // const getListOfMarkers = async () => {
+    //   let list = {data: ''};
+    //   try {
+    //     //@ts-ignore
+    //     list = await API.get('mapapp', '/resource');
+    //     console.log(JSON.stringify(list));
+    //   } catch (e) {
+    //     dispatch(setError(e));
+    //   }
+    // }
     getMapMarkers();
     // getListOfMarkers();
   }, [dispatch]);

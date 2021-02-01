@@ -10,7 +10,6 @@ import LoaderButton from "../LoaderButton";
 import './Login.scss';
 
 const Login = () => {
-  const history = useHistory();
   //@ts-ignore
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
