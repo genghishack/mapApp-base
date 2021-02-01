@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Header.scss';
 import Nav from './Nav';
+import AuthNav from './AuthNav';
 
 interface IHeaderProps {
 }
@@ -27,6 +28,8 @@ const Header = (props: IHeaderProps) => {
 
       <div className="controls">
       </div>
+
+      <AuthNav/>
     </header>
   )
 }
