@@ -23,7 +23,7 @@ const NavItem = (props: INavItemProps) => {
 
   return (
     <div
-      className={`nav-item ${location.pathname === pathname ? 'active' : 'inactive'}`}
+      className={`NavItem ${location.pathname === pathname ? 'active' : 'inactive'}`}
       onClick={handleClick}
     >{label}</div>
   )

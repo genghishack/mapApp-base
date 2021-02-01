@@ -14,6 +14,7 @@
       font-size: 22px;
       color: #6495ed;
     }
+
     .main-title {
       font-family: 'Open sans', sans-serif;
       font-size: 22px;
@@ -29,21 +30,27 @@
     width: 100%;
     font-size: 15px;
     color: #00c;
+  }
 
-    .nav-item {
-      margin: 3px 10px;
-      height: 24px;
+  .AuthNav {
+    display: flex;
+    margin-right: 20px;
+    font-size: small;
+  }
 
-      &.active {
-        border-bottom: 2px solid #00f;
-        cursor: normal;
-        color: #006;
-      }
+  .NavItem {
+    margin: 3px 10px;
+    height: 24px;
 
-      &.inactive:hover {
-        border-bottom: 2px solid #006;
-        cursor: pointer;
-      }
+    &.active {
+      border-bottom: 2px solid #00f;
+      cursor: normal;
+      color: #006;
+    }
+
+    &.inactive:hover {
+      border-bottom: 2px solid #006;
+      cursor: pointer;
     }
   }
 
@@ -63,6 +70,7 @@
 
     .selector {
       padding: 0 5px;
+
       .label {
         position: relative;
         top: 2px;
