@@ -1,22 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
+import {useHistory} from "react-router-dom";
+import Form from 'react-bootstrap/Form';
+import {FormControl, InputLabel, Input, Button} from '@material-ui/core';
+import LoaderButton from '../LoaderButton';
+import { useFormFields } from '../../libs/hooksLib';
+import { onError } from '../../libs/errorLib';
+import config from '../../config';
+
 import './EnterInfo.scss';
-import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 
 const EnterInfo = () => {
-    return (
-        <div className="EnterInfo">
-            <h1>Enter Info</h1>
+  const history = useHistory();
+  const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [fields, handleFieldChange] = useFormFields({
+    address: '',
+  });
 
-            <FormControl>
-                <InputLabel htmlFor="address">Address</InputLabel>
-                <Input id="address" aria-describedby="address input" />
-            </FormControl>
+  const validateForm = () => {
+    return fields.address.length > 0;
+  }
 
-            <Button variant="contained" color="primary">
-                Submit
-            </Button>
-        </div>
-    )
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+
+    setIsLoading(true);
+  }
+
+  return (
+    <div className="EnterInfo">
+      <Form onSubmit={handleSubmit}>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="address">
+          <Form.Label>Address</Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            value={fields.address}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        <LoaderButton
+          block
+          size="lg"
+          type="submit"
+          isLoading={isLoading}
+          disabled={!validateForm()}
+        >
+          Add Address
+        </LoaderButton>
+      </Form>
+    </div>
+  )
 }
 
 export default EnterInfo;

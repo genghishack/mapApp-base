@@ -1,8 +1,10 @@
-.EnterInfo {
-  width: 60%;
-  margin: 10px auto;
+@media all and (min-width: 480px) {
+  .EnterInfo {
+    padding: 60px 0;
+  }
 
-  #address {
-    width: 500px;
+  .EnterInfo form {
+    margin: 0 auto;
+    max-width: 320px;
   }
 }
