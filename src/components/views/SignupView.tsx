@@ -5,7 +5,6 @@ import Signup from "../Auth/Signup";
 const SignupView = () => {
   return (
     <div className="SignupView">
-      <Header />
       <Signup />
     </div>
   )

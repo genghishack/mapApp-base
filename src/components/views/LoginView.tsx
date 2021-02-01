@@ -5,7 +5,6 @@ import Login from '../Auth/Login';
 const LoginView = () => {
   return (
     <div className="LoginView">
-      <Header/>
       <Login/>
     </div>
   )

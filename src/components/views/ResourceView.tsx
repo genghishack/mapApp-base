@@ -56,7 +56,6 @@ const ResourceView = (props: IResourceViewProps) => {
 
   return (
     <div className="ResourceView">
-      <Header/>
       <div id="main-container">
         <MenuTree
           handleSelection={handleResourceSelection}

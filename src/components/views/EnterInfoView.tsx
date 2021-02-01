@@ -5,7 +5,6 @@ import EnterInfo from '../EnterInfo/EnterInfo';
 const EnterInfoView = () => {
   return (
     <div className="EnterInfoView">
-      <Header/>
       <EnterInfo/>
     </div>
   )

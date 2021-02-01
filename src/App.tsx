@@ -8,6 +8,7 @@ import Routes from './Routes';
 
 import './App.scss';
 import './components/views/views.scss';
+import Header from "./components/Header/Header";
 
 interface IAppProps {
 }
@@ -43,6 +44,7 @@ const App = (props: IAppProps) => {
           {/*@ts-ignore*/}
           <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}}>
             <Router>
+              <Header />
               <Routes />
             </Router>
           </AppContext.Provider>
