@@ -6,6 +6,8 @@ import NotFound from './components/views/NotFound';
 import ResourceView from "./components/views/ResourceView";
 import AboutView from "./components/views/AboutView";
 import EnterInfoView from "./components/views/EnterInfoView";
+import AuthenticatedRoute from "./components/Auth/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/Auth/UnauthenticatedRoute";
 
 const Routes = () => {
   return (
@@ -13,18 +15,18 @@ const Routes = () => {
       <Route exact path="/">
         <ResourceView/>
       </Route>
-      <Route exact path="/login">
+      <UnauthenticatedRoute exact path="/login">
         <LoginView/>
-      </Route>
-      <Route exact path="/signup">
+      </UnauthenticatedRoute>
+      <UnauthenticatedRoute exact path="/signup">
         <SignupView />
-      </Route>
+      </UnauthenticatedRoute>
       <Route exact path="/about" >
         <AboutView />
       </Route>
-      <Route exact path="/enter-info" >
+      <AuthenticatedRoute exact path="/enter-info" >
         <EnterInfoView/>
-      </Route>
+      </AuthenticatedRoute>
       <Route>
         <NotFound />
       </Route>
