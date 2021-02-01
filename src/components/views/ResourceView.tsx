@@ -2,7 +2,6 @@ import React, { useLayoutEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { API } from 'aws-amplify';
 
-import Header from '../Header/Header';
 import ResourceMap from '../ResourceMap/ResourceMap';
 import Config from '../../config';
 
