@@ -20,9 +20,15 @@ const Nav = () => {
       <NavItem label="Resources" pathname="/" />
       <NavItem label="About" pathname="/about" />
       {isAuthenticated ? (
-        <NavItem label="Logout" callback={handleLogout} />
+        <>
+          <NavItem label="Enter Info" pathname="/enter-info" />
+          <NavItem label="Logout" callback={handleLogout} />
+        </>
       ) : (
-        <NavItem label="Login" pathname="/login" />
+        <>
+          <NavItem label="Signup" pathname="/signup" />
+          <NavItem label="Login" pathname="/login" />
+        </>
       )}
     </div>
   )

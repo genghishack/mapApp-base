@@ -1,4 +1,4 @@
-# MapApp Base
+# MapApp FrontEnd
 
 This is a template repo for map-based projects.  
 

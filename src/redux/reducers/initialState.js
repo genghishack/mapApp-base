@@ -1,5 +1,6 @@
 const initialState = {
   errors: [],
+  resources: [],
   entities: {
     currentEntity: {
       id: null,

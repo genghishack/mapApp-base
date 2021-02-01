@@ -1,12 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 
 import {AppContext} from "./libs/contextLib";
-import { onError } from "./libs/errorLib";
-import ResourceView from './components/views/ResourceView';
-import AboutView from './components/views/AboutView';
-import LoginView from './components/views/LoginView';
+import {onError} from "./libs/errorLib";
+import Routes from './Routes';
 
 import './App.scss';
 import './components/views/views.scss';
@@ -35,20 +33,22 @@ const App = (props: IAppProps) => {
   }
 
   return (
-    !isAuthenticating && (
-      <div className="App">
-        {/*@ts-ignore*/}
-        <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}}>
-          <Router>
-            <Switch>
-              <Route path="/login" component={LoginView}/>
-              <Route path="/about" component={AboutView}/>
-              <Route path="/" component={ResourceView}/>
-            </Switch>
-          </Router>
-        </AppContext.Provider>
-      </div>
-    )
+    <div className="App">
+      {isAuthenticating ? (
+        <>
+          {/*  Loading indicator or null here */}
+        </>
+      ) : (
+        <>
+          {/*@ts-ignore*/}
+          <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}}>
+            <Router>
+              <Routes />
+            </Router>
+          </AppContext.Provider>
+        </>
+      )}
+    </div>
   )
 }
 

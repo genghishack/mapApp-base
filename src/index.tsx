@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Amplify } from 'aws-amplify';
-import Config from './config';
+import config from './config';
 import './index.scss';
 import App from './App';
 import store from './redux/store';
@@ -11,17 +11,17 @@ import * as serviceWorker from './serviceWorker';
 Amplify.configure({
   Auth: {
     mandatorySignIn: true,
-    region: Config.cognito.REGION,
-    userPoolId: Config.cognito.USER_POOL_ID,
-    identityPoolId: Config.cognito.IDENTITY_POOL_ID,
-    userPoolWebClientId: Config.cognito.APP_CLIENT_ID
+    region: config.cognito.REGION,
+    userPoolId: config.cognito.USER_POOL_ID,
+    identityPoolId: config.cognito.IDENTITY_POOL_ID,
+    userPoolWebClientId: config.cognito.APP_CLIENT_ID
   },
   API: {
     endpoints: [
       {
-        name: 'resource',
-        endpoint: Config.apiGateway.URL,
-        region: Config.apiGateway.REGION
+        name: 'mapapp',
+        endpoint: config.apiGateway.URL,
+        region: config.apiGateway.REGION
       },
     ]
   }

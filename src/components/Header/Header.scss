@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   background-color: #fff;
-  height: 25px;
+  height: 60px;
   padding: 15px 20px 10px;
 
   .home-link {
@@ -32,6 +32,7 @@
 
     .nav-item {
       margin: 3px 10px;
+      height: 24px;
 
       &.active {
         border-bottom: 2px solid #00f;
