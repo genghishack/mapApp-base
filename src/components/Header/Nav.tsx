@@ -9,7 +9,6 @@ const Nav = () => {
   return (
     <div className="Nav">
       <NavItem label="Resources" pathname="/" />
-      <NavItem label="About" pathname="/about" />
       {isAuthenticated ? (
         <>
           <NavItem label="Enter Info" pathname="/enter-info" />

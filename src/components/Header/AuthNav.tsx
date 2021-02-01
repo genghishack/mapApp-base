@@ -17,6 +17,7 @@ const AuthNav = () => {
 
   return (
     <div className="AuthNav">
+      <NavItem label="About" pathname="/about" />
       {isAuthenticated ? (
         <>
           <NavItem label="Logout" callback={handleLogout} />
