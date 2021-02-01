@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
-import {useHistory} from "react-router-dom";
 import Form from 'react-bootstrap/Form';
-import {FormControl, InputLabel, Input, Button} from '@material-ui/core';
+import { API } from 'aws-amplify';
 import LoaderButton from '../LoaderButton';
 import { useFormFields } from '../../libs/hooksLib';
 import { onError } from '../../libs/errorLib';
-import config from '../../config';
 
 import './EnterInfo.scss';
 
 const EnterInfo = () => {
-  const history = useHistory();
-  const [content, setContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     address: '',
@@ -21,10 +17,24 @@ const EnterInfo = () => {
     return fields.address.length > 0;
   }
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
 
     setIsLoading(true);
+
+    try {
+      await createResource({address: fields.address});
+      setIsLoading(false);
+    } catch (e) {
+      onError(e);
+      setIsLoading(false)
+    }
+  }
+
+  const createResource = (resource) => {
+    return API.post('mapapp', '/resource', {
+      body: resource
+    });
   }
 
   return (
