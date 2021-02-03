@@ -163,8 +163,7 @@ export default function ResetPassword() {
   return (
     <div className="ResetPassword">
       {!codeSent
-        ? renderSuccessMessage()
-        // ? renderRequestCodeForm()
+        ? renderRequestCodeForm()
         : !confirmed
           ? renderConfirmationForm()
           : renderSuccessMessage()}
