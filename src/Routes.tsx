@@ -5,6 +5,9 @@ import UnauthenticatedRoute from "./components/Auth/UnauthenticatedRoute";
 import LoginView from "./components/views/LoginView";
 import SignupView from "./components/views/SignupView";
 import ResetPassword from "./components/Auth/ResetPassword";
+import Settings from './components/Auth/Settings';
+import ChangePassword from "./components/Auth/ChangePassword";
+import ChangeEmail from "./components/Auth/ChangeEmail";
 import NotFound from './components/views/NotFound';
 import ResourceView from "./components/views/ResourceView";
 import AboutView from "./components/views/AboutView";
@@ -25,12 +28,21 @@ const Routes = () => {
       <UnauthenticatedRoute exact path="/signup">
         <SignupView />
       </UnauthenticatedRoute>
-      <Route exact path="/about" >
-        <AboutView />
-      </Route>
+      <AuthenticatedRoute exact path="/settings" >
+        <Settings />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/settings/password">
+        <ChangePassword />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/settings/email">
+        <ChangeEmail />
+      </AuthenticatedRoute>
       <AuthenticatedRoute exact path="/enter-info" >
         <EnterInfoView/>
       </AuthenticatedRoute>
+      <Route exact path="/about" >
+        <AboutView />
+      </Route>
       <Route>
         <NotFound />
       </Route>
