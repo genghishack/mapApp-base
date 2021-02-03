@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {connect} from 'react-redux';
 import {Map as TMap} from 'mapbox-gl';
-import {continentalViewport} from '../../utils/MapHelpers';
+import {continentalViewport} from '../../libs/mapLib';
 import Map from '../Map';
 
 import './ResourceMap.scss';

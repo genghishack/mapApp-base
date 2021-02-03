@@ -11,6 +11,11 @@ const EnterInfo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     address: '',
+    // street: '',
+    // city: '',
+    // state: '',
+    // country: 'US',
+    // postalCode: ''
   });
 
   const validateForm = () => {
