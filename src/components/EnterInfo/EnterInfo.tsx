@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
-import { API } from 'aws-amplify';
+import {API} from 'aws-amplify';
 import LoaderButton from '../LoaderButton';
-import { useFormFields } from '../../libs/hooksLib';
-import { onError } from '../../libs/errorLib';
+import {useFormFields} from '../../libs/hooksLib';
+import {onError} from '../../libs/errorLib';
 
 import './EnterInfo.scss';
 
 const EnterInfo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
-    address: '',
-    // street: '',
-    // city: '',
-    // state: '',
-    // country: 'US',
-    // postalCode: ''
+    name: '',
+    street: '',
+    city: '',
+    state: '',
+    country: 'US',
+    postalCode: ''
   });
 
   const validateForm = () => {
-    return fields.address.length > 0;
+    return fields.street.length > 0
+      || fields.city.length > 0
+      || fields.state.length > 0
+      || fields.country.length > 0
+      || fields.postalCode.length > 0;
   }
 
   const handleSubmit = async (evt) => {
@@ -27,12 +31,16 @@ const EnterInfo = () => {
 
     setIsLoading(true);
 
+    const {name, street, city, state, country, postalCode} = fields;
     try {
-      await createResource({address: fields.address});
+      await createResource({
+        name,
+        address: {street, city, state, country, postalCode}
+      });
       setIsLoading(false);
     } catch (e) {
       onError(e);
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -46,12 +54,62 @@ const EnterInfo = () => {
     <div className="EnterInfo">
       <Form onSubmit={handleSubmit}>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="address">
-          <Form.Label>Address</Form.Label>
+        <Form.Group size="lg" controlId="name">
+          <Form.Label>Name</Form.Label>
           <Form.Control
             autoFocus
             type="text"
-            value={fields.address}
+            value={fields.name}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="street">
+          <Form.Label>Street</Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            value={fields.street}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="city">
+          <Form.Label>City</Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            value={fields.city}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="state">
+          <Form.Label>State</Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            value={fields.state}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="country">
+          <Form.Label>Country</Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            value={fields.country}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="postalCode">
+          <Form.Label>Postal Code</Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            value={fields.postalCode}
             onChange={handleFieldChange}
           />
         </Form.Group>
