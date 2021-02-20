@@ -1,17 +1,9 @@
 import React from 'react';
-import ReactMapGl, { NavigationControl, ViewportChangeHandler } from 'react-map-gl';
-import { Map as TMap } from 'mapbox-gl';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Config from '../config';
 
 interface IMapProps {
-  map: TMap | null;
-  setMap: Function;
-  setMapFullyLoaded: Function;
   viewport: any;
-  setViewport: ViewportChangeHandler;
-  handleMapClick: Function;
-  handleMouseMove?: Function;
   markers?: [any];
 }
 
@@ -22,27 +14,11 @@ const tileUrl = `https://api.mapbox.com/styles/v1/${username}/${keys.bright}/til
 
 const Map = (props: IMapProps) => {
   const {
-    map,
-    setMap,
-    setMapFullyLoaded,
     viewport,
-    setViewport,
-    handleMapClick,
-    handleMouseMove,
     markers,
   } = props;
 
-  console.log({markers});
-  
-  const onMapLoad = () => {
-    if (map) {
-      if (!map.loaded() || !map.isStyleLoaded() || !map.areTilesLoaded()) {
-        setTimeout(onMapLoad, 100);
-      } else {
-        setMapFullyLoaded(true);
-      }
-    }
-  };
+  // console.log({markers});
 
   const { latitude, longitude, zoom } = viewport;
 

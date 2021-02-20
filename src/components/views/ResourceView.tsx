@@ -54,11 +54,7 @@ const ResourceView = (props: IResourceViewProps) => {
         <MenuTree
           handleSelection={handleResourceSelection}
         />
-        <ResourceMap
-          selectedResource={selectedResource}
-          setResource={setResource}
-          setInfoTrayExpanded={setInfoTrayExpanded}
-        />
+        <ResourceMap />
         <InfoBox
           resource={resource}
           /* Comment this line with // to use Infobox as a slider tray
