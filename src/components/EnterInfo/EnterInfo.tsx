@@ -31,11 +31,11 @@ const EnterInfo = () => {
 
     setIsLoading(true);
 
-    const {name, street, city, state, country, postalCode} = fields;
+    const {name, street_1, street_2, city, state, country, postalCode} = fields;
     try {
       await createResource({
         name,
-        address: {street, city, state, country, postalCode}
+        address: {street_1, street_2, city, state, country, postalCode}
       });
       setIsLoading(false);
     } catch (e) {
@@ -64,12 +64,22 @@ const EnterInfo = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="street">
-          <Form.Label>Street</Form.Label>
+        <Form.Group size="lg" controlId="street_1">
+          <Form.Label>Address 1 (e.g. Street)</Form.Label>
           <Form.Control
             autoFocus
             type="text"
-            value={fields.street}
+            value={fields.street_1}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="street_2">
+          <Form.Label>Address 2 (e.g. Apt #)</Form.Label>
+          <Form.Control
+            autoFocus
+            type="text"
+            value={fields.street_2}
             onChange={handleFieldChange}
           />
         </Form.Group>
