@@ -77,8 +77,9 @@ export default function Signup() {
       await Auth.signIn(fields.email, fields.password);
 
       userHasAuthenticated(true);
-      const dbUser = await createUser();
-      console.log({dbUser});
+      const user = await createUser();
+      console.log({user});
+      // TODO: Store the user record in redux
       history.push("/");
     } catch (e) {
       onError(e);

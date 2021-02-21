@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
-import { Auth } from 'aws-amplify';
+import { Link, useHistory } from 'react-router-dom';
+import {API, Auth} from 'aws-amplify';
 import Form from 'react-bootstrap/Form';
 import {useAppContext} from "../../libs/contextLib";
 import {useFormFields} from "../../libs/hooksLib";
@@ -10,13 +10,18 @@ import LoaderButton from "../LoaderButton";
 import './Login.scss';
 
 const Login = () => {
-  //@ts-ignore
-  const { userHasAuthenticated } = useAppContext();
-  const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     email: '',
     password: ''
   });
+  const history = useHistory();
+  //@ts-ignore
+  const { userHasAuthenticated } = useAppContext();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const getUser = () => {
+    return API.get('mapapp', '/user/self', {});
+  }
 
   const validateForm = () => {
     return fields.email.length > 0 && fields.password.length > 0;
@@ -28,6 +33,10 @@ const Login = () => {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
+      const user = await getUser();
+      console.log({user});
+      // TODO: store the user in redux
+      history.push("/")
     } catch (e) {
       onError(e);
       setIsLoading(false);
