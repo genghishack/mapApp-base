@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { Auth, API } from "aws-amplify";
 import LoaderButton from "../../components/LoaderButton";
 import { useAppContext } from "../../libs/contextLib";
 import { useFormFields } from "../../libs/hooksLib";
@@ -21,7 +21,11 @@ export default function Signup() {
   const { userHasAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
-  function validateForm() {
+  const createUser = () => {
+    return API.post('mapapp', '/user', {});
+  }
+
+  const validateForm = () => {
     return (
       fields.email.length > 0 &&
       fields.password.length > 0 &&
@@ -29,7 +33,7 @@ export default function Signup() {
     );
   }
 
-  function validateConfirmationForm() {
+  const validateConfirmationForm = () => {
     return fields.confirmationCode.length > 0;
   }
 
@@ -46,6 +50,7 @@ export default function Signup() {
       setIsLoading(false);
       // @ts-ignore
       setNewUser(newUser);
+      console.log({newUser})
     } catch (e) {
       if (e.code === 'UsernameExistsException') {
         // Check to see if user has not been confirmed.
@@ -72,6 +77,8 @@ export default function Signup() {
       await Auth.signIn(fields.email, fields.password);
 
       userHasAuthenticated(true);
+      const dbUser = await createUser();
+      console.log({dbUser});
       history.push("/");
     } catch (e) {
       onError(e);
