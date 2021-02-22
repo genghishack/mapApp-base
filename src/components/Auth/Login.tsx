@@ -1,15 +1,24 @@
 import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import {connect} from "react-redux";
 import {API, Auth} from 'aws-amplify';
 import Form from 'react-bootstrap/Form';
+
 import {useAppContext} from "../../libs/contextLib";
 import {useFormFields} from "../../libs/hooksLib";
 import {onError} from "../../libs/errorLib";
+import {setCurrentUser} from "../../redux/actions/currentUser";
 import LoaderButton from "../LoaderButton";
 
 import './Login.scss';
 
-const Login = () => {
+interface ILoginProps {
+  dispatch: Function;
+}
+
+const Login = (props: ILoginProps) => {
+  const {dispatch} = props;
+
   const [fields, handleFieldChange] = useFormFields({
     email: '',
     password: ''
@@ -34,8 +43,7 @@ const Login = () => {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
       const user = await getUser();
-      console.log({user});
-      // TODO: store the user in redux
+      dispatch(setCurrentUser(user.data));
       history.push("/")
     } catch (e) {
       onError(e);
@@ -84,4 +92,11 @@ const Login = () => {
   )
 }
 
-export default Login;
+function mapStateToProps(state: { errors: any; currentUser: any; }) {
+  return {
+    currentUser: state.currentUser,
+    errors: state.errors,
+  };
+}
+
+export default connect(mapStateToProps)(Login);

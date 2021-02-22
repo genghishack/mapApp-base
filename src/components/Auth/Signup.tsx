@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
+import {Auth, API} from "aws-amplify";
 import Form from "react-bootstrap/Form";
-import { useHistory } from "react-router-dom";
-import { Auth, API } from "aws-amplify";
+
+import {useAppContext} from "../../libs/contextLib";
+import {useFormFields} from "../../libs/hooksLib";
+import {onError} from "../../libs/errorLib";
+import {setCurrentUser} from "../../redux/actions/currentUser";
 import LoaderButton from "../../components/LoaderButton";
-import { useAppContext } from "../../libs/contextLib";
-import { useFormFields } from "../../libs/hooksLib";
-import { onError } from "../../libs/errorLib";
+
 import "./Login.scss";
 
-export default function Signup() {
+interface ISignupProps {
+  dispatch: Function;
+}
+
+const Signup = (props: ISignupProps) => {
+  const {dispatch} = props;
+
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
@@ -18,7 +28,7 @@ export default function Signup() {
   const history = useHistory();
   const [newUser, setNewUser] = useState(null);
   //@ts-ignore
-  const { userHasAuthenticated } = useAppContext();
+  const {userHasAuthenticated} = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const createUser = () => {
@@ -78,8 +88,7 @@ export default function Signup() {
 
       userHasAuthenticated(true);
       const user = await createUser();
-      console.log({user});
-      // TODO: Store the user record in redux
+      dispatch(setCurrentUser(user.data));
       history.push("/");
     } catch (e) {
       onError(e);
@@ -168,3 +177,12 @@ export default function Signup() {
     </div>
   );
 }
+
+function mapStateToProps(state: { errors: any; currentUser: any; }) {
+  return {
+    currentUser: state.currentUser,
+    errors: state.errors,
+  };
+}
+
+export default connect(mapStateToProps)(Signup);
