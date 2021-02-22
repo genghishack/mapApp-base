@@ -1,14 +1,14 @@
 import geoViewport from "@mapbox/geo-viewport";
 import { continentalBbox } from '../constants';
 
-const AKBbox = [-190, 51.214183, -129, 71.365162];
+// const AKBbox = [-190, 51.214183, -129, 71.365162];
 
 const getViewport = (bbox, w, h) => {
   return geoViewport.viewport(
     bbox,
     [w, h],
-    0,   // minZoon
-    20,  // maxZoon
+    0,   // minZoom
+    20,  // maxZoom
     256, // 512 for mapbox tiles, 256 for other (but not really, apparently)
     true // allowFloat
   );

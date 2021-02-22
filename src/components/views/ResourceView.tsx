@@ -1,19 +1,16 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import Header from '../Header/Header';
-import ResourceMap from '../ResourceMap/ResourceMap';
-import Config from '../../config';
+import { API } from 'aws-amplify';
 
+import { setResources } from '../../redux/actions/resources';
+import { setError } from '../../redux/actions/errors';
+import ResourceMap from '../ResourceMap/ResourceMap';
 import MenuTree from '../MenuTree/MenuTree';
 import InfoBox from '../InfoBox/InfoBox';
-
-import './ResourceView.scss';
 
 interface IResourceViewProps {
   dispatch: Function;
 }
-
-const apiConfig = Config.apiGateway;
 
 const ResourceView = (props: IResourceViewProps) => {
   const { dispatch } = props;
@@ -22,7 +19,29 @@ const ResourceView = (props: IResourceViewProps) => {
   const [resource, setResource] = useState({});
   const [selectedResource, setSelectedResource] = useState('');
 
-  useLayoutEffect(() => {
+  //@ts-ignore
+  useEffect(() => {
+    const getMapMarkers = async () => {
+      let resources = {data: []};
+      try {
+        resources = await API.get('mapapp', '/public/resource', {});
+        dispatch(setResources(resources.data));
+      } catch (e) {
+        dispatch(setError(e));
+      }
+    }
+    // const getListOfMarkers = async () => {
+    //   let list = {data: ''};
+    //   try {
+    //     //@ts-ignore
+    //     list = await API.get('mapapp', '/resource');
+    //     console.log(JSON.stringify(list));
+    //   } catch (e) {
+    //     dispatch(setError(e));
+    //   }
+    // }
+    getMapMarkers();
+    // getListOfMarkers();
   }, [dispatch]);
 
   const handleResourceSelection = (stateAbbr: string, resourceId: string = '') => {
@@ -31,16 +50,11 @@ const ResourceView = (props: IResourceViewProps) => {
 
   return (
     <div className="ResourceView">
-      <Header/>
       <div id="main-container">
         <MenuTree
           handleSelection={handleResourceSelection}
         />
-        <ResourceMap
-          selectedResource={selectedResource}
-          setResource={setResource}
-          setInfoTrayExpanded={setInfoTrayExpanded}
-        />
+        <ResourceMap />
         <InfoBox
           resource={resource}
           /* Comment this line with // to use Infobox as a slider tray
@@ -54,8 +68,9 @@ const ResourceView = (props: IResourceViewProps) => {
   )
 }
 
-function mapStateToProps(state: { errors: any; }) {
+function mapStateToProps(state: { errors: any; resources: any; }) {
   return {
+    resources: state.resources,
     errors: state.errors,
   };
 }
