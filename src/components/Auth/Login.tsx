@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {API, Auth} from 'aws-amplify';
 import Form from 'react-bootstrap/Form';
 import {useAppContext} from "../../libs/contextLib";
 import {useFormFields} from "../../libs/hooksLib";
-import { onError} from "../../libs/errorLib";
+import {onError} from "../../libs/errorLib";
 import LoaderButton from "../LoaderButton";
 
 import './Login.scss';
@@ -16,7 +16,7 @@ const Login = () => {
   });
   const history = useHistory();
   //@ts-ignore
-  const { userHasAuthenticated } = useAppContext();
+  const {userHasAuthenticated} = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
 
   const getUser = () => {
@@ -46,6 +46,7 @@ const Login = () => {
   return (
     <div className="Login">
       <Form onSubmit={handleSubmit}>
+        <header>Login</header>
         {/*//@ts-ignore*/}
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
@@ -65,7 +66,10 @@ const Login = () => {
             onChange={handleFieldChange}
           />
         </Form.Group>
-        <Link to="/login/reset">Forgot password?</Link>
+        <div className="options">
+          <Link to="/login/reset">Forgot password?</Link>
+          <Link to="/login/signup">Create an account</Link>
+        </div>
         <LoaderButton
           block
           size="lg"

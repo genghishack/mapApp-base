@@ -6,7 +6,7 @@ import LoaderButton from "../../components/LoaderButton";
 import { useAppContext } from "../../libs/contextLib";
 import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";
-import "./Signup.scss";
+import "./Login.scss";
 
 export default function Signup() {
   const [fields, handleFieldChange] = useFormFields({
@@ -90,6 +90,7 @@ export default function Signup() {
   function renderConfirmationForm() {
     return (
       <Form onSubmit={handleConfirmationSubmit}>
+        <header>Confirm account</header>
         {/*@ts-ignore*/}
         <Form.Group controlId="confirmationCode" size="lg">
           <Form.Label>Confirmation Code</Form.Label>
@@ -118,6 +119,7 @@ export default function Signup() {
   function renderForm() {
     return (
       <Form onSubmit={handleSubmit}>
+        <header>Create an account</header>
         {/*@ts-ignore*/}
         <Form.Group controlId="email" size="lg">
           <Form.Label>Email</Form.Label>
@@ -161,7 +163,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="Signup">
+    <div className="Login">
       {newUser === null ? renderForm() : renderConfirmationForm()}
     </div>
   );

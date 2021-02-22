@@ -5,9 +5,9 @@ import LoaderButton from '../LoaderButton';
 import {useFormFields} from '../../libs/hooksLib';
 import {onError} from '../../libs/errorLib';
 
-import './EnterInfo.scss';
+import './CreateResource.scss';
 
-const EnterInfo = () => {
+const CreateResource = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     name: '',
@@ -53,6 +53,7 @@ const EnterInfo = () => {
   return (
     <div className="EnterInfo">
       <Form onSubmit={handleSubmit}>
+        <header>Create a resource</header>
         {/*@ts-ignore*/}
         <Form.Group size="lg" controlId="name">
           <Form.Label>Name</Form.Label>
@@ -130,11 +131,11 @@ const EnterInfo = () => {
           isLoading={isLoading}
           disabled={!validateForm()}
         >
-          Add Address
+          Add Resource
         </LoaderButton>
       </Form>
     </div>
   )
 }
 
-export default EnterInfo;
+export default CreateResource;

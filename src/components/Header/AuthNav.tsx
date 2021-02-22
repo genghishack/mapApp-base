@@ -25,7 +25,6 @@ const AuthNav = () => {
         </>
       ) : (
         <>
-          <NavItem label="Signup" pathname="/signup" />
           <NavItem label="Login" pathname="/login" />
         </>
       )}

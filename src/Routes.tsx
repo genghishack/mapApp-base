@@ -11,7 +11,7 @@ import ChangeEmail from "./components/Auth/ChangeEmail";
 import NotFound from './components/views/NotFound';
 import ResourceView from "./components/views/ResourceView";
 import AboutView from "./components/views/AboutView";
-import EnterInfoView from "./components/views/EnterInfoView";
+import CreateResourceView from "./components/views/CreateResourceView";
 
 const Routes = () => {
   return (
@@ -25,7 +25,7 @@ const Routes = () => {
       <UnauthenticatedRoute exact path="/login/reset">
         <ResetPassword />
       </UnauthenticatedRoute>
-      <UnauthenticatedRoute exact path="/signup">
+      <UnauthenticatedRoute exact path="/login/signup">
         <SignupView />
       </UnauthenticatedRoute>
       <AuthenticatedRoute exact path="/settings" >
@@ -37,8 +37,8 @@ const Routes = () => {
       <AuthenticatedRoute exact path="/settings/email">
         <ChangeEmail />
       </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/enter-info" >
-        <EnterInfoView/>
+      <AuthenticatedRoute exact path="/create-resource" >
+        <CreateResourceView/>
       </AuthenticatedRoute>
       <Route exact path="/about" >
         <AboutView />

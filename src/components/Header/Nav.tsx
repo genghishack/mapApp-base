@@ -11,7 +11,7 @@ const Nav = () => {
       <NavItem label="Resources" pathname="/" />
       {isAuthenticated ? (
         <>
-          <NavItem label="Enter Info" pathname="/enter-info" />
+          <NavItem label="Create Resource" pathname="/create-resource" />
         </>
       ) : null }
     </div>

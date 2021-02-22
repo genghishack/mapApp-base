@@ -3,16 +3,28 @@
     width: 60%;
     margin: 10px auto;
     padding: 60px 0;
-  }
 
-  .Login form {
-    margin: 0 auto;
-    max-width: 320px;
-  }
+    form {
+      margin: 0 auto;
+      max-width: 320px;
 
-  .Login form a {
-    margin-bottom: 15px;
-    display: block;
-    font-size: 14px;
+      header {
+        font-size: 25px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      a {
+        margin-bottom: 15px;
+        display: block;
+        font-size: 14px;
+      }
+
+      .options {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
   }
 }
