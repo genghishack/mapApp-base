@@ -27,10 +27,10 @@ const Routes = () => {
       <AuthenticatedRoute exact path="/profile" >
         <Profile />
       </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/settings/password">
+      <AuthenticatedRoute exact path="/profile/password">
         <ChangePassword />
       </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/settings/email">
+      <AuthenticatedRoute exact path="/profile/email">
         <ChangeEmail />
       </AuthenticatedRoute>
       <AuthenticatedRoute exact path="/create-resource" >
