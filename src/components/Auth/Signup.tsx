@@ -1,14 +1,15 @@
 import React from 'react';
 import {Auth} from "aws-amplify";
-import {onError} from "../../libs/errorLib";
 import Form from "react-bootstrap/Form";
-import LoaderButton from "../LoaderButton";
+
 import {useAuthContext} from "../../libs/contextLib";
+import {onError} from "../../libs/errorLib";
+import LoaderButton from "../LoaderButton";
 
 const Signup = () => {
   const {
     //@ts-ignore
-    setAuthPhase,
+    authPhaseTransition, resetFormState,
     //@ts-ignore
     isLoading, setIsLoading,
     //@ts-ignore
@@ -34,10 +35,10 @@ const Signup = () => {
         username: fields.email,
         password: fields.password,
       });
-      setIsLoading(false);
-      // @ts-ignore
+      resetFormState();
       setNewUser(user);
-      console.log({newUser})
+      // console.log({newUser})
+
     } catch (e) {
       if (e.code === 'UsernameExistsException') {
         // Check to see if user has not been confirmed.
@@ -87,7 +88,7 @@ const Signup = () => {
       </Form.Group>
       <div className="options">
         <div/>
-        <a className="option" onClick={() => setAuthPhase('login')}>
+        <a className="option" onClick={() => authPhaseTransition('login')}>
           Return to login
         </a>
       </div>

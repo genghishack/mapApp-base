@@ -6,7 +6,7 @@ import {useAuthContext} from "../../libs/contextLib";
 const ResetPasswordSuccess = () => {
   const {
     //@ts-ignore
-    setAuthPhase, setResetCodeSent, setResetCodeConfirmed
+    authPhaseTransition,
   } = useAuthContext();
 
   return (
@@ -17,9 +17,7 @@ const ResetPasswordSuccess = () => {
         <p>Your password has been reset.</p>
       </div>
       <a className="success-link" onClick={() => {
-        setResetCodeSent(false)
-        setResetCodeConfirmed(false);
-        setAuthPhase('login')
+        authPhaseTransition('login')
       }}>
         Click here to login with your new credentials.
       </a>

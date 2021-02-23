@@ -12,19 +12,43 @@ import Login from '../components/Auth/Login';
 import './Auth.scss';
 
 const AuthContainer = () => {
-  const [authPhase, setAuthPhase] = useState('login');
-  const [isLoading, setIsLoading] = useState(false);
-  const [newUser, setNewUser] = useState(null);
-  const [isSendingResetCode, setIsSendingResetCode] = useState(false);
-  const [resetCodeSent, setResetCodeSent] = useState(false);
-  const [resetCodeConfirmed, setResetCodeConfirmed] = useState(false);
-  const [fields, handleFieldChange] = useFormFields({
+  const initialFormFields = {
     email: "",
     password: "",
     confirmPassword: "",
     resetCode: "",
     confirmationCode: "",
-  });
+  }
+  const [authPhase, setAuthPhase] = useState('login');
+  const [isLoading, setIsLoading] = useState(false);
+  const [newUser, setNewUser] = useState(null);
+  const [resetCodeSent, setResetCodeSent] = useState(false);
+  const [resetCodeConfirmed, setResetCodeConfirmed] = useState(false);
+  const [fields, handleFieldChange] = useFormFields(initialFormFields);
+
+  const clearSensitiveFields = () => {
+    fields.password = '';
+    fields.confirmPassword = '';
+    fields.resetCode = '';
+    fields.confirmationCode = '';
+  };
+
+  const resetFormState = () => {
+    setIsLoading(false);
+    clearSensitiveFields();
+  }
+
+  const clearResetPasswordState = () => {
+    setResetCodeSent(false);
+    setResetCodeConfirmed(false);
+  }
+
+  const authPhaseTransition = (phase) => {
+    setNewUser(null);
+    resetFormState()
+    clearResetPasswordState()
+    setAuthPhase(phase);
+  }
 
   const renderAuthPhase = () => {
     switch (authPhase) {
@@ -55,13 +79,12 @@ const AuthContainer = () => {
     <div className="Auth AuthContainer">
       {/*@ts-ignore*/}
       <AuthContext.Provider value={{
-        authPhase, setAuthPhase,
         isLoading, setIsLoading,
         fields, handleFieldChange,
         newUser, setNewUser,
-        isSendingResetCode, setIsSendingResetCode,
         resetCodeSent, setResetCodeSent,
         resetCodeConfirmed, setResetCodeConfirmed,
+        authPhaseTransition, resetFormState,
       }}>
         {renderAuthPhase()}
       </AuthContext.Provider>

@@ -22,9 +22,11 @@ const SignupConfirmation = (props: ISignupConfirmationProps) => {
   const {userHasAuthenticated} = useAppContext();
   const {
     // @ts-ignore
+    authPhaseTransition, resetFormState,
+    // @ts-ignore
     isLoading, setIsLoading,
     // @ts-ignore
-    fields, handleFieldChange
+    fields, handleFieldChange,
   } = useAuthContext();
 
   const validateForm = () => {
@@ -47,6 +49,7 @@ const SignupConfirmation = (props: ISignupConfirmationProps) => {
       userHasAuthenticated(true);
       const user = await createUser();
       dispatch(setCurrentUser(user.data));
+      resetFormState();
       history.push("/");
     } catch (e) {
       onError(e);
@@ -68,6 +71,12 @@ const SignupConfirmation = (props: ISignupConfirmationProps) => {
         />
         <Form.Text muted>Please check your email for the code.</Form.Text>
       </Form.Group>
+      <div className="options">
+        <div/>
+        <a className="option" onClick={() => authPhaseTransition('login')}>
+          Return to login
+        </a>
+      </div>
       <LoaderButton
         block
         size="lg"

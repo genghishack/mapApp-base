@@ -8,7 +8,9 @@ import {useAuthContext} from "../../libs/contextLib";
 const ResetPassword = () => {
   const {
     //@ts-ignore
-    setAuthPhase, isLoading, setIsLoading,
+    authPhaseTransition, resetFormState,
+    //@ts-ignore
+    isLoading, setIsLoading,
     //@ts-ignore
     setResetCodeSent,
     //@ts-ignore
@@ -25,7 +27,7 @@ const ResetPassword = () => {
 
     try {
       await Auth.forgotPassword(fields.email);
-      setIsLoading(false);
+      resetFormState();
       setResetCodeSent(true);
     } catch (error) {
       onError(error);
@@ -50,9 +52,7 @@ const ResetPassword = () => {
         <div className="options">
           <div/>
           <a className="option" onClick={() => {
-            setIsLoading(false);
-            setResetCodeSent(false);
-            setAuthPhase('login')
+            authPhaseTransition('login')
           }}>
             Return to login
           </a>

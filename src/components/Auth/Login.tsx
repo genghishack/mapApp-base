@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import {connect} from "react-redux";
 import {API, Auth} from 'aws-amplify';
 import Form from 'react-bootstrap/Form';
@@ -21,11 +21,11 @@ const Login = (props: ILoginProps) => {
   const {userHasAuthenticated} = useAppContext();
   const {
     //@ts-ignore
-    setAuthPhase,
+    authPhaseTransition, resetFormState,
     //@ts-ignore
     isLoading, setIsLoading,
     //@ts-ignore
-    fields, handleFieldChange
+    fields, handleFieldChange,
   } = useAuthContext();
 
   const getUser = () => {
@@ -44,6 +44,7 @@ const Login = (props: ILoginProps) => {
       userHasAuthenticated(true);
       const user = await getUser();
       dispatch(setCurrentUser(user.data));
+      resetFormState();
       history.push("/")
     } catch (e) {
       onError(e);
@@ -75,10 +76,10 @@ const Login = (props: ILoginProps) => {
           />
         </Form.Group>
         <div className="options">
-          <a className="option" onClick={() => setAuthPhase('reset')}>
+          <a className="option" onClick={() => authPhaseTransition('reset')}>
             Forgot password?
           </a>
-          <a className="option" onClick={() => setAuthPhase('signup')}>
+          <a className="option" onClick={() => authPhaseTransition('signup')}>
             Create an account
           </a>
         </div>
