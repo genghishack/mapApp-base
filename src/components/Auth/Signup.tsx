@@ -1,22 +1,21 @@
 import React from 'react';
-import {FieldState, LoadingState, NewUserState} from "../../types";
 import {Auth} from "aws-amplify";
 import {onError} from "../../libs/errorLib";
 import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
+import {useAuthContext} from "../../libs/contextLib";
 
-interface ISignupProps {
-  fieldState: FieldState;
-  loadingState: LoadingState;
-  newUserState: NewUserState;
-}
-
-const Signup = (props: ISignupProps) => {
+const Signup = () => {
   const {
-    fieldState: {fields, handleFieldChange},
-    loadingState: {isLoading, setIsLoading},
-    newUserState: {newUser, setNewUser},
-  } = props;
+    //@ts-ignore
+    setAuthPhase,
+    //@ts-ignore
+    isLoading, setIsLoading,
+    //@ts-ignore
+    fields, handleFieldChange,
+    //@ts-ignore
+    newUser, setNewUser,
+  } = useAuthContext();
 
   const validateForm = () => {
     return (
@@ -86,6 +85,12 @@ const Signup = (props: ISignupProps) => {
           value={fields.confirmPassword}
         />
       </Form.Group>
+      <div className="options">
+        <div/>
+        <a className="option" onClick={() => setAuthPhase('login')}>
+          Return to login
+        </a>
+      </div>
       <LoaderButton
         block
         size="lg"

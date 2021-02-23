@@ -1,16 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import {connect} from "react-redux";
 import {API, Auth} from 'aws-amplify';
 import Form from 'react-bootstrap/Form';
 
-import {useAppContext} from "../../libs/contextLib";
-import {useFormFields} from "../../libs/hooksLib";
+import {useAppContext, useAuthContext} from "../../libs/contextLib";
 import {onError} from "../../libs/errorLib";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 import LoaderButton from "../LoaderButton";
-
-import './Login.scss';
 
 interface ILoginProps {
   dispatch: Function;
@@ -19,14 +16,17 @@ interface ILoginProps {
 const Login = (props: ILoginProps) => {
   const {dispatch} = props;
 
-  const [fields, handleFieldChange] = useFormFields({
-    email: '',
-    password: ''
-  });
   const history = useHistory();
   //@ts-ignore
   const {userHasAuthenticated} = useAppContext();
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    //@ts-ignore
+    setAuthPhase,
+    //@ts-ignore
+    isLoading, setIsLoading,
+    //@ts-ignore
+    fields, handleFieldChange
+  } = useAuthContext();
 
   const getUser = () => {
     return API.get('mapapp', '/user/self', {});
@@ -52,7 +52,7 @@ const Login = (props: ILoginProps) => {
   }
 
   return (
-    <div className="Login">
+    <div className="Auth">
       <Form onSubmit={handleSubmit}>
         <header>Login</header>
         {/*//@ts-ignore*/}
@@ -76,7 +76,9 @@ const Login = (props: ILoginProps) => {
         </Form.Group>
         <div className="options">
           <Link to="/login/reset">Forgot password?</Link>
-          <Link to="/login/signup">Create an account</Link>
+          <a className="option" onClick={() => setAuthPhase('signup')}>
+            Create an account
+          </a>
         </div>
         <LoaderButton
           block

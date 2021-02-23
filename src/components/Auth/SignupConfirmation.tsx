@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {API, Auth} from "aws-amplify";
@@ -6,25 +6,26 @@ import {setCurrentUser} from "../../redux/actions/currentUser";
 import {onError} from "../../libs/errorLib";
 import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
-import {useAppContext} from "../../libs/contextLib";
-import {FieldState, LoadingState} from "../../types";
+import {useAppContext, useAuthContext} from "../../libs/contextLib";
 
 interface ISignupConfirmationProps {
   dispatch: Function;
-  fieldState: FieldState;
-  loadingState: LoadingState;
 }
 
 const SignupConfirmation = (props: ISignupConfirmationProps) => {
   const {
     dispatch,
-    fieldState: {fields, handleFieldChange},
-    loadingState: {isLoading, setIsLoading},
   } = props;
 
   const history = useHistory();
   // @ts-ignore
   const {userHasAuthenticated} = useAppContext();
+  const {
+    // @ts-ignore
+    isLoading, setIsLoading,
+    // @ts-ignore
+    fields, handleFieldChange
+  } = useAuthContext();
 
   const validateForm = () => {
     return fields.confirmationCode.length > 0;
