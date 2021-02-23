@@ -1,11 +1,11 @@
 import React from 'react';
 import {Route, Switch} from "react-router-dom";
-import AuthenticatedRoute from "./components/Auth/AuthenticatedRoute";
-import UnauthenticatedRoute from "./components/Auth/UnauthenticatedRoute";
+import AuthenticatedRoute from "./components/Routes/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/Routes/UnauthenticatedRoute";
 import ResetPassword from "./components/Auth/ResetPassword";
-import Settings from './components/Auth/Settings';
-import ChangePassword from "./components/Auth/ChangePassword";
-import ChangeEmail from "./components/Auth/ChangeEmail";
+import Settings from './components/User/Settings';
+import ChangePassword from "./components/User/ChangePassword";
+import ChangeEmail from "./components/User/ChangeEmail";
 import NotFound from './components/views/NotFound';
 import ResourceView from "./components/views/ResourceView";
 import AboutView from "./components/views/AboutView";

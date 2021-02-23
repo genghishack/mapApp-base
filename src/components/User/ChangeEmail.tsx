@@ -7,7 +7,7 @@ import {
   FormControl,
   FormLabel, // was ControlLabel in previous version of react-bootstrap
 } from "react-bootstrap";
-import LoaderButton from "../../components/LoaderButton";
+import LoaderButton from "../LoaderButton";
 import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";
 import "./ChangeEmail.scss";

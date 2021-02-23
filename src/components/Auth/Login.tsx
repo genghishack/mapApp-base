@@ -75,7 +75,9 @@ const Login = (props: ILoginProps) => {
           />
         </Form.Group>
         <div className="options">
-          <Link to="/login/reset">Forgot password?</Link>
+          <a className="option" onClick={() => setAuthPhase('reset')}>
+            Forgot password?
+          </a>
           <a className="option" onClick={() => setAuthPhase('signup')}>
             Create an account
           </a>

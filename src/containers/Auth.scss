@@ -4,15 +4,15 @@
     margin: 10px auto;
     padding: 60px 0;
 
+    header {
+      font-size: 25px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
     form {
       margin: 0 auto;
       max-width: 320px;
-
-      header {
-        font-size: 25px;
-        margin-bottom: 20px;
-        text-align: center;
-      }
 
       a {
         margin-bottom: 15px;
@@ -29,6 +29,29 @@
           cursor: pointer;
         }
       }
+    }
+
+    .success {
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .success-message {
+      display: flex;
+      justify-content: center;
+
+      .success-icon {
+        color: grey;
+        font-size: 25px;
+        margin-right: 10px;
+      }
+    }
+
+    .success-link {
+      display: flex;
+      justify-content: center;
+      cursor: pointer;
     }
   }
 }
