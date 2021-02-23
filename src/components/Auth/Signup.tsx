@@ -34,10 +34,13 @@ const Signup = () => {
       const user = await Auth.signUp({
         username: fields.email,
         password: fields.password,
+        attributes: {
+          name: fields.name,
+        },
       });
       resetFormState();
       setNewUser(user);
-      // console.log({newUser})
+      console.log({newUser})
 
     } catch (e) {
       if (e.code === 'UsernameExistsException') {
@@ -65,6 +68,16 @@ const Signup = () => {
           autoFocus
           type="email"
           value={fields.email}
+          onChange={handleFieldChange}
+        />
+      </Form.Group>
+      {/*@ts-ignore*/}
+      <Form.Group controlId="name" size="lg">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          autoFocus
+          type="text"
+          value={fields.name}
           onChange={handleFieldChange}
         />
       </Form.Group>
