@@ -11,6 +11,7 @@ import {setCurrentUser} from "../../redux/actions/currentUser";
 import LoaderButton from "../../components/LoaderButton";
 
 import "./Login.scss";
+import SignupConfirmation from "./SignupConfirmation";
 
 interface ISignupProps {
   dispatch: Function;
@@ -25,15 +26,9 @@ const Signup = (props: ISignupProps) => {
     confirmPassword: "",
     confirmationCode: "",
   });
-  const history = useHistory();
   const [newUser, setNewUser] = useState(null);
   //@ts-ignore
-  const {userHasAuthenticated} = useAppContext();
   const [isLoading, setIsLoading] = useState(false);
-
-  const createUser = () => {
-    return API.post('mapapp', '/user', {});
-  }
 
   const validateForm = () => {
     return (
@@ -41,10 +36,6 @@ const Signup = (props: ISignupProps) => {
       fields.password.length > 0 &&
       fields.password === fields.confirmPassword
     );
-  }
-
-  const validateConfirmationForm = () => {
-    return fields.confirmationCode.length > 0;
   }
 
   async function handleSubmit(event) {
@@ -75,54 +66,6 @@ const Signup = (props: ISignupProps) => {
       onError(e);
       setIsLoading(false);
     }
-  }
-
-  async function handleConfirmationSubmit(event) {
-    event.preventDefault();
-
-    setIsLoading(true);
-
-    try {
-      await Auth.confirmSignUp(fields.email, fields.confirmationCode);
-      await Auth.signIn(fields.email, fields.password);
-
-      userHasAuthenticated(true);
-      const user = await createUser();
-      dispatch(setCurrentUser(user.data));
-      history.push("/");
-    } catch (e) {
-      onError(e);
-      setIsLoading(false);
-    }
-  }
-
-  function renderConfirmationForm() {
-    return (
-      <Form onSubmit={handleConfirmationSubmit}>
-        <header>Confirm account</header>
-        {/*@ts-ignore*/}
-        <Form.Group controlId="confirmationCode" size="lg">
-          <Form.Label>Confirmation Code</Form.Label>
-          <Form.Control
-            autoFocus
-            type="tel"
-            onChange={handleFieldChange}
-            value={fields.confirmationCode}
-          />
-          <Form.Text muted>Please check your email for the code.</Form.Text>
-        </Form.Group>
-        <LoaderButton
-          block
-          size="lg"
-          type="submit"
-          variant="success"
-          isLoading={isLoading}
-          disabled={!validateConfirmationForm()}
-        >
-          Verify
-        </LoaderButton>
-      </Form>
-    );
   }
 
   function renderForm() {
@@ -173,7 +116,12 @@ const Signup = (props: ISignupProps) => {
 
   return (
     <div className="Login">
-      {newUser === null ? renderForm() : renderConfirmationForm()}
+      {newUser === null ? renderForm() : (
+        <SignupConfirmation
+          fields={fields}
+          handleFieldChange={handleFieldChange}
+        />
+      )}
     </div>
   );
 }
