@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
 import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import LoaderButton from "../../components/LoaderButton";
+import LoaderButton from "../LoaderButton";
 import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";
 import "./ChangePassword.scss";
