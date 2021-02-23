@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { LinkContainer } from 'react-router-bootstrap';
 import LoaderButton from "../LoaderButton";
 
-import './Settings.scss';
+import './Profile.scss';
 
-export default function Settings() {
+export default function Profile() {
 
   return (
     <div className="Settings">

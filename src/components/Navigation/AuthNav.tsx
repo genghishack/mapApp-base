@@ -20,7 +20,7 @@ const AuthNav = () => {
       <NavItem label="About" pathname="/about" />
       {isAuthenticated ? (
         <>
-          <NavItem label="Settings" pathname="/settings" />
+          <NavItem label="Profile" pathname="/profile" />
           <NavItem label="Logout" callback={handleLogout} />
         </>
       ) : (

@@ -11,7 +11,7 @@ const About = () => {
       <p>Includes basic functionality like login/logout, about page, and a map
       to display data.</p>
 
-      <p>Logged-in admin users can enter data to display on the map.</p>
+      <p>Logged-in Admin and Editor users can enter data to display on the map.</p>
 
       <p>The map is publicly available to non-logged in users.  Logged-in
       users may have additional functionality.</p>

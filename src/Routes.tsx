@@ -3,7 +3,7 @@ import {Route, Switch} from "react-router-dom";
 import AuthenticatedRoute from "./components/Routes/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/Routes/UnauthenticatedRoute";
 import ResetPassword from "./components/Auth/ResetPassword";
-import Settings from './components/User/Settings';
+import Profile from './components/User/Profile';
 import ChangePassword from "./components/User/ChangePassword";
 import ChangeEmail from "./components/User/ChangeEmail";
 import NotFound from './components/views/NotFound';
@@ -24,8 +24,8 @@ const Routes = () => {
       <UnauthenticatedRoute exact path="/login/reset">
         <ResetPassword />
       </UnauthenticatedRoute>
-      <AuthenticatedRoute exact path="/settings" >
-        <Settings />
+      <AuthenticatedRoute exact path="/profile" >
+        <Profile />
       </AuthenticatedRoute>
       <AuthenticatedRoute exact path="/settings/password">
         <ChangePassword />
