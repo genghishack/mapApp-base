@@ -1,4 +1,4 @@
-import React, {ChangeEventHandler, useState} from 'react';
+import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {API, Auth} from "aws-amplify";
@@ -7,17 +7,21 @@ import {onError} from "../../libs/errorLib";
 import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
 import {useAppContext} from "../../libs/contextLib";
+import {FieldState, LoadingState} from "../../types";
 
 interface ISignupConfirmationProps {
   dispatch: Function;
-  fields: any;
-  handleFieldChange: ChangeEventHandler;
+  fieldState: FieldState;
+  loadingState: LoadingState;
 }
 
 const SignupConfirmation = (props: ISignupConfirmationProps) => {
-  const {dispatch, fields, handleFieldChange} = props;
+  const {
+    dispatch,
+    fieldState: {fields, handleFieldChange},
+    loadingState: {isLoading, setIsLoading},
+  } = props;
 
-  const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
   // @ts-ignore
   const {userHasAuthenticated} = useAppContext();

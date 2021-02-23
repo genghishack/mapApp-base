@@ -1,34 +1,22 @@
-import React, {useState} from "react";
-import {useHistory} from "react-router-dom";
-import {connect} from "react-redux";
-import {Auth, API} from "aws-amplify";
-import Form from "react-bootstrap/Form";
-
-import {useAppContext} from "../../libs/contextLib";
-import {useFormFields} from "../../libs/hooksLib";
+import React from 'react';
+import {FieldState, LoadingState, NewUserState} from "../../types";
+import {Auth} from "aws-amplify";
 import {onError} from "../../libs/errorLib";
-import {setCurrentUser} from "../../redux/actions/currentUser";
-import LoaderButton from "../../components/LoaderButton";
-
-import "./Login.scss";
-import SignupConfirmation from "./SignupConfirmation";
+import Form from "react-bootstrap/Form";
+import LoaderButton from "../LoaderButton";
 
 interface ISignupProps {
-  dispatch: Function;
+  fieldState: FieldState;
+  loadingState: LoadingState;
+  newUserState: NewUserState;
 }
 
 const Signup = (props: ISignupProps) => {
-  const {dispatch} = props;
-
-  const [fields, handleFieldChange] = useFormFields({
-    email: "",
-    password: "",
-    confirmPassword: "",
-    confirmationCode: "",
-  });
-  const [newUser, setNewUser] = useState(null);
-  //@ts-ignore
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    fieldState: {fields, handleFieldChange},
+    loadingState: {isLoading, setIsLoading},
+    newUserState: {newUser, setNewUser},
+  } = props;
 
   const validateForm = () => {
     return (
@@ -42,15 +30,14 @@ const Signup = (props: ISignupProps) => {
     event.preventDefault();
 
     setIsLoading(true);
-
     try {
-      const newUser = await Auth.signUp({
+      const user = await Auth.signUp({
         username: fields.email,
         password: fields.password,
       });
       setIsLoading(false);
       // @ts-ignore
-      setNewUser(newUser);
+      setNewUser(user);
       console.log({newUser})
     } catch (e) {
       if (e.code === 'UsernameExistsException') {
@@ -68,69 +55,49 @@ const Signup = (props: ISignupProps) => {
     }
   }
 
-  function renderForm() {
-    return (
-      <Form onSubmit={handleSubmit}>
-        <header>Create an account</header>
-        {/*@ts-ignore*/}
-        <Form.Group controlId="email" size="lg">
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={fields.email}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        {/*@ts-ignore*/}
-        <Form.Group controlId="password" size="lg">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            value={fields.password}
-            onChange={handleFieldChange}
-          />
-        </Form.Group>
-        {/*@ts-ignore*/}
-        <Form.Group controlId="confirmPassword" size="lg">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            onChange={handleFieldChange}
-            value={fields.confirmPassword}
-          />
-        </Form.Group>
-        <LoaderButton
-          block
-          size="lg"
-          type="submit"
-          variant="success"
-          isLoading={isLoading}
-          disabled={!validateForm()}
-        >
-          Signup
-        </LoaderButton>
-      </Form>
-    );
-  }
-
   return (
-    <div className="Login">
-      {newUser === null ? renderForm() : (
-        <SignupConfirmation
-          fields={fields}
-          handleFieldChange={handleFieldChange}
+    <Form onSubmit={handleSubmit}>
+      <header>Create an account</header>
+      {/*@ts-ignore*/}
+      <Form.Group controlId="email" size="lg">
+        <Form.Label>Email</Form.Label>
+        <Form.Control
+          autoFocus
+          type="email"
+          value={fields.email}
+          onChange={handleFieldChange}
         />
-      )}
-    </div>
+      </Form.Group>
+      {/*@ts-ignore*/}
+      <Form.Group controlId="password" size="lg">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          value={fields.password}
+          onChange={handleFieldChange}
+        />
+      </Form.Group>
+      {/*@ts-ignore*/}
+      <Form.Group controlId="confirmPassword" size="lg">
+        <Form.Label>Confirm Password</Form.Label>
+        <Form.Control
+          type="password"
+          onChange={handleFieldChange}
+          value={fields.confirmPassword}
+        />
+      </Form.Group>
+      <LoaderButton
+        block
+        size="lg"
+        type="submit"
+        variant="success"
+        isLoading={isLoading}
+        disabled={!validateForm()}
+      >
+        Signup
+      </LoaderButton>
+    </Form>
   );
 }
 
-function mapStateToProps(state: { errors: any; currentUser: any; }) {
-  return {
-    currentUser: state.currentUser,
-    errors: state.errors,
-  };
-}
-
-export default connect(mapStateToProps)(Signup);
+export default Signup;
