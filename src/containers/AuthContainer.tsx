@@ -14,6 +14,7 @@ import './Auth.scss';
 const AuthContainer = () => {
   const initialFormFields = {
     email: "",
+    name: "",
     password: "",
     confirmPassword: "",
     resetCode: "",
@@ -27,7 +28,6 @@ const AuthContainer = () => {
   const [fields, handleFieldChange] = useFormFields(initialFormFields);
 
   const clearSensitiveFields = () => {
-    fields.password = '';
     fields.confirmPassword = '';
     fields.resetCode = '';
     fields.confirmationCode = '';
