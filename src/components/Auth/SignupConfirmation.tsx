@@ -13,9 +13,7 @@ interface ISignupConfirmationProps {
 }
 
 const SignupConfirmation = (props: ISignupConfirmationProps) => {
-  const {
-    dispatch,
-  } = props;
+  const {dispatch} = props;
 
   const history = useHistory();
   // @ts-ignore
