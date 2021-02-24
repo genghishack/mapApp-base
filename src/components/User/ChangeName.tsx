@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { useHistory } from "react-router-dom";
-import {
-  FormText, // was HelpBlock in previous version of react-bootstrap
-  FormGroup,
-  FormControl,
-  FormLabel, // was ControlLabel in previous version of react-bootstrap
-} from "react-bootstrap";
+import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
 import { useFormFields } from "../../libs/hooksLib";
 import { onError } from "../../libs/errorLib";
-import "./ChangeName.scss";
+import {getUser} from '../../libs/userLib';
+import {setCurrentUser} from "../../redux/actions/currentUser";
 
-export default function ChangeName() {
+import "./ChangeName.scss";
+import {connect} from "react-redux";
+
+interface IChangeNameProps {
+  dispatch: Function;
+}
+
+const ChangeName = (props: IChangeNameProps) => {
+  const {dispatch} = props;
+
   const history = useHistory();
   const [fields, handleFieldChange] = useFormFields({
     code: "",
@@ -32,6 +37,8 @@ export default function ChangeName() {
     try {
       const user = await Auth.currentAuthenticatedUser();
       await Auth.updateUserAttributes(user, { name: fields.name });
+      const updatedUser = await getUser();
+      dispatch(setCurrentUser(updatedUser.data))
       history.push("/profile");
     } catch (error) {
       onError(error);
@@ -40,17 +47,17 @@ export default function ChangeName() {
 
   function renderUpdateForm() {
     return (
-      <form onSubmit={handleUpdateClick}>
+      <Form onSubmit={handleUpdateClick}>
         {/*@ts-ignore*/}
-        <FormGroup size="lg" controlId="name">
-          <FormText>Name</FormText>
-          <FormControl
+        <Form.Group size="lg" controlId="name">
+          <Form.Text>Name</Form.Text>
+          <Form.Control
             autoFocus
             type="text"
             value={fields.name}
             onChange={handleFieldChange}
           />
-        </FormGroup>
+        </Form.Group>
         <LoaderButton
           block
           type="submit"
@@ -60,7 +67,7 @@ export default function ChangeName() {
         >
           Update Name
         </LoaderButton>
-      </form>
+      </Form>
     );
   }
 
@@ -70,3 +77,11 @@ export default function ChangeName() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    errors: state.errors,
+  }
+}
+
+export default connect(mapStateToProps)(ChangeName);

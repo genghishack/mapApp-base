@@ -1,5 +1,5 @@
 import React from "react";
-import { LinkContainer } from 'react-router-bootstrap';
+import {LinkContainer} from 'react-router-bootstrap';
 import LoaderButton from "../LoaderButton";
 
 import './Profile.scss';
@@ -12,7 +12,7 @@ interface IProfileProps {
 const Profile = (props: IProfileProps) => {
   const {currentUser} = props;
 
-  const { name, email, roles } = currentUser;
+  const {name, email, roles} = currentUser;
 
   const rolesDisplay = roles.join(', ');
 
