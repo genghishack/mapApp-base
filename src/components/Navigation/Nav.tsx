@@ -14,6 +14,7 @@ const Nav = () => {
           <NavItem label="Create Resource" pathname="/create-resource" />
         </>
       ) : null }
+      <NavItem label="About" pathname="/about" />
     </div>
   )
 }
