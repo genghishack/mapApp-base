@@ -1,18 +1,23 @@
-import React, { useState } from "react";
-import { Auth } from "aws-amplify";
-import { useHistory } from "react-router-dom";
-import {
-  FormText, // was HelpBlock in previous version of react-bootstrap
-  FormGroup,
-  FormControl,
-  FormLabel, // was ControlLabel in previous version of react-bootstrap
-} from "react-bootstrap";
+import React, {useState} from "react";
+import {Auth} from "aws-amplify";
+import {connect} from "react-redux";
+import {useHistory} from "react-router-dom";
+import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
-import { useFormFields } from "../../libs/hooksLib";
-import { onError } from "../../libs/errorLib";
+import {useFormFields} from "../../libs/hooksLib";
+import {onError} from "../../libs/errorLib";
+import {getUser} from '../../libs/userLib';
+import {setCurrentUser} from "../../redux/actions/currentUser";
+
 import "./ChangeEmail.scss";
 
-export default function ChangeEmail() {
+interface IChangeEmailProps {
+  dispatch: Function;
+}
+
+const ChangeEmail = (props: IChangeEmailProps) => {
+  const {dispatch} = props;
+
   const history = useHistory();
   const [codeSent, setCodeSent] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
@@ -37,7 +42,7 @@ export default function ChangeEmail() {
 
     try {
       const user = await Auth.currentAuthenticatedUser();
-      await Auth.updateUserAttributes(user, { email: fields.email });
+      await Auth.updateUserAttributes(user, {email: fields.email});
       setCodeSent(true);
     } catch (error) {
       onError(error);
@@ -52,8 +57,9 @@ export default function ChangeEmail() {
 
     try {
       await Auth.verifyCurrentUserAttributeSubmit("email", fields.code);
-
-      history.push("/settings");
+      const user = await getUser();
+      dispatch(setCurrentUser(user.data))
+      history.push("/profile");
     } catch (error) {
       onError(error);
       setIsConfirming(false);
@@ -62,17 +68,17 @@ export default function ChangeEmail() {
 
   function renderUpdateForm() {
     return (
-      <form onSubmit={handleUpdateClick}>
+      <Form onSubmit={handleUpdateClick}>
         {/*@ts-ignore*/}
-        <FormGroup size="lg" controlId="email">
-          <FormText>Email</FormText>
-          <FormControl
+        <Form.Group size="lg" controlId="email">
+          <Form.Text>Email</Form.Text>
+          <Form.Control
             autoFocus
             type="email"
             value={fields.email}
             onChange={handleFieldChange}
           />
-        </FormGroup>
+        </Form.Group>
         <LoaderButton
           block
           type="submit"
@@ -82,26 +88,26 @@ export default function ChangeEmail() {
         >
           Update Email
         </LoaderButton>
-      </form>
+      </Form>
     );
   }
 
   function renderConfirmationForm() {
     return (
-      <form onSubmit={handleConfirmClick}>
+      <Form onSubmit={handleConfirmClick}>
         {/*@ts-ignore*/}
-        <FormGroup size="lg" controlId="code">
-          <FormLabel>Confirmation Code</FormLabel>
-          <FormControl
+        <Form.Group size="lg" controlId="code">
+          <Form.Label>Confirmation Code</Form.Label>
+          <Form.Control
             autoFocus
             type="tel"
             value={fields.code}
             onChange={handleFieldChange}
           />
-          <FormText>
+          <Form.Text>
             Please check your email ({fields.email}) for the confirmation code.
-          </FormText>
-        </FormGroup>
+          </Form.Text>
+        </Form.Group>
         <LoaderButton
           block
           type="submit"
@@ -111,7 +117,7 @@ export default function ChangeEmail() {
         >
           Confirm
         </LoaderButton>
-      </form>
+      </Form>
     );
   }
 
@@ -121,3 +127,11 @@ export default function ChangeEmail() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    errors: state.errors,
+  }
+}
+
+export default connect(mapStateToProps)(ChangeEmail);

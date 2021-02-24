@@ -1,11 +1,12 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {connect} from "react-redux";
-import {API, Auth} from 'aws-amplify';
+import {Auth} from 'aws-amplify';
 import Form from 'react-bootstrap/Form';
 
 import {useAppContext, useAuthContext} from "../../libs/contextLib";
 import {onError} from "../../libs/errorLib";
+import {getUser} from '../../libs/userLib';
 import {setCurrentUser} from "../../redux/actions/currentUser";
 import LoaderButton from "../LoaderButton";
 
@@ -27,10 +28,6 @@ const Login = (props: ILoginProps) => {
     //@ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();
-
-  const getUser = () => {
-    return API.get('mapapp', '/user/self', {});
-  }
 
   const validateForm = () => {
     return fields.email.length > 0 && fields.password.length > 0;

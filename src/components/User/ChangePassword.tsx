@@ -37,7 +37,7 @@ export default function ChangePassword() {
         fields.password
       );
 
-      history.push("/settings");
+      history.push("/profile");
     } catch (error) {
       onError(error);
       setIsChanging(false);
