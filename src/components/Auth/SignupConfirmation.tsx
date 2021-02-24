@@ -1,12 +1,13 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {API, Auth} from "aws-amplify";
+import {Auth} from "aws-amplify";
 import {setCurrentUser} from "../../redux/actions/currentUser";
+import {useAppContext, useAuthContext} from "../../libs/contextLib";
 import {onError} from "../../libs/errorLib";
+import {createUser} from '../../libs/userLib';
 import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
-import {useAppContext, useAuthContext} from "../../libs/contextLib";
 
 interface ISignupConfirmationProps {
   dispatch: Function;
@@ -29,10 +30,6 @@ const SignupConfirmation = (props: ISignupConfirmationProps) => {
 
   const validateForm = () => {
     return fields.confirmationCode.length > 0;
-  }
-
-  const createUser = () => {
-    return API.post('mapapp', '/user', {});
   }
 
   const handleSubmit = async (event) => {

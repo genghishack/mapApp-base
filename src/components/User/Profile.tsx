@@ -14,8 +14,11 @@ const Profile = (props: IProfileProps) => {
 
   const { name, email, roles } = currentUser;
 
+  const rolesDisplay = roles.join(', ');
+
   return (
     <div className="Profile">
+
       <div className="userAttributeRow">
         <div className="userAttribute">
           <div className="attrName">Email:</div>
@@ -28,6 +31,7 @@ const Profile = (props: IProfileProps) => {
           </LoaderButton>
         </LinkContainer>
       </div>
+
       <div className="userAttributeRow">
         <div className="userAttribute">
           <div className="attrName">Name:</div>
@@ -40,6 +44,14 @@ const Profile = (props: IProfileProps) => {
           </LoaderButton>
         </LinkContainer>
       </div>
+
+      <div className="userAttributeRow">
+        <div className="userAttribute">
+          <div className="attrName">Roles:</div>
+          <div className="attrValue">{rolesDisplay}</div>
+        </div>
+      </div>
+
       <div className="userAttributeRow">
         <LinkContainer to="/profile/password">
           {/*@ts-ignore*/}
@@ -48,6 +60,7 @@ const Profile = (props: IProfileProps) => {
           </LoaderButton>
         </LinkContainer>
       </div>
+
     </div>
   );
 }
