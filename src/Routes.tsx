@@ -22,9 +22,6 @@ const Routes = () => {
       <UnauthenticatedRoute exact path="/auth">
         <AuthContainer/>
       </UnauthenticatedRoute>
-      <UnauthenticatedRoute exact path="/login/reset">
-        <ResetPassword />
-      </UnauthenticatedRoute>
       <AuthenticatedRoute exact path="/profile" >
         <Profile />
       </AuthenticatedRoute>
