@@ -40,7 +40,7 @@ const Signup = () => {
       });
       resetFormState();
       setNewUser(user);
-      console.log({newUser})
+      // console.log({newUser})
 
     } catch (e) {
       if (e.code === 'UsernameExistsException') {

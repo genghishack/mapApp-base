@@ -58,6 +58,8 @@ const AuthContainer = () => {
             {newUser === null ? <Signup/> : <SignupConfirmation/>}
           </>
         );
+      case 'signupConfirmation':
+        return <SignupConfirmation/>;
       case 'reset':
         return (
           <>

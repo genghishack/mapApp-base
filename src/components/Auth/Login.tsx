@@ -44,8 +44,13 @@ const Login = (props: ILoginProps) => {
       resetFormState();
       history.push("/")
     } catch (e) {
-      onError(e);
-      setIsLoading(false);
+      console.log(e);
+      if (e.code === 'UserNotConfirmedException') {
+        authPhaseTransition('signupConfirmation');
+      } else {
+        onError(e);
+        setIsLoading(false);
+      }
     }
   }
 

@@ -32,6 +32,15 @@ const SignupConfirmation = (props: ISignupConfirmationProps) => {
     return fields.confirmationCode.length > 0;
   }
 
+  const resendCode = async () => {
+    try {
+      await Auth.resendSignUp(fields.email);
+      alert('A new confirmation code has been sent.');
+    } catch (e) {
+      onError(e);
+    }
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -67,7 +76,9 @@ const SignupConfirmation = (props: ISignupConfirmationProps) => {
         <Form.Text muted>Please check your email for the code.</Form.Text>
       </Form.Group>
       <div className="options">
-        <div/>
+        <a className="option" onClick={() => resendCode()}>
+          Resend code
+        </a>
         <a className="option" onClick={() => authPhaseTransition('login')}>
           Return to login
         </a>
