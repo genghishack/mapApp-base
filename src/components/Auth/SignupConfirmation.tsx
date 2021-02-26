@@ -1,27 +1,14 @@
 import React from 'react';
-import {connect} from "react-redux";
-import {useHistory} from "react-router-dom";
 import {Auth} from "aws-amplify";
-import {setCurrentUser} from "../../redux/actions/currentUser";
-import {useAppContext, useAuthContext} from "../../libs/contextLib";
+import {useAuthContext} from "../../libs/contextLib";
 import {onError} from "../../libs/errorLib";
-import {createUser} from '../../libs/userLib';
 import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
 
-interface ISignupConfirmationProps {
-  dispatch: Function;
-}
-
-const SignupConfirmation = (props: ISignupConfirmationProps) => {
-  const {dispatch} = props;
-
-  const history = useHistory();
-  // @ts-ignore
-  const {userHasAuthenticated} = useAppContext();
+const SignupConfirmation = () => {
   const {
     // @ts-ignore
-    authPhaseTransition, resetFormState,
+    authPhaseTransition, attemptSignin,
     // @ts-ignore
     isLoading, setIsLoading,
     // @ts-ignore
@@ -43,18 +30,11 @@ const SignupConfirmation = (props: ISignupConfirmationProps) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     setIsLoading(true);
 
     try {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
-      await Auth.signIn(fields.email, fields.password);
-
-      userHasAuthenticated(true);
-      const user = await createUser();
-      dispatch(setCurrentUser(user.data));
-      resetFormState();
-      history.push("/");
+      await attemptSignin();
     } catch (e) {
       onError(e);
       setIsLoading(false);
@@ -97,11 +77,4 @@ const SignupConfirmation = (props: ISignupConfirmationProps) => {
   );
 }
 
-const mapStateToProps = (state: { errors: any; currentUser: any }) => {
-  return {
-    currentUser: state.currentUser,
-    errors: state.errors,
-  }
-}
-
-export default connect(mapStateToProps)(SignupConfirmation);
+export default SignupConfirmation;

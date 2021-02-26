@@ -1,7 +1,13 @@
 import React, {useState} from "react";
+import {Auth} from "aws-amplify";
+import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
 
 import {AuthContext, useAppContext} from "../libs/contextLib";
 import {useFormFields} from "../libs/hooksLib";
+import {getUser} from "../libs/userLib";
+import {onError} from "../libs/errorLib";
+import {setCurrentUser} from "../redux/actions/currentUser";
 import Signup from "../components/Auth/Signup";
 import SignupConfirmation from "../components/Auth/SignupConfirmation";
 import ResetPassword from "../components/Auth/ResetPassword";
@@ -10,12 +16,6 @@ import ResetPasswordSuccess from "../components/Auth/ResetPasswordSuccess";
 import Login from '../components/Auth/Login';
 
 import './Auth.scss';
-import {Auth} from "aws-amplify";
-import {getUser} from "../libs/userLib";
-import {setCurrentUser} from "../redux/actions/currentUser";
-import {onError} from "../libs/errorLib";
-import {useHistory} from "react-router-dom";
-import {connect} from "react-redux";
 
 interface IAuthContainerProps {
   dispatch: Function;
@@ -76,7 +76,6 @@ const AuthContainer = (props: IAuthContainerProps) => {
       if (e.code === 'UserNotConfirmedException') {
         authPhaseTransition('signupConfirmation');
       } else {
-        console.log(e);
         onError(e);
         setIsLoading(false);
       }

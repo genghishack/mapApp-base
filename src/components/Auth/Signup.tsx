@@ -46,7 +46,6 @@ const Signup = () => {
       if (e.code === 'UsernameExistsException') {
         await attemptSignin();
       } else {
-        console.log(e);
         onError(e);
         setIsLoading(false);
       }
