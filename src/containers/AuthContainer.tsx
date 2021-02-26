@@ -1,7 +1,13 @@
 import React, {useState} from "react";
+import {Auth} from "aws-amplify";
+import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
 
-import {AuthContext} from "../libs/contextLib";
+import {AuthContext, useAppContext} from "../libs/contextLib";
 import {useFormFields} from "../libs/hooksLib";
+import {getUser} from "../libs/userLib";
+import {onError} from "../libs/errorLib";
+import {setCurrentUser} from "../redux/actions/currentUser";
 import Signup from "../components/Auth/Signup";
 import SignupConfirmation from "../components/Auth/SignupConfirmation";
 import ResetPassword from "../components/Auth/ResetPassword";
@@ -11,7 +17,15 @@ import Login from '../components/Auth/Login';
 
 import './Auth.scss';
 
-const AuthContainer = () => {
+interface IAuthContainerProps {
+  dispatch: Function;
+}
+
+const AuthContainer = (props: IAuthContainerProps) => {
+  const {dispatch} = props;
+  const history = useHistory();
+  //@ts-ignore
+  const {userHasAuthenticated} = useAppContext()
   const initialFormFields = {
     email: "",
     name: "",
@@ -50,6 +64,24 @@ const AuthContainer = () => {
     setAuthPhase(phase);
   }
 
+  const attemptSignin = async () => {
+    try {
+      await Auth.signIn(fields.email, fields.password);
+      userHasAuthenticated(true);
+      const user = await getUser();
+      dispatch(setCurrentUser(user.data));
+      resetFormState();
+      history.push("/")
+    } catch (e) {
+      if (e.code === 'UserNotConfirmedException') {
+        authPhaseTransition('signupConfirmation');
+      } else {
+        onError(e);
+        setIsLoading(false);
+      }
+    }
+  }
+
   const renderAuthPhase = () => {
     switch (authPhase) {
       case 'signup':
@@ -58,6 +90,8 @@ const AuthContainer = () => {
             {newUser === null ? <Signup/> : <SignupConfirmation/>}
           </>
         );
+      case 'signupConfirmation':
+        return <SignupConfirmation/>;
       case 'reset':
         return (
           <>
@@ -81,7 +115,7 @@ const AuthContainer = () => {
       <AuthContext.Provider value={{
         isLoading, setIsLoading,
         fields, handleFieldChange,
-        newUser, setNewUser,
+        newUser, setNewUser, attemptSignin,
         resetCodeSent, setResetCodeSent,
         resetCodeConfirmed, setResetCodeConfirmed,
         authPhaseTransition, resetFormState,
@@ -92,4 +126,11 @@ const AuthContainer = () => {
   )
 }
 
-export default AuthContainer;
+function mapStateToProps(state: { errors: any; currentUser: any; }) {
+  return {
+    currentUser: state.currentUser,
+    errors: state.errors,
+  };
+}
+
+export default connect(mapStateToProps)(AuthContainer);
