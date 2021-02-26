@@ -24,7 +24,7 @@ const ResourceView = (props: IResourceViewProps) => {
     const getMapMarkers = async () => {
       let resources = {data: []};
       try {
-        resources = await API.get('mapapp', '/public/resource', {});
+        resources = await API.get('mapapp', '/resource', {});
         dispatch(setResources(resources.data));
       } catch (e) {
         dispatch(setError(e));
