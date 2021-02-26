@@ -1,17 +1,10 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom';
-import {connect} from "react-redux";
-import {Auth} from 'aws-amplify';
 import Form from 'react-bootstrap/Form';
 
-import {useAppContext, useAuthContext} from "../../libs/contextLib";
-import {onError} from "../../libs/errorLib";
-import {getUser} from '../../libs/userLib';
-import {setCurrentUser} from "../../redux/actions/currentUser";
+import {useAuthContext} from "../../libs/contextLib";
 import LoaderButton from "../LoaderButton";
 
 const Login = () => {
-  //@ts-ignore
   const {
     //@ts-ignore
     authPhaseTransition, attemptSignin,

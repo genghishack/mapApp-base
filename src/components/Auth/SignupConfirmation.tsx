@@ -1,8 +1,9 @@
 import React from 'react';
 import {Auth} from "aws-amplify";
+import Form from "react-bootstrap/Form";
+
 import {useAuthContext} from "../../libs/contextLib";
 import {onError} from "../../libs/errorLib";
-import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
 
 const SignupConfirmation = () => {
