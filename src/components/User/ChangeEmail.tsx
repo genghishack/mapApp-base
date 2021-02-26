@@ -1,90 +1,74 @@
-import React, {useState} from "react";
+import React from "react";
 import {Auth} from "aws-amplify";
 import Form from "react-bootstrap/Form";
 
 import LoaderButton from "../LoaderButton";
-import {useFormFields} from "../../libs/hooksLib";
 import {onError} from "../../libs/errorLib";
-import ChangeEmailConfirmation from "./ChangeEmailConfirmation";
+import {useProfileContext} from '../../libs/contextLib';
 
-import "./ChangeEmail.scss";
+const ChangeEmail = () => {
+  const {
+    //@ts-ignore
+    profilePhaseTransition, resetFormState,
+    //@ts-ignore
+    isLoading, setIsLoading, setConfirmationCodeSent,
+    //@ts-ignore
+    fields, handleFieldChange,
+  } = useProfileContext();
 
-interface IChangeEmailProps {
-}
-
-const ChangeEmail = (props: IChangeEmailProps) => {
-  const [codeSent, setCodeSent] = useState(false);
-  const [fields, handleFieldChange] = useFormFields({
-    email: "",
-  });
-  const [isSendingCode, setIsSendingCode] = useState(false);
-
-  const profilePhaseTransition = (phase) => {
-    // no-op
-  }
-
-  const validateEmailForm = () => {
+  const validateForm = () => {
     return fields.email.length > 0;
   }
 
-  const handleUpdateClick = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    setIsSendingCode(true);
+    setIsLoading(true);
 
     try {
       const user = await Auth.currentAuthenticatedUser();
       await Auth.updateUserAttributes(user, {email: fields.email});
-      setCodeSent(true);
+      resetFormState();
+      setConfirmationCodeSent(true);
     } catch (error) {
       onError(error);
-      setIsSendingCode(false);
+      setIsLoading(false);
     }
   }
 
-  const renderUpdateForm = () => {
-    return (
-      <div className="Profile ChangeEmail">
-        <Form onSubmit={handleUpdateClick}>
-          <header>Change email</header>
-          {/*@ts-ignore*/}
-          <Form.Group size="lg" controlId="email">
-            <Form.Text>Email</Form.Text>
-            <Form.Control
-              autoFocus
-              type="email"
-              value={fields.email}
-              onChange={handleFieldChange}
-            />
-          </Form.Group>
-          <div className="options">
-            <div/>
-            <a className="option" onClick={() => {
-              profilePhaseTransition('profile')
-            }}>
-              Return to profile
-            </a>
-          </div>
-          <LoaderButton
-            block
-            type="submit"
-            bsSize="large"
-            isLoading={isSendingCode}
-            disabled={!validateEmailForm()}
-          >
-            Update Email
-          </LoaderButton>
-        </Form>
-      </div>
-    );
-  }
-
   return (
-    <>
-      {!codeSent ? renderUpdateForm() : <ChangeEmailConfirmation/>}
-    </>
+    <div className="ChangeEmail">
+      <Form onSubmit={handleSubmit}>
+        <header>Change email</header>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="email">
+          <Form.Text>Email</Form.Text>
+          <Form.Control
+            autoFocus
+            type="email"
+            value={fields.email}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        <div className="options">
+          <div/>
+          <a className="option" onClick={() => {
+            profilePhaseTransition('profile')
+          }}>
+            Return to profile
+          </a>
+        </div>
+        <LoaderButton
+          block
+          type="submit"
+          bsSize="large"
+          isLoading={isLoading}
+          disabled={!validateForm()}
+        >
+          Update Email
+        </LoaderButton>
+      </Form>
+    </div>
   );
 }
-
 
 export default ChangeEmail;

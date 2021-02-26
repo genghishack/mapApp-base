@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import { Auth } from "aws-amplify";
-import { useHistory } from "react-router-dom";
+import React from "react";
+import {Auth} from "aws-amplify";
 import Form from "react-bootstrap/Form";
-import LoaderButton from "../LoaderButton";
-import { useFormFields } from "../../libs/hooksLib";
-import { onError } from "../../libs/errorLib";
-import {getUser} from '../../libs/userLib';
-import {setCurrentUser} from "../../redux/actions/currentUser";
-
-import "./ChangeName.scss";
 import {connect} from "react-redux";
+
+import LoaderButton from "../LoaderButton";
+import {onError} from "../../libs/errorLib";
+import {getUser} from '../../libs/userLib';
+import {useProfileContext} from '../../libs/contextLib';
+import {setCurrentUser} from "../../redux/actions/currentUser";
 
 interface IChangeNameProps {
   dispatch: Function;
@@ -17,37 +15,39 @@ interface IChangeNameProps {
 
 const ChangeName = (props: IChangeNameProps) => {
   const {dispatch} = props;
+  const {
+    //@ts-ignore
+    profilePhaseTransition,
+    //@ts-ignore
+    isLoading, setIsLoading,
+    //@ts-ignore
+    fields, handleFieldChange,
+  } = useProfileContext();
 
-  const history = useHistory();
-  const [fields, handleFieldChange] = useFormFields({
-    code: "",
-    name: "",
-  });
-  const [isSendingCode, setIsSendingCode] = useState(false);
-
-  function validateNameForm() {
+  function validateForm() {
     return fields.name.length > 0;
   }
 
-  async function handleUpdateClick(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-
-    setIsSendingCode(true);
+    setIsLoading(true);
 
     try {
       const user = await Auth.currentAuthenticatedUser();
-      await Auth.updateUserAttributes(user, { name: fields.name });
+      await Auth.updateUserAttributes(user, {name: fields.name});
       const updatedUser = await getUser();
       dispatch(setCurrentUser(updatedUser.data))
-      history.push("/profile");
+      profilePhaseTransition('profile');
     } catch (error) {
       onError(error);
+      setIsLoading(false);
     }
   }
 
-  function renderUpdateForm() {
-    return (
-      <Form onSubmit={handleUpdateClick}>
+  return (
+    <div className="ChangeName">
+      <Form onSubmit={handleSubmit}>
+        <header>Change name</header>
         {/*@ts-ignore*/}
         <Form.Group size="lg" controlId="name">
           <Form.Text>Name</Form.Text>
@@ -58,22 +58,24 @@ const ChangeName = (props: IChangeNameProps) => {
             onChange={handleFieldChange}
           />
         </Form.Group>
+        <div className="options">
+          <div/>
+          <a className="option" onClick={() => {
+            profilePhaseTransition('profile')
+          }}>
+            Return to profile
+          </a>
+        </div>
         <LoaderButton
           block
           type="submit"
           bsSize="large"
-          isLoading={isSendingCode}
-          disabled={!validateNameForm()}
+          isLoading={isLoading}
+          disabled={!validateForm()}
         >
           Update Name
         </LoaderButton>
       </Form>
-    );
-  }
-
-  return (
-    <div className="ChangeName">
-      {renderUpdateForm()}
     </div>
   );
 }

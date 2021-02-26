@@ -1,8 +1,9 @@
 import React from "react";
-import { Auth } from "aws-amplify";
+import {Auth} from "aws-amplify";
 import Form from "react-bootstrap/Form";
+
 import LoaderButton from "../LoaderButton";
-import { onError } from "../../libs/errorLib";
+import {onError} from "../../libs/errorLib";
 import {useAuthContext} from "../../libs/contextLib";
 
 const ResetPassword = () => {
@@ -10,9 +11,7 @@ const ResetPassword = () => {
     //@ts-ignore
     authPhaseTransition, resetFormState,
     //@ts-ignore
-    isLoading, setIsLoading,
-    //@ts-ignore
-    setResetCodeSent,
+    isLoading, setIsLoading, setResetCodeSent,
     //@ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();

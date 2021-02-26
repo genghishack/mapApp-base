@@ -12,6 +12,7 @@ import AboutView from "./components/views/AboutView";
 import CreateResourceView from "./components/views/CreateResourceView";
 import AuthContainer from "./containers/AuthContainer";
 import ChangeName from "./components/User/ChangeName";
+import ProfileContainer from "./containers/ProfileContainer";
 
 const Routes = () => {
   return (
@@ -23,16 +24,7 @@ const Routes = () => {
         <AuthContainer/>
       </UnauthenticatedRoute>
       <AuthenticatedRoute exact path="/profile" >
-        <Profile />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/profile/password">
-        <ChangePassword />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/profile/email">
-        <ChangeEmail />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/profile/name">
-        <ChangeName />
+        <ProfileContainer />
       </AuthenticatedRoute>
       <AuthenticatedRoute exact path="/create-resource" >
         <CreateResourceView/>

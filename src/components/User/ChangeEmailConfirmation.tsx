@@ -7,8 +7,7 @@ import LoaderButton from "../LoaderButton";
 import {getUser} from "../../libs/userLib";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 import {onError} from "../../libs/errorLib";
-import {useHistory} from "react-router-dom";
-import {useFormFields} from "../../libs/hooksLib";
+import {useProfileContext} from '../../libs/contextLib';
 
 interface IChangeEmailConfirmation {
   dispatch: Function;
@@ -16,47 +15,45 @@ interface IChangeEmailConfirmation {
 
 const ChangeEmailConfirmation = (props: IChangeEmailConfirmation) => {
   const {dispatch} = props;
-  const [isConfirming, setIsConfirming] = useState(false);
-  const history = useHistory();
-  const [fields, handleFieldChange] = useFormFields({
-    code: "",
-  });
+  const {
+    //@ts-ignore
+    profilePhaseTransition,
+    //@ts-ignore
+    isLoading, setIsLoading,
+    //@ts-ignore
+    fields, handleFieldChange,
+  } = useProfileContext();
 
-  const profilePhaseTransition = (phase) => {
-    // no-op
+  const validateForm = () => {
+    return fields.confirmationCode.length > 0;
   }
 
-  const validateConfirmForm = () => {
-    return fields.code.length > 0;
-  }
-
-  const handleConfirmClick = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    setIsConfirming(true);
+    setIsLoading(true);
 
     try {
-      await Auth.verifyCurrentUserAttributeSubmit("email", fields.code);
+      await Auth.verifyCurrentUserAttributeSubmit("email", fields.confirmationCode);
       const user = await getUser();
       dispatch(setCurrentUser(user.data))
-      history.push("/profile");
+      profilePhaseTransition('profile');
     } catch (error) {
       onError(error);
-      setIsConfirming(false);
+      setIsLoading(false);
     }
   }
 
   return (
-    <div className="Profile ChangeEmailConfirmation">
-      <Form onSubmit={handleConfirmClick}>
+    <div className="ChangeEmailConfirmation">
+      <Form onSubmit={handleSubmit}>
         <header>Change email confirmation</header>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="code">
+        <Form.Group size="lg" controlId="confirmationCode">
           <Form.Label>Confirmation Code</Form.Label>
           <Form.Control
             autoFocus
             type="tel"
-            value={fields.code}
+            value={fields.confirmationCode}
             onChange={handleFieldChange}
           />
           <Form.Text>
@@ -75,8 +72,8 @@ const ChangeEmailConfirmation = (props: IChangeEmailConfirmation) => {
           block
           type="submit"
           bsSize="large"
-          isLoading={isConfirming}
-          disabled={!validateConfirmForm()}
+          isLoading={isLoading}
+          disabled={!validateForm()}
         >
           Confirm
         </LoaderButton>
