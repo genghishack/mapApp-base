@@ -7,6 +7,7 @@ import {onError} from "../../libs/errorLib";
 import LoaderButton from "../LoaderButton";
 
 const Signup = () => {
+  //@ts-ignore
   const {
     //@ts-ignore
     authPhaseTransition, resetFormState,
@@ -15,7 +16,7 @@ const Signup = () => {
     //@ts-ignore
     fields, handleFieldChange,
     //@ts-ignore
-    newUser, setNewUser,
+    setNewUser, attemptSignin,
   } = useAuthContext();
 
   const validateForm = () => {
@@ -40,21 +41,15 @@ const Signup = () => {
       });
       resetFormState();
       setNewUser(user);
-      // console.log({newUser})
 
     } catch (e) {
       if (e.code === 'UsernameExistsException') {
-        // Check to see if user has not been confirmed.
-        // if not, redirect user to confirmation screen.
-        // if yes, sign them in as long as they got the
-        // email and password correct.
-        // Use Auth.resendSignup() method to re-send code
-        // AWS Auth API: https://aws-amplify.github.io/amplify-js/api/classes/authclass.html
-        // Tutorial: https://serverless-stack.com/chapters/signup-with-aws-cognito.html
+        await attemptSignin();
+      } else {
+        console.log(e);
+        onError(e);
+        setIsLoading(false);
       }
-      console.log(e);
-      onError(e);
-      setIsLoading(false);
     }
   }
 

@@ -10,19 +10,11 @@ import {getUser} from '../../libs/userLib';
 import {setCurrentUser} from "../../redux/actions/currentUser";
 import LoaderButton from "../LoaderButton";
 
-interface ILoginProps {
-  dispatch: Function;
-}
-
-const Login = (props: ILoginProps) => {
-  const {dispatch} = props;
-
-  const history = useHistory();
+const Login = () => {
   //@ts-ignore
-  const {userHasAuthenticated} = useAppContext();
   const {
     //@ts-ignore
-    authPhaseTransition, resetFormState,
+    authPhaseTransition, attemptSignin,
     //@ts-ignore
     isLoading, setIsLoading,
     //@ts-ignore
@@ -36,22 +28,7 @@ const Login = (props: ILoginProps) => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     setIsLoading(true);
-    try {
-      await Auth.signIn(fields.email, fields.password);
-      userHasAuthenticated(true);
-      const user = await getUser();
-      dispatch(setCurrentUser(user.data));
-      resetFormState();
-      history.push("/")
-    } catch (e) {
-      console.log(e);
-      if (e.code === 'UserNotConfirmedException') {
-        authPhaseTransition('signupConfirmation');
-      } else {
-        onError(e);
-        setIsLoading(false);
-      }
-    }
+    await attemptSignin()
   }
 
   return (
@@ -99,11 +76,4 @@ const Login = (props: ILoginProps) => {
   )
 }
 
-function mapStateToProps(state: { errors: any; currentUser: any; }) {
-  return {
-    currentUser: state.currentUser,
-    errors: state.errors,
-  };
-}
-
-export default connect(mapStateToProps)(Login);
+export default Login;
