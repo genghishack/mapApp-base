@@ -1,74 +1,44 @@
-import React, {useState} from "react";
+import React from "react";
 import {Auth} from "aws-amplify";
-import {connect} from "react-redux";
-import {useHistory} from "react-router-dom";
 import Form from "react-bootstrap/Form";
+
 import LoaderButton from "../LoaderButton";
-import {useFormFields} from "../../libs/hooksLib";
 import {onError} from "../../libs/errorLib";
-import {getUser} from '../../libs/userLib';
-import {setCurrentUser} from "../../redux/actions/currentUser";
+import {useProfileContext} from '../../libs/contextLib';
 
-import "./ChangeEmail.scss";
+const ChangeEmail = () => {
+  const {
+    //@ts-ignore
+    profilePhaseTransition, resetFormState,
+    //@ts-ignore
+    isLoading, setIsLoading, setConfirmationCodeSent,
+    //@ts-ignore
+    fields, handleFieldChange,
+  } = useProfileContext();
 
-interface IChangeEmailProps {
-  dispatch: Function;
-}
-
-const ChangeEmail = (props: IChangeEmailProps) => {
-  const {dispatch} = props;
-
-  const history = useHistory();
-  const [codeSent, setCodeSent] = useState(false);
-  const [fields, handleFieldChange] = useFormFields({
-    code: "",
-    email: "",
-  });
-  const [isConfirming, setIsConfirming] = useState(false);
-  const [isSendingCode, setIsSendingCode] = useState(false);
-
-  function validateEmailForm() {
+  const validateForm = () => {
     return fields.email.length > 0;
   }
 
-  function validateConfirmForm() {
-    return fields.code.length > 0;
-  }
-
-  async function handleUpdateClick(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    setIsSendingCode(true);
+    setIsLoading(true);
 
     try {
       const user = await Auth.currentAuthenticatedUser();
       await Auth.updateUserAttributes(user, {email: fields.email});
-      setCodeSent(true);
+      resetFormState();
+      setConfirmationCodeSent(true);
     } catch (error) {
       onError(error);
-      setIsSendingCode(false);
+      setIsLoading(false);
     }
   }
 
-  async function handleConfirmClick(event) {
-    event.preventDefault();
-
-    setIsConfirming(true);
-
-    try {
-      await Auth.verifyCurrentUserAttributeSubmit("email", fields.code);
-      const user = await getUser();
-      dispatch(setCurrentUser(user.data))
-      history.push("/profile");
-    } catch (error) {
-      onError(error);
-      setIsConfirming(false);
-    }
-  }
-
-  function renderUpdateForm() {
-    return (
-      <Form onSubmit={handleUpdateClick}>
+  return (
+    <div className="ChangeEmail">
+      <Form onSubmit={handleSubmit}>
+        <header>Change email</header>
         {/*@ts-ignore*/}
         <Form.Group size="lg" controlId="email">
           <Form.Text>Email</Form.Text>
@@ -79,59 +49,26 @@ const ChangeEmail = (props: IChangeEmailProps) => {
             onChange={handleFieldChange}
           />
         </Form.Group>
+        <div className="options">
+          <div/>
+          <a className="option" onClick={() => {
+            profilePhaseTransition('profile')
+          }}>
+            Return to profile
+          </a>
+        </div>
         <LoaderButton
           block
           type="submit"
           bsSize="large"
-          isLoading={isSendingCode}
-          disabled={!validateEmailForm()}
+          isLoading={isLoading}
+          disabled={!validateForm()}
         >
           Update Email
         </LoaderButton>
       </Form>
-    );
-  }
-
-  function renderConfirmationForm() {
-    return (
-      <Form onSubmit={handleConfirmClick}>
-        {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="code">
-          <Form.Label>Confirmation Code</Form.Label>
-          <Form.Control
-            autoFocus
-            type="tel"
-            value={fields.code}
-            onChange={handleFieldChange}
-          />
-          <Form.Text>
-            Please check your email ({fields.email}) for the confirmation code.
-          </Form.Text>
-        </Form.Group>
-        <LoaderButton
-          block
-          type="submit"
-          bsSize="large"
-          isLoading={isConfirming}
-          disabled={!validateConfirmForm()}
-        >
-          Confirm
-        </LoaderButton>
-      </Form>
-    );
-  }
-
-  return (
-    <div className="ChangeEmail">
-      {!codeSent ? renderUpdateForm() : renderConfirmationForm()}
     </div>
   );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    errors: state.errors,
-  }
-}
-
-export default connect(mapStateToProps)(ChangeEmail);
+export default ChangeEmail;

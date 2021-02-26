@@ -1,19 +1,19 @@
-import React from "react";
-import {Auth} from "aws-amplify";
+import React, {useState} from 'react';
 import Form from "react-bootstrap/Form";
 import {connect} from "react-redux";
+import {Auth} from "aws-amplify";
 
 import LoaderButton from "../LoaderButton";
-import {onError} from "../../libs/errorLib";
-import {getUser} from '../../libs/userLib';
-import {useProfileContext} from '../../libs/contextLib';
+import {getUser} from "../../libs/userLib";
 import {setCurrentUser} from "../../redux/actions/currentUser";
+import {onError} from "../../libs/errorLib";
+import {useProfileContext} from '../../libs/contextLib';
 
-interface IChangeNameProps {
+interface IChangeEmailConfirmation {
   dispatch: Function;
 }
 
-const ChangeName = (props: IChangeNameProps) => {
+const ChangeEmailConfirmation = (props: IChangeEmailConfirmation) => {
   const {dispatch} = props;
   const {
     //@ts-ignore
@@ -24,19 +24,18 @@ const ChangeName = (props: IChangeNameProps) => {
     fields, handleFieldChange,
   } = useProfileContext();
 
-  function validateForm() {
-    return fields.name.length > 0;
+  const validateForm = () => {
+    return fields.confirmationCode.length > 0;
   }
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
     try {
-      const user = await Auth.currentAuthenticatedUser();
-      await Auth.updateUserAttributes(user, {name: fields.name});
-      const updatedUser = await getUser();
-      dispatch(setCurrentUser(updatedUser.data))
+      await Auth.verifyCurrentUserAttributeSubmit("email", fields.confirmationCode);
+      const user = await getUser();
+      dispatch(setCurrentUser(user.data))
       profilePhaseTransition('profile');
     } catch (error) {
       onError(error);
@@ -45,18 +44,21 @@ const ChangeName = (props: IChangeNameProps) => {
   }
 
   return (
-    <div className="ChangeName">
+    <div className="ChangeEmailConfirmation">
       <Form onSubmit={handleSubmit}>
-        <header>Change name</header>
+        <header>Change email confirmation</header>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="name">
-          <Form.Text>Name</Form.Text>
+        <Form.Group size="lg" controlId="confirmationCode">
+          <Form.Label>Confirmation Code</Form.Label>
           <Form.Control
             autoFocus
-            type="text"
-            value={fields.name}
+            type="tel"
+            value={fields.confirmationCode}
             onChange={handleFieldChange}
           />
+          <Form.Text>
+            Please check your email ({fields.email}) for the confirmation code.
+          </Form.Text>
         </Form.Group>
         <div className="options">
           <div/>
@@ -73,7 +75,7 @@ const ChangeName = (props: IChangeNameProps) => {
           isLoading={isLoading}
           disabled={!validateForm()}
         >
-          Update Name
+          Confirm
         </LoaderButton>
       </Form>
     </div>
@@ -86,4 +88,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(ChangeName);
+export default connect(mapStateToProps)(ChangeEmailConfirmation);

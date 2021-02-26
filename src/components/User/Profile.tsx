@@ -1,9 +1,11 @@
 import React from "react";
 import {LinkContainer} from 'react-router-bootstrap';
+import {connect} from "react-redux";
+
+import {useProfileContext} from "../../libs/contextLib";
 import LoaderButton from "../LoaderButton";
 
 import './Profile.scss';
-import {connect} from "react-redux";
 
 interface IProfileProps {
   currentUser: any;
@@ -11,6 +13,10 @@ interface IProfileProps {
 
 const Profile = (props: IProfileProps) => {
   const {currentUser} = props;
+  const {
+    //@ts-ignore
+    profilePhaseTransition
+  } = useProfileContext();
 
   const {name, email, roles} = currentUser;
 
@@ -18,18 +24,16 @@ const Profile = (props: IProfileProps) => {
 
   return (
     <div className="Profile">
-
+      <header>User profile</header>
       <div className="userAttributeRow">
         <div className="userAttribute">
           <div className="attrName">Email:</div>
           <div className="attrValue">{email}</div>
         </div>
-        <LinkContainer to="/profile/email">
           {/*@ts-ignore*/}
-          <LoaderButton bsSize="large">
+          <LoaderButton bsSize="large" onClick={() => profilePhaseTransition('email')}>
             Change Email
           </LoaderButton>
-        </LinkContainer>
       </div>
 
       <div className="userAttributeRow">
@@ -37,12 +41,10 @@ const Profile = (props: IProfileProps) => {
           <div className="attrName">Name:</div>
           <div className="attrValue">{name}</div>
         </div>
-        <LinkContainer to="/profile/name">
           {/*@ts-ignore*/}
-          <LoaderButton bsSize="large">
+          <LoaderButton bsSize="large" onClick={() => profilePhaseTransition('name')}>
             Change Name
           </LoaderButton>
-        </LinkContainer>
       </div>
 
       <div className="userAttributeRow">
@@ -53,12 +55,10 @@ const Profile = (props: IProfileProps) => {
       </div>
 
       <div className="userAttributeRow">
-        <LinkContainer to="/profile/password">
           {/*@ts-ignore*/}
-          <LoaderButton block bsSize="large">
+          <LoaderButton block bsSize="large" onClick={() => profilePhaseTransition('password')}>
             Change Password
           </LoaderButton>
-        </LinkContainer>
       </div>
 
     </div>

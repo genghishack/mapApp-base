@@ -1,7 +1,8 @@
 import React from 'react';
 import Form from "react-bootstrap/Form";
-import LoaderButton from "../LoaderButton";
 import {Auth} from "aws-amplify";
+
+import LoaderButton from "../LoaderButton";
 import {onError} from "../../libs/errorLib";
 import {useAuthContext} from "../../libs/contextLib";
 

@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Auth } from "aws-amplify";
-import { useHistory } from "react-router-dom";
-import { FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import LoaderButton from "../LoaderButton";
-import { useFormFields } from "../../libs/hooksLib";
-import { onError } from "../../libs/errorLib";
-import "./ChangePassword.scss";
+import Form from "react-bootstrap/Form";
 
-export default function ChangePassword() {
-  const history = useHistory();
-  const [fields, handleFieldChange] = useFormFields({
-    password: "",
-    oldPassword: "",
-    confirmPassword: "",
-  });
-  const [isChanging, setIsChanging] = useState(false);
+import LoaderButton from "../LoaderButton";
+import { onError } from "../../libs/errorLib";
+import {useProfileContext} from "../../libs/contextLib";
+
+const ChangePassword = () => {
+  const {
+    //@ts-ignore
+    profilePhaseTransition,
+    //@ts-ignore
+    isLoading, setIsLoading,
+    //@ts-ignore
+    fields, handleFieldChange,
+  } = useProfileContext();
 
   function validateForm() {
     return (
@@ -24,67 +24,76 @@ export default function ChangePassword() {
     );
   }
 
-  async function handleChangeClick(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-
-    setIsChanging(true);
+    setIsLoading(true);
 
     try {
-      const currentUser = await Auth.currentAuthenticatedUser();
+      const user = await Auth.currentAuthenticatedUser();
       await Auth.changePassword(
-        currentUser,
+        user,
         fields.oldPassword,
         fields.password
       );
-
-      history.push("/profile");
+      profilePhaseTransition("/profile");
     } catch (error) {
       onError(error);
-      setIsChanging(false);
+      setIsLoading(false);
     }
   }
 
   return (
     <div className="ChangePassword">
-      <form onSubmit={handleChangeClick}>
+      <Form onSubmit={handleSubmit}>
+        <header>Change password</header>
         {/*@ts-ignore*/}
-        <FormGroup size="lg" controlId="oldPassword">
-          <FormLabel>Old Password</FormLabel>
-          <FormControl
+        <Form.Group size="lg" controlId="oldPassword">
+          <Form.Label>Old Password</Form.Label>
+          <Form.Control
             type="password"
             onChange={handleFieldChange}
             value={fields.oldPassword}
           />
-        </FormGroup>
+        </Form.Group>
         <hr />
         {/*@ts-ignore*/}
-        <FormGroup size="lg" controlId="password">
-          <FormLabel>New Password</FormLabel>
-          <FormControl
+        <Form.Group size="lg" controlId="password">
+          <Form.Label>New Password</Form.Label>
+          <Form.Control
             type="password"
             onChange={handleFieldChange}
             value={fields.password}
           />
-        </FormGroup>
+        </Form.Group>
         {/*@ts-ignore*/}
-        <FormGroup size="lg" controlId="confirmPassword">
-          <FormLabel>Confirm Password</FormLabel>
-          <FormControl
+        <Form.Group size="lg" controlId="confirmPassword">
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
             type="password"
             onChange={handleFieldChange}
             value={fields.confirmPassword}
           />
-        </FormGroup>
+        </Form.Group>
+        <div className="options">
+          <div/>
+          <a className="option" onClick={() => {
+            profilePhaseTransition('profile')
+          }}>
+            Return to profile
+          </a>
+        </div>
         <LoaderButton
           block
           type="submit"
           bsSize="large"
           disabled={!validateForm()}
-          isLoading={isChanging}
+          isLoading={isLoading}
         >
           Change Password
         </LoaderButton>
-      </form>
+      </Form>
     </div>
   );
 }
+
+export default ChangePassword;
