@@ -48,7 +48,7 @@ const Login = () => {
           />
         </Form.Group>
         <div className="options">
-          <a className="option" onClick={() => authPhaseTransition('reset')}>
+          <a className="option" onClick={() => authPhaseTransition('resetPassword')}>
             Forgot password?
           </a>
           <a className="option" onClick={() => authPhaseTransition('signup')}>

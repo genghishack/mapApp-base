@@ -13,6 +13,7 @@ import SignupConfirmation from "../components/Auth/SignupConfirmation";
 import ResetPassword from "../components/Auth/ResetPassword";
 import ResetPasswordConfirmation from "../components/Auth/ResetPasswordConfirmation";
 import ResetPasswordSuccess from "../components/Auth/ResetPasswordSuccess";
+import ForceResetPassword from "../components/Auth/ForceResetPassword";
 import Login from '../components/Auth/Login';
 
 import './Auth.scss';
@@ -30,6 +31,7 @@ const AuthContainer = (props: IAuthContainerProps) => {
     email: "",
     name: "",
     password: "",
+    newPassword: "",
     confirmPassword: "",
     resetCode: "",
     confirmationCode: "",
@@ -42,6 +44,7 @@ const AuthContainer = (props: IAuthContainerProps) => {
   const [fields, handleFieldChange] = useFormFields(initialFormFields);
 
   const clearSensitiveFields = () => {
+    fields.newPassword = '';
     fields.confirmPassword = '';
     fields.resetCode = '';
     fields.confirmationCode = '';
@@ -58,7 +61,6 @@ const AuthContainer = (props: IAuthContainerProps) => {
   }
 
   const authPhaseTransition = (phase) => {
-    setNewUser(null);
     resetFormState()
     clearResetPasswordState()
     setAuthPhase(phase);
@@ -66,13 +68,27 @@ const AuthContainer = (props: IAuthContainerProps) => {
 
   const attemptSignin = async () => {
     try {
-      await Auth.signIn(fields.email, fields.password);
-      userHasAuthenticated(true);
-      const user = await getUser();
-      dispatch(setCurrentUser(user.data));
-      resetFormState();
-      history.push("/")
+      const signin = await Auth.signIn(fields.email, fields.password);
+      if (signin.challengeName) {
+        switch (signin.challengeName) {
+          case 'NEW_PASSWORD_REQUIRED':
+            setNewUser(signin);
+            authPhaseTransition('forceResetPassword');
+            break;
+          default:
+            alert(signin.challengeName);
+        }
+      } else {
+        userHasAuthenticated(true);
+        const user = await getUser();
+        dispatch(setCurrentUser(user.data));
+        resetFormState();
+        history.push("/")
+      }
     } catch (e) {
+      if (authPhase === 'signup' && e.code === 'NotAuthorizedException') {
+        alert('User already exists.');
+      }
       if (e.code === 'UserNotConfirmedException') {
         authPhaseTransition('signupConfirmation');
       } else {
@@ -85,14 +101,10 @@ const AuthContainer = (props: IAuthContainerProps) => {
   const renderAuthPhase = () => {
     switch (authPhase) {
       case 'signup':
-        return (
-          <>
-            {newUser === null ? <Signup/> : <SignupConfirmation/>}
-          </>
-        );
+        return <Signup/>;
       case 'signupConfirmation':
         return <SignupConfirmation/>;
-      case 'reset':
+      case 'resetPassword':
         return (
           <>
             {!resetCodeSent
@@ -103,6 +115,8 @@ const AuthContainer = (props: IAuthContainerProps) => {
             }
           </>
         );
+      case 'forceResetPassword':
+        return <ForceResetPassword/>
       case 'login':
       default:
         return <Login/>;

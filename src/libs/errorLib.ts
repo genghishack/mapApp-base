@@ -1,4 +1,5 @@
 export const onError = (error) => {
+  console.log(error);
   let message = error.toString();
 
   // Auth errors
@@ -6,5 +7,5 @@ export const onError = (error) => {
     message = error.message;
   }
 
-  alert(message);
+  alert(`${message}`);
 }

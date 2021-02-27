@@ -41,7 +41,7 @@ const Signup = () => {
       });
       resetFormState();
       setNewUser(user);
-
+      authPhaseTransition('signupConfirmation');
     } catch (e) {
       if (e.code === 'UsernameExistsException') {
         await attemptSignin();
