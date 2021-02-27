@@ -9,13 +9,11 @@ import {useAuthContext} from "../../libs/contextLib";
 const ResetPasswordConfirmation = () => {
   const {
     //@ts-ignore
-    authPhaseTransition, resetFormState,
+    authPhaseTransition,
     //@ts-ignore
     isLoading, setIsLoading,
     //@ts-ignore
     fields, handleFieldChange,
-    //@ts-ignore
-    setResetCodeConfirmed,
   } = useAuthContext();
 
   function validateForm() {
@@ -36,8 +34,7 @@ const ResetPasswordConfirmation = () => {
         fields.resetCode,
         fields.password
       );
-      resetFormState();
-      setResetCodeConfirmed(true);
+      authPhaseTransition('resetPasswordSuccess');
     } catch (error) {
       onError(error);
       setIsLoading(false);

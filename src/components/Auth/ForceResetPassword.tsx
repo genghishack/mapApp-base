@@ -5,6 +5,8 @@ import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
 import {onError} from "../../libs/errorLib";
 import {useAuthContext} from "../../libs/contextLib";
+import {getUser} from "../../libs/userLib";
+import {setCurrentUser} from "../../redux/actions/currentUser";
 
 const ForceResetPassword = () => {
   const {
@@ -30,18 +32,15 @@ const ForceResetPassword = () => {
     setIsLoading(true);
 
     try {
-      console.log(newUser, fields.newPassword, fields.email);
-      const foo = await Auth.completeNewPassword(
+      await Auth.completeNewPassword(
         newUser,
         fields.newPassword,
         {
           email: fields.email
         }
       );
-      console.log({foo});
-      authPhaseTransition("/resetPasswordSuccess");
+      authPhaseTransition("resetPasswordSuccess");
     } catch (error) {
-      console.log('force reset password error')
       onError(error);
       setIsLoading(false);
     }
@@ -65,6 +64,7 @@ const ForceResetPassword = () => {
         <Form.Group size="lg" controlId="newPassword">
           <Form.Label>New Password</Form.Label>
           <Form.Control
+            autoFocus
             type="password"
             onChange={handleFieldChange}
             value={fields.newPassword}

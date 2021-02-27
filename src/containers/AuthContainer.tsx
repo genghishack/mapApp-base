@@ -27,7 +27,10 @@ const AuthContainer = (props: IAuthContainerProps) => {
   const history = useHistory();
   //@ts-ignore
   const {userHasAuthenticated} = useAppContext()
-  const initialFormFields = {
+  const [authPhase, setAuthPhase] = useState('login');
+  const [isLoading, setIsLoading] = useState(false);
+  const [newUser, setNewUser] = useState(null);
+  const [fields, handleFieldChange] = useFormFields({
     email: "",
     name: "",
     password: "",
@@ -35,13 +38,11 @@ const AuthContainer = (props: IAuthContainerProps) => {
     confirmPassword: "",
     resetCode: "",
     confirmationCode: "",
+  });
+
+  const clearPassword = () => {
+    fields.password = '';
   }
-  const [authPhase, setAuthPhase] = useState('login');
-  const [isLoading, setIsLoading] = useState(false);
-  const [newUser, setNewUser] = useState(null);
-  const [resetCodeSent, setResetCodeSent] = useState(false);
-  const [resetCodeConfirmed, setResetCodeConfirmed] = useState(false);
-  const [fields, handleFieldChange] = useFormFields(initialFormFields);
 
   const clearSensitiveFields = () => {
     fields.newPassword = '';
@@ -55,15 +56,16 @@ const AuthContainer = (props: IAuthContainerProps) => {
     clearSensitiveFields();
   }
 
-  const clearResetPasswordState = () => {
-    setResetCodeSent(false);
-    setResetCodeConfirmed(false);
-  }
-
   const authPhaseTransition = (phase) => {
     resetFormState()
-    clearResetPasswordState()
     setAuthPhase(phase);
+  }
+
+  const updateStateWithCurrentUser = async () => {
+    const user = await getUser();
+    dispatch(setCurrentUser(user.data));
+    clearPassword();
+    resetFormState();
   }
 
   const attemptSignin = async () => {
@@ -80,9 +82,7 @@ const AuthContainer = (props: IAuthContainerProps) => {
         }
       } else {
         userHasAuthenticated(true);
-        const user = await getUser();
-        dispatch(setCurrentUser(user.data));
-        resetFormState();
+        await updateStateWithCurrentUser();
         history.push("/")
       }
     } catch (e) {
@@ -105,16 +105,11 @@ const AuthContainer = (props: IAuthContainerProps) => {
       case 'signupConfirmation':
         return <SignupConfirmation/>;
       case 'resetPassword':
-        return (
-          <>
-            {!resetCodeSent
-              ? <ResetPassword/>
-              : !resetCodeConfirmed
-                ? <ResetPasswordConfirmation/>
-                : <ResetPasswordSuccess/>
-            }
-          </>
-        );
+        return <ResetPassword/>;
+      case 'resetPasswordConfirmation':
+        return <ResetPasswordConfirmation/>
+      case 'resetPasswordSuccess':
+        return <ResetPasswordSuccess/>;
       case 'forceResetPassword':
         return <ForceResetPassword/>
       case 'login':
@@ -129,10 +124,8 @@ const AuthContainer = (props: IAuthContainerProps) => {
       <AuthContext.Provider value={{
         isLoading, setIsLoading,
         fields, handleFieldChange,
-        newUser, setNewUser, attemptSignin,
-        resetCodeSent, setResetCodeSent,
-        resetCodeConfirmed, setResetCodeConfirmed,
-        authPhaseTransition, resetFormState,
+        newUser, attemptSignin,
+        authPhaseTransition,
       }}>
         {renderAuthPhase()}
       </AuthContext.Provider>
