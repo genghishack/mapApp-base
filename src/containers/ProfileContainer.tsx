@@ -17,18 +17,16 @@ interface IProfileContainer {
 const ProfileContainer = (props: IProfileContainer) => {
   const {currentUser} = props;
 
-  const initialFormFields = {
+  const [profilePhase, setProfilePhase] = useState('profile');
+  const [isLoading, setIsLoading] = useState(false);
+  const [fields, handleFieldChange] = useFormFields({
     email: currentUser.email,
     name: '',
     confirmationCode: '',
     password: '',
     oldPassword: '',
     confirmPassword: '',
-  }
-  const [profilePhase, setProfilePhase] = useState('profile');
-  const [isLoading, setIsLoading] = useState(false);
-  const [confirmationCodeSent, setConfirmationCodeSent] = useState(false);
-  const [fields, handleFieldChange] = useFormFields(initialFormFields);
+  });
 
   const clearSensitiveFields = () => {
     fields.confirmationCode = '';
@@ -42,24 +40,17 @@ const ProfileContainer = (props: IProfileContainer) => {
     clearSensitiveFields();
   }
 
-  const clearChangeEmailState = () => {
-    setConfirmationCodeSent(false);
-  }
-
   const profilePhaseTransition = (phase) => {
     resetFormState()
-    clearChangeEmailState()
     setProfilePhase(phase);
   }
 
   const renderProfilePhase = () => {
     switch (profilePhase) {
       case 'email':
-        return (
-          <>
-            {!confirmationCodeSent ? <ChangeEmail/> : <ChangeEmailConfirmation/>}
-          </>
-        )
+        return <ChangeEmail/>;
+      case 'emailConfirmation':
+        return <ChangeEmailConfirmation/>;
       case 'name':
         return <ChangeName/>;
       case 'password':
@@ -75,8 +66,7 @@ const ProfileContainer = (props: IProfileContainer) => {
       <ProfileContext.Provider value={{
         isLoading, setIsLoading,
         fields, handleFieldChange,
-        profilePhaseTransition, resetFormState,
-        setConfirmationCodeSent,
+        profilePhaseTransition,
       }}>
         {renderProfilePhase()}
       </ProfileContext.Provider>

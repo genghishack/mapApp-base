@@ -9,9 +9,9 @@ import {useProfileContext} from '../../libs/contextLib';
 const ChangeEmail = () => {
   const {
     //@ts-ignore
-    profilePhaseTransition, resetFormState,
+    profilePhaseTransition,
     //@ts-ignore
-    isLoading, setIsLoading, setConfirmationCodeSent,
+    isLoading, setIsLoading,
     //@ts-ignore
     fields, handleFieldChange,
   } = useProfileContext();
@@ -27,8 +27,7 @@ const ChangeEmail = () => {
     try {
       const user = await Auth.currentAuthenticatedUser();
       await Auth.updateUserAttributes(user, {email: fields.email});
-      resetFormState();
-      setConfirmationCodeSent(true);
+      profilePhaseTransition('emailConfirmation');
     } catch (error) {
       onError(error);
       setIsLoading(false);

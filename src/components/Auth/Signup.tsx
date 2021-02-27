@@ -10,13 +10,11 @@ const Signup = () => {
   //@ts-ignore
   const {
     //@ts-ignore
-    authPhaseTransition, resetFormState,
+    authPhaseTransition, attemptSignin,
     //@ts-ignore
     isLoading, setIsLoading,
     //@ts-ignore
     fields, handleFieldChange,
-    //@ts-ignore
-    setNewUser, attemptSignin,
   } = useAuthContext();
 
   const validateForm = () => {
@@ -32,16 +30,14 @@ const Signup = () => {
 
     setIsLoading(true);
     try {
-      const user = await Auth.signUp({
+      await Auth.signUp({
         username: fields.email,
         password: fields.password,
         attributes: {
           name: fields.name,
         },
       });
-      resetFormState();
-      setNewUser(user);
-
+      authPhaseTransition('signupConfirmation');
     } catch (e) {
       if (e.code === 'UsernameExistsException') {
         await attemptSignin();

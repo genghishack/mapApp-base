@@ -1,15 +1,17 @@
-import React from 'react';
-import Form from "react-bootstrap/Form";
+import React from "react";
 import {Auth} from "aws-amplify";
+import Form from "react-bootstrap/Form";
 
 import LoaderButton from "../LoaderButton";
 import {onError} from "../../libs/errorLib";
 import {useAuthContext} from "../../libs/contextLib";
+import {getUser} from "../../libs/userLib";
+import {setCurrentUser} from "../../redux/actions/currentUser";
 
-const ResetPasswordConfirmation = () => {
+const ForceResetPassword = () => {
   const {
     //@ts-ignore
-    authPhaseTransition,
+    authPhaseTransition, newUser,
     //@ts-ignore
     isLoading, setIsLoading,
     //@ts-ignore
@@ -18,23 +20,26 @@ const ResetPasswordConfirmation = () => {
 
   function validateForm() {
     return (
-      fields.resetCode.length > 0 &&
       fields.password.length > 0 &&
-      fields.password === fields.confirmPassword
+      fields.newPassword.length > 0 &&
+      fields.newPassword === fields.confirmPassword &&
+      fields.password !== fields.newPassword
     );
   }
 
-  const handleSubmit = async (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
 
     try {
-      await Auth.forgotPasswordSubmit(
-        fields.email,
-        fields.resetCode,
-        fields.password
+      await Auth.completeNewPassword(
+        newUser,
+        fields.newPassword,
+        {
+          email: fields.email
+        }
       );
-      authPhaseTransition('resetPasswordSuccess');
+      authPhaseTransition("resetPasswordSuccess");
     } catch (error) {
       onError(error);
       setIsLoading(false);
@@ -42,30 +47,27 @@ const ResetPasswordConfirmation = () => {
   }
 
   return (
-    <div className="Auth ResetPassword">
+    <div className="ForceResetPassword">
       <Form onSubmit={handleSubmit}>
-        <header>Reset password</header>
-        {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="resetCode">
-          <Form.Label>Confirmation Code</Form.Label>
-          <Form.Control
-            autoFocus
-            type="tel"
-            value={fields.resetCode}
-            onChange={handleFieldChange}
-          />
-          <Form.Text>
-            Please check your email ({fields.email}) for the confirmation code.
-          </Form.Text>
-        </Form.Group>
-        <hr />
+        <header>Change password</header>
         {/*@ts-ignore*/}
         <Form.Group size="lg" controlId="password">
-          <Form.Label>New Password</Form.Label>
+          <Form.Label>Old Password</Form.Label>
           <Form.Control
             type="password"
-            value={fields.password}
             onChange={handleFieldChange}
+            value={fields.password}
+          />
+        </Form.Group>
+        <hr/>
+        {/*@ts-ignore*/}
+        <Form.Group size="lg" controlId="newPassword">
+          <Form.Label>New Password</Form.Label>
+          <Form.Control
+            autoFocus
+            type="password"
+            onChange={handleFieldChange}
+            value={fields.newPassword}
           />
         </Form.Group>
         {/*@ts-ignore*/}
@@ -73,8 +75,8 @@ const ResetPasswordConfirmation = () => {
           <Form.Label>Confirm Password</Form.Label>
           <Form.Control
             type="password"
-            value={fields.confirmPassword}
             onChange={handleFieldChange}
+            value={fields.confirmPassword}
           />
         </Form.Group>
         <div className="options">
@@ -88,15 +90,15 @@ const ResetPasswordConfirmation = () => {
         <LoaderButton
           block
           type="submit"
-          size="lg"
-          isLoading={isLoading}
+          bsSize="large"
           disabled={!validateForm()}
+          isLoading={isLoading}
         >
-          Confirm
+          Change Password
         </LoaderButton>
       </Form>
     </div>
   );
 }
 
-export default ResetPasswordConfirmation;
+export default ForceResetPassword;
