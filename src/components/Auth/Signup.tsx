@@ -1,6 +1,7 @@
 import React from 'react';
 import {Auth} from "aws-amplify";
 import Form from "react-bootstrap/Form";
+import Button from 'react-bootstrap/esm/Button';
 
 import {useAuthContext} from "../../libs/contextLib";
 import {onError} from "../../libs/errorLib";
@@ -91,9 +92,11 @@ const Signup = () => {
       </Form.Group>
       <div className="options">
         <div/>
-        <a className="option" onClick={() => authPhaseTransition('login')}>
+        <Button className="option" variant="link" onClick={
+          () => authPhaseTransition('login')
+        }>
           Return to login
-        </a>
+        </Button>
       </div>
       <LoaderButton
         block

@@ -14,19 +14,14 @@
       margin: 0 auto;
       max-width: 320px;
 
-      a {
-        margin-bottom: 15px;
-        display: block;
-        font-size: 14px;
-      }
-
       .options {
         display: flex;
         justify-content: space-between;
         width: 100%;
 
-        a {
-          cursor: pointer;
+        .option {
+          margin-bottom: 15px;
+          font-size: 14px;
         }
       }
     }
