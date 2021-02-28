@@ -52,7 +52,7 @@ const App = (props: IAppProps) => {
       ) : (
         <>
           {/*@ts-ignore*/}
-          <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}}>
+          <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}} displayName="AppContext">
             <Router>
               <Header/>
               <Routes/>

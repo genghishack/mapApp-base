@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Amplify } from 'aws-amplify';
+import {debugContextDevtool} from 'react-context-devtool';
+
 import config from './config';
 import './index.scss';
 import App from './App';
@@ -27,6 +29,8 @@ Amplify.configure({
   }
 });
 
+const container = document.getElementById('root');
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -34,8 +38,12 @@ ReactDOM.render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  container
 );
+
+debugContextDevtool(container, {
+  disable: process.env.REACT_APP_STAGE === 'prod'
+});
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
