@@ -71,7 +71,6 @@ const ChangeEmailConfirmation = (props: IChangeEmailConfirmation) => {
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
           isLoading={isLoading}
           disabled={!validateForm()}
         >

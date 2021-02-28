@@ -69,7 +69,6 @@ const ChangeName = (props: IChangeNameProps) => {
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
           isLoading={isLoading}
           disabled={!validateForm()}
         >

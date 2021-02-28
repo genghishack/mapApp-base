@@ -20,7 +20,7 @@ const ProfileContainer = (props: IProfileContainer) => {
   const [profilePhase, setProfilePhase] = useState('profile');
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
-    email: currentUser.email,
+    email: '',
     name: '',
     confirmationCode: '',
     password: '',

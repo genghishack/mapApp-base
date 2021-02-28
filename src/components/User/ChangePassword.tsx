@@ -85,7 +85,6 @@ const ChangePassword = () => {
         <LoaderButton
           block
           type="submit"
-          bsSize="large"
           disabled={!validateForm()}
           isLoading={isLoading}
         >
