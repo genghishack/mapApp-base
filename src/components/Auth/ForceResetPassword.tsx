@@ -5,8 +5,7 @@ import Form from "react-bootstrap/Form";
 import LoaderButton from "../LoaderButton";
 import {onError} from "../../libs/errorLib";
 import {useAuthContext} from "../../libs/contextLib";
-import {getUser} from "../../libs/userLib";
-import {setCurrentUser} from "../../redux/actions/currentUser";
+import Button from "react-bootstrap/esm/Button";
 
 const ForceResetPassword = () => {
   const {
@@ -81,11 +80,11 @@ const ForceResetPassword = () => {
         </Form.Group>
         <div className="options">
           <div/>
-          <a className="option" onClick={() => {
-            authPhaseTransition('login')
-          }}>
+          <Button className="option" variant="link" onClick={
+            () => authPhaseTransition('login')
+          }>
             Return to login
-          </a>
+          </Button>
         </div>
         <LoaderButton
           block

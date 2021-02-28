@@ -1,6 +1,7 @@
 import React from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import Button from "react-bootstrap/Button";
 
 import {useAuthContext} from "../../libs/contextLib";
 
@@ -17,11 +18,11 @@ const ResetPasswordSuccess = () => {
         <FontAwesomeIcon className="success-icon" icon={faCheckCircle}/>
         <p>Your password has been reset.</p>
       </div>
-      <a className="success-link" onClick={() => {
-        authPhaseTransition('login')
-      }}>
+      <Button className="success-link" variant="link" onClick={
+        () => authPhaseTransition('login')
+      }>
         Click here to login with your new credentials.
-      </a>
+      </Button>
     </div>
   );
 }

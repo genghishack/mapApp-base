@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form';
 
 import {useAuthContext} from "../../libs/contextLib";
@@ -48,12 +49,16 @@ const Login = () => {
           />
         </Form.Group>
         <div className="options">
-          <a className="option" onClick={() => authPhaseTransition('resetPassword')}>
+          <Button className="option" variant="link" onClick={
+            () => authPhaseTransition('resetPassword')
+          }>
             Forgot password?
-          </a>
-          <a className="option" onClick={() => authPhaseTransition('signup')}>
+          </Button>
+          <Button className="option" variant="link" onClick={
+            () => authPhaseTransition('signup')
+          }>
             Create an account
-          </a>
+          </Button>
         </div>
         <LoaderButton
           block

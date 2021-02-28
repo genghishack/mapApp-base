@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 import {connect} from "react-redux";
@@ -23,11 +23,7 @@ const App = (props: IAppProps) => {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
-  useEffect(() => {
-    onLoad();
-  }, []);
-
-  const onLoad = async () => {
+  const onLoad = useCallback(async () => {
     try {
       await Auth.currentSession();
       userHasAuthenticated(true);
@@ -41,7 +37,11 @@ const App = (props: IAppProps) => {
       }
     }
     setIsAuthenticating(false);
-  }
+  }, [currentUser.id, dispatch])
+
+  useEffect(() => {
+    onLoad();
+  }, [onLoad]);
 
   return (
     <div className="App">

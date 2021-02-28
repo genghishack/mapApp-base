@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {connect} from "react-redux";
 
 import {useFormFields} from "../libs/hooksLib";
 import {ProfileContext} from '../libs/contextLib';
@@ -11,11 +10,7 @@ import ChangePassword from "../components/User/ChangePassword";
 
 import './Profile.scss';
 
-interface IProfileContainer {
-  currentUser: any;
-}
-const ProfileContainer = (props: IProfileContainer) => {
-  const {currentUser} = props;
+const ProfileContainer = () => {
 
   const [profilePhase, setProfilePhase] = useState('profile');
   const [isLoading, setIsLoading] = useState(false);
@@ -74,11 +69,4 @@ const ProfileContainer = (props: IProfileContainer) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.currentUser,
-    errors: state.errors,
-  }
-}
-
-export default connect(mapStateToProps)(ProfileContainer);
+export default ProfileContainer;

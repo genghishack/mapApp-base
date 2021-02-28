@@ -1,5 +1,6 @@
 import React from 'react';
 import Form from "react-bootstrap/Form";
+import Button from 'react-bootstrap/esm/Button';
 import {connect} from "react-redux";
 import {Auth} from "aws-amplify";
 
@@ -62,11 +63,11 @@ const ChangeEmailConfirmation = (props: IChangeEmailConfirmation) => {
         </Form.Group>
         <div className="options">
           <div/>
-          <a className="option" onClick={() => {
+          <Button className="option" variant="link" onClick={() => {
             profilePhaseTransition('profile')
           }}>
             Return to profile
-          </a>
+          </Button>
         </div>
         <LoaderButton
           block

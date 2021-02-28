@@ -1,6 +1,7 @@
 import React from 'react';
 import Form from "react-bootstrap/Form";
 import {Auth} from "aws-amplify";
+import Button from 'react-bootstrap/esm/Button';
 
 import LoaderButton from "../LoaderButton";
 import {onError} from "../../libs/errorLib";
@@ -79,11 +80,11 @@ const ResetPasswordConfirmation = () => {
         </Form.Group>
         <div className="options">
           <div/>
-          <a className="option" onClick={() => {
-            authPhaseTransition('login')
-          }}>
+          <Button className="option" variant="link" onClick={
+            () => authPhaseTransition('login')
+          }>
             Return to login
-          </a>
+          </Button>
         </div>
         <LoaderButton
           block
