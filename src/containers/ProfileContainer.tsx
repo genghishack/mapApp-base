@@ -67,7 +67,7 @@ const ProfileContainer = (props: IProfileContainer) => {
         isLoading, setIsLoading,
         fields, handleFieldChange,
         profilePhaseTransition,
-      }}>
+      }} displayName="ProfileContext">
         {renderProfilePhase()}
       </ProfileContext.Provider>
     </div>

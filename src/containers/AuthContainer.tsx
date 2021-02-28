@@ -126,7 +126,7 @@ const AuthContainer = (props: IAuthContainerProps) => {
         fields, handleFieldChange,
         newUser, attemptSignin,
         authPhaseTransition,
-      }}>
+      }} displayName="AuthContext">
         {renderAuthPhase()}
       </AuthContext.Provider>
     </div>
