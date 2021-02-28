@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Amplify } from 'aws-amplify';
-import {debugContextDevtool} from 'react-context-devtool';
+// import {debugContextDevtool} from 'react-context-devtool';
 
 import config from './config';
 import './index.scss';

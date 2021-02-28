@@ -15,9 +15,8 @@ interface IResourceViewProps {
 const ResourceView = (props: IResourceViewProps) => {
   const { dispatch } = props;
 
-  const [infoTrayExpanded, setInfoTrayExpanded] = useState(false);
+  // const [infoTrayExpanded, setInfoTrayExpanded] = useState(false);
   const [resource, setResource] = useState({});
-  const [selectedResource, setSelectedResource] = useState('');
 
   //@ts-ignore
   useEffect(() => {
@@ -44,8 +43,9 @@ const ResourceView = (props: IResourceViewProps) => {
     // getListOfMarkers();
   }, [dispatch]);
 
-  const handleResourceSelection = (stateAbbr: string, resourceId: string = '') => {
-    setSelectedResource(resourceId);
+  const handleResourceSelection = () => {
+    //no-op
+    setResource({});
   };
 
   return (
