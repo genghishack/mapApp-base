@@ -1,6 +1,7 @@
 import React from "react";
 import { Auth } from "aws-amplify";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/esm/Button";
 
 import LoaderButton from "../LoaderButton";
 import { onError } from "../../libs/errorLib";
@@ -76,11 +77,11 @@ const ChangePassword = () => {
         </Form.Group>
         <div className="options">
           <div/>
-          <a className="option" onClick={() => {
-            profilePhaseTransition('profile')
+          <Button className="option" variant="link" onClick={() => {
+            profilePhaseTransition('profile');
           }}>
             Return to profile
-          </a>
+          </Button>
         </div>
         <LoaderButton
           block
