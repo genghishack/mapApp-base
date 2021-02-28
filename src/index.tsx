@@ -41,9 +41,11 @@ ReactDOM.render(
   container
 );
 
+/*// This causes console errors, so it's commented until needed for debugging
 debugContextDevtool(container, {
   disable: process.env.REACT_APP_STAGE === 'prod'
 });
+//*/
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

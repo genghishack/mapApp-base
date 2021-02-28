@@ -1,5 +1,4 @@
 import React from "react";
-import {LinkContainer} from 'react-router-bootstrap';
 import {connect} from "react-redux";
 
 import {useProfileContext} from "../../libs/contextLib";
@@ -31,7 +30,7 @@ const Profile = (props: IProfileProps) => {
           <div className="attrValue">{email}</div>
         </div>
           {/*@ts-ignore*/}
-          <LoaderButton bsSize="large" onClick={() => profilePhaseTransition('email')}>
+          <LoaderButton onClick={() => profilePhaseTransition('email')}>
             Change Email
           </LoaderButton>
       </div>
@@ -42,7 +41,7 @@ const Profile = (props: IProfileProps) => {
           <div className="attrValue">{name}</div>
         </div>
           {/*@ts-ignore*/}
-          <LoaderButton bsSize="large" onClick={() => profilePhaseTransition('name')}>
+          <LoaderButton onClick={() => profilePhaseTransition('name')}>
             Change Name
           </LoaderButton>
       </div>
@@ -56,7 +55,7 @@ const Profile = (props: IProfileProps) => {
 
       <div className="userAttributeRow">
           {/*@ts-ignore*/}
-          <LoaderButton block bsSize="large" onClick={() => profilePhaseTransition('password')}>
+          <LoaderButton block onClick={() => profilePhaseTransition('password')}>
             Change Password
           </LoaderButton>
       </div>

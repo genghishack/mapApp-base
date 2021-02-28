@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Auth} from "aws-amplify";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 
 import {AuthContext, useAppContext} from "../libs/contextLib";
-import {useFormFields} from "../libs/hooksLib";
+import {useFormFields, useIsMountedRef} from "../libs/hooksLib";
 import {getUser} from "../libs/userLib";
 import {onError} from "../libs/errorLib";
 import {setCurrentUser} from "../redux/actions/currentUser";
@@ -20,16 +20,19 @@ import './Auth.scss';
 
 interface IAuthContainerProps {
   dispatch: Function;
+  currentUser: any;
 }
 
 const AuthContainer = (props: IAuthContainerProps) => {
-  const {dispatch} = props;
+  const {dispatch, currentUser} = props;
   const history = useHistory();
+  const isMountedRef = useIsMountedRef();
   //@ts-ignore
   const {userHasAuthenticated} = useAppContext()
   const [authPhase, setAuthPhase] = useState('login');
   const [isLoading, setIsLoading] = useState(false);
   const [newUser, setNewUser] = useState(null);
+  // const [user, setUser] = useState(null);
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     name: "",
@@ -40,21 +43,32 @@ const AuthContainer = (props: IAuthContainerProps) => {
     confirmationCode: "",
   });
 
-  const clearPassword = () => {
+  const clearPassword = useCallback(() => {
     fields.password = '';
-  }
+  }, [fields]);
 
-  const clearSensitiveFields = () => {
+  const clearSensitiveFields = useCallback(() => {
     fields.newPassword = '';
     fields.confirmPassword = '';
     fields.resetCode = '';
     fields.confirmationCode = '';
-  };
+  }, [fields]);
 
-  const resetFormState = () => {
+  const resetFormState = useCallback(() => {
     setIsLoading(false);
     clearSensitiveFields();
-  }
+  }, [setIsLoading, clearSensitiveFields])
+
+  //@ts-ignore
+  useEffect(() => {
+    if (currentUser.id) {
+      if (isMountedRef.current) {
+        clearPassword();
+        resetFormState();
+        history.push("/");
+      }
+    }
+  }, [currentUser, clearPassword, resetFormState, history, isMountedRef]);
 
   const authPhaseTransition = (phase) => {
     resetFormState()
@@ -64,8 +78,6 @@ const AuthContainer = (props: IAuthContainerProps) => {
   const updateStateWithCurrentUser = async () => {
     const user = await getUser();
     dispatch(setCurrentUser(user.data));
-    clearPassword();
-    resetFormState();
   }
 
   const attemptSignin = async () => {
@@ -83,7 +95,6 @@ const AuthContainer = (props: IAuthContainerProps) => {
       } else {
         userHasAuthenticated(true);
         await updateStateWithCurrentUser();
-        history.push("/")
       }
     } catch (e) {
       if (authPhase === 'signup' && e.code === 'NotAuthorizedException') {

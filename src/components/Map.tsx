@@ -34,7 +34,7 @@ const Map = (props: IMapProps) => {
             url={tileUrl}
         />
         {markers && markers.map((marker) => (
-          <Marker position={marker.latlng}>
+          <Marker key={marker.id} position={marker.latlng}>
             <Popup>{marker.name}</Popup>
           </Marker>
         ))}
