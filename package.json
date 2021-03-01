@@ -53,7 +53,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deployDev": "REACT_APP_STAGE=dev react-scripts build && aws s3 rm s3://bluezone-dev --recursive --profile BluezoneDev && aws s3 sync build/ s3://bluezone-dev --profile BluezoneDev"
+    "deployDev": "REACT_APP_STAGE=dev react-scripts build && aws s3 rm s3://mapapp-dev --recursive --profile BluezoneDev && aws s3 sync build/ s3://mapapp-dev --profile BluezoneDev"
   },
   "eslintConfig": {
     "extends": "react-app"
