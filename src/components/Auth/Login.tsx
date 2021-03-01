@@ -1,27 +1,19 @@
-import React, {useState} from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import {API, Auth} from 'aws-amplify';
+import React from 'react';
+import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form';
-import {useAppContext} from "../../libs/contextLib";
-import {useFormFields} from "../../libs/hooksLib";
-import { onError} from "../../libs/errorLib";
+
+import {useAuthContext} from "../../libs/contextLib";
 import LoaderButton from "../LoaderButton";
 
-import './Login.scss';
-
 const Login = () => {
-  const [fields, handleFieldChange] = useFormFields({
-    email: '',
-    password: ''
-  });
-  const history = useHistory();
-  //@ts-ignore
-  const { userHasAuthenticated } = useAppContext();
-  const [isLoading, setIsLoading] = useState(false);
-
-  const getUser = () => {
-    return API.get('mapapp', '/user/self', {});
-  }
+  const {
+    //@ts-ignore
+    authPhaseTransition, attemptSignin,
+    //@ts-ignore
+    isLoading, setIsLoading,
+    //@ts-ignore
+    fields, handleFieldChange,
+  } = useAuthContext();
 
   const validateForm = () => {
     return fields.email.length > 0 && fields.password.length > 0;
@@ -30,22 +22,13 @@ const Login = () => {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     setIsLoading(true);
-    try {
-      await Auth.signIn(fields.email, fields.password);
-      userHasAuthenticated(true);
-      const user = await getUser();
-      console.log({user});
-      // TODO: store the user in redux
-      history.push("/")
-    } catch (e) {
-      onError(e);
-      setIsLoading(false);
-    }
+    await attemptSignin()
   }
 
   return (
-    <div className="Login">
+    <div className="Auth">
       <Form onSubmit={handleSubmit}>
+        <header>Login</header>
         {/*//@ts-ignore*/}
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
@@ -65,7 +48,18 @@ const Login = () => {
             onChange={handleFieldChange}
           />
         </Form.Group>
-        <Link to="/login/reset">Forgot password?</Link>
+        <div className="options">
+          <Button className="option" variant="link" onClick={
+            () => authPhaseTransition('resetPassword')
+          }>
+            Forgot password?
+          </Button>
+          <Button className="option" variant="link" onClick={
+            () => authPhaseTransition('signup')
+          }>
+            Create an account
+          </Button>
+        </div>
         <LoaderButton
           block
           size="lg"

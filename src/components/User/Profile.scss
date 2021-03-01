@@ -1,0 +1,34 @@
+@media all and (min-width: 480px) {
+  .Profile {
+    padding: 60px 0;
+    margin: 0 auto;
+    max-width: 480px;
+
+    .userAttributeRow {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+
+      .LoaderButton {
+        font-size: 12px;
+        padding: 5px;
+      }
+
+      .userAttribute {
+        display: flex;
+
+        div {
+          height: 20px;
+        }
+
+        .attrName {
+          font-weight: bold;
+          margin-right: 10px;
+        }
+
+        .attrValue {
+        }
+      }
+    }
+  }
+}

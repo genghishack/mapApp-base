@@ -5,29 +5,30 @@ import Button from "react-bootstrap/esm/Button";
 
 import LoaderButton from "../LoaderButton";
 import {onError} from "../../libs/errorLib";
-import {useAuthContext} from "../../libs/contextLib";
+import {useProfileContext} from '../../libs/contextLib';
 
-const ResetPassword = () => {
+const ChangeEmail = () => {
   const {
     //@ts-ignore
-    authPhaseTransition,
+    profilePhaseTransition,
     //@ts-ignore
     isLoading, setIsLoading,
     //@ts-ignore
     fields, handleFieldChange,
-  } = useAuthContext();
+  } = useProfileContext();
 
-  function validateForm() {
+  const validateForm = () => {
     return fields.email.length > 0;
   }
 
-  async function handleSubmit(event) {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
 
     try {
-      await Auth.forgotPassword(fields.email);
-      authPhaseTransition('resetPasswordConfirmation');
+      const user = await Auth.currentAuthenticatedUser();
+      await Auth.updateUserAttributes(user, {email: fields.email});
+      profilePhaseTransition('emailConfirmation');
     } catch (error) {
       onError(error);
       setIsLoading(false);
@@ -35,12 +36,12 @@ const ResetPassword = () => {
   }
 
   return (
-    <div className="ResetPassword">
+    <div className="ChangeEmail">
       <Form onSubmit={handleSubmit}>
-        <header>Reset password</header>
+        <header>Change email</header>
         {/*@ts-ignore*/}
         <Form.Group size="lg" controlId="email">
-          <Form.Label>Email</Form.Label>
+          <Form.Text>Email</Form.Text>
           <Form.Control
             autoFocus
             type="email"
@@ -50,24 +51,23 @@ const ResetPassword = () => {
         </Form.Group>
         <div className="options">
           <div/>
-          <Button className="option" variant="link" onClick={
-            () => authPhaseTransition('login')
-          }>
-            Return to login
+          <Button className="option" variant="link" onClick={() => {
+            profilePhaseTransition('profile')
+          }}>
+            Return to profile
           </Button>
         </div>
         <LoaderButton
           block
           type="submit"
-          size="lg"
           isLoading={isLoading}
           disabled={!validateForm()}
         >
-          Send Confirmation
+          Update Email
         </LoaderButton>
       </Form>
     </div>
   );
 }
 
-export default ResetPassword;
+export default ChangeEmail;

@@ -82,7 +82,7 @@ const prod = {
   }
 };
 
-let config = local;
+let config;
 
 switch (process.env.REACT_APP_STAGE) {
   case 'prod':

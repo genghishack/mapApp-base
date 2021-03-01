@@ -1,44 +1,37 @@
 import React from 'react';
 import {Route, Switch} from "react-router-dom";
-import AuthenticatedRoute from "./components/Auth/AuthenticatedRoute";
-import UnauthenticatedRoute from "./components/Auth/UnauthenticatedRoute";
-import LoginView from "./components/views/LoginView";
-import SignupView from "./components/views/SignupView";
-import ResetPassword from "./components/Auth/ResetPassword";
-import Settings from './components/Auth/Settings';
-import ChangePassword from "./components/Auth/ChangePassword";
-import ChangeEmail from "./components/Auth/ChangeEmail";
+import {connect} from "react-redux";
+
+import AuthenticatedRoute from "./components/Routes/AuthenticatedRoute";
+import UnauthenticatedRoute from "./components/Routes/UnauthenticatedRoute";
 import NotFound from './components/views/NotFound';
 import ResourceView from "./components/views/ResourceView";
 import AboutView from "./components/views/AboutView";
-import EnterInfoView from "./components/views/EnterInfoView";
+import CreateResourceView from "./components/views/CreateResourceView";
+import AuthContainer from "./containers/AuthContainer";
+import ProfileContainer from "./containers/ProfileContainer";
 
-const Routes = () => {
+interface IRoutes {
+  currentUser: any;
+}
+
+const Routes = (props: IRoutes) => {
+  const {currentUser} = props;
+
   return (
     <Switch>
       <Route exact path="/">
         <ResourceView/>
       </Route>
-      <UnauthenticatedRoute exact path="/login">
-        <LoginView/>
+      <UnauthenticatedRoute exact path="/auth">
+        <AuthContainer/>
       </UnauthenticatedRoute>
-      <UnauthenticatedRoute exact path="/login/reset">
-        <ResetPassword />
-      </UnauthenticatedRoute>
-      <UnauthenticatedRoute exact path="/signup">
-        <SignupView />
-      </UnauthenticatedRoute>
-      <AuthenticatedRoute exact path="/settings" >
-        <Settings />
+      <AuthenticatedRoute exact path="/profile" >
+        <ProfileContainer />
       </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/settings/password">
-        <ChangePassword />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/settings/email">
-        <ChangeEmail />
-      </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/enter-info" >
-        <EnterInfoView/>
+      <AuthenticatedRoute exact path="/create-resource" >
+        {currentUser.roles && (currentUser.roles.includes('Editor') || currentUser.roles.includes('Admin'))
+        ? <CreateResourceView/> : <NotFound/>}
       </AuthenticatedRoute>
       <Route exact path="/about" >
         <AboutView />
@@ -50,4 +43,11 @@ const Routes = () => {
   )
 }
 
-export default Routes;
+const mapStateToProps = (state: { errors: any; currentUser: any }) => {
+  return {
+    currentUser: state.currentUser,
+    errors: state.errors,
+  }
+}
+
+export default connect(mapStateToProps)(Routes);

@@ -1,37 +1,47 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
+import {connect} from "react-redux";
 
 import {AppContext} from "./libs/contextLib";
 import {onError} from "./libs/errorLib";
+import {getUser} from './libs/userLib';
+import {setCurrentUser} from "./redux/actions/currentUser";
 import Routes from './Routes';
+import Header from "./components/Header/Header";
 
 import './App.scss';
 import './components/views/views.scss';
-import Header from "./components/Header/Header";
 
 interface IAppProps {
+  dispatch: Function;
+  currentUser: any;
 }
 
 const App = (props: IAppProps) => {
+  const {dispatch, currentUser} = props;
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
-  useEffect(() => {
-    onLoad();
-  }, []);
-
-  const onLoad = async () => {
+  const onLoad = useCallback(async () => {
     try {
       await Auth.currentSession();
       userHasAuthenticated(true);
+      if (!currentUser.id) {
+        const user = await getUser();
+        dispatch(setCurrentUser(user.data));
+      }
     } catch (e) {
       if (e !== 'No current user') {
         onError(e);
       }
     }
     setIsAuthenticating(false);
-  }
+  }, [currentUser.id, dispatch])
+
+  useEffect(() => {
+    onLoad();
+  }, [onLoad]);
 
   return (
     <div className="App">
@@ -42,10 +52,10 @@ const App = (props: IAppProps) => {
       ) : (
         <>
           {/*@ts-ignore*/}
-          <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}}>
+          <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}} displayName="AppContext">
             <Router>
-              <Header />
-              <Routes />
+              <Header/>
+              <Routes/>
             </Router>
           </AppContext.Provider>
         </>
@@ -54,4 +64,11 @@ const App = (props: IAppProps) => {
   )
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.currentUser,
+    errors: state.errors,
+  }
+}
+
+export default connect(mapStateToProps)(App);

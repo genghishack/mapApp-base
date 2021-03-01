@@ -15,16 +15,15 @@ interface IResourceViewProps {
 const ResourceView = (props: IResourceViewProps) => {
   const { dispatch } = props;
 
-  const [infoTrayExpanded, setInfoTrayExpanded] = useState(false);
+  // const [infoTrayExpanded, setInfoTrayExpanded] = useState(false);
   const [resource, setResource] = useState({});
-  const [selectedResource, setSelectedResource] = useState('');
 
   //@ts-ignore
   useEffect(() => {
     const getMapMarkers = async () => {
       let resources = {data: []};
       try {
-        resources = await API.get('mapapp', '/public/resource', {});
+        resources = await API.get('mapapp', '/resource', {});
         dispatch(setResources(resources.data));
       } catch (e) {
         dispatch(setError(e));
@@ -44,8 +43,9 @@ const ResourceView = (props: IResourceViewProps) => {
     // getListOfMarkers();
   }, [dispatch]);
 
-  const handleResourceSelection = (stateAbbr: string, resourceId: string = '') => {
-    setSelectedResource(resourceId);
+  const handleResourceSelection = () => {
+    //no-op
+    setResource({});
   };
 
   return (
