@@ -1,22 +1,29 @@
 import React from 'react';
+import {connect} from "react-redux";
 import NavItem from './NavItem';
-import {useAppContext} from "../../libs/contextLib";
 
-const Nav = () => {
-  //@ts-ignore
-  const { isAuthenticated } = useAppContext();
+interface INav {
+  currentUser: any;
+}
+
+const Nav = (props: INav) => {
+  const {currentUser} = props;
 
   return (
     <div className="Nav">
       <NavItem label="Resources" pathname="/" />
-      {isAuthenticated ? (
-        <>
-          <NavItem label="Create Resource" pathname="/create-resource" />
-        </>
-      ) : null }
+      {currentUser.roles && (currentUser.roles.includes('Admin') || currentUser.roles.includes('Editor'))
+        ? <NavItem label="Create Resource" pathname="/create-resource" /> : null }
       <NavItem label="About" pathname="/about" />
     </div>
   )
 }
 
-export default Nav;
+const mapStateToProps = (state: { errors: any; currentUser: any }) => {
+  return {
+    currentUser: state.currentUser,
+    errors: state.errors,
+  }
+}
+
+export default connect(mapStateToProps)(Nav);
