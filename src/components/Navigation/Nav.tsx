@@ -14,6 +14,8 @@ const Nav = (props: INav) => {
       <NavItem label="Resources" pathname="/" />
       {currentUser.roles && (currentUser.roles.includes('Admin') || currentUser.roles.includes('Editor'))
         ? <NavItem label="Create Resource" pathname="/create-resource" /> : null }
+      {currentUser.roles && currentUser.roles.includes('Admin')
+        ? <NavItem label="Admin Tools" pathname="/admin" /> : null }
       <NavItem label="About" pathname="/about" />
     </div>
   )
