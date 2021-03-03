@@ -32,7 +32,7 @@ const App = (props: IAppProps) => {
         dispatch(setCurrentUser(user.data));
       }
     } catch (e) {
-      if (e !== 'No current user') {
+      if (e !== 'No current user' && e.code !== 'UserNotFoundException') {
         onError(e);
       }
     }
