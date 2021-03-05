@@ -9,5 +9,35 @@
       margin-bottom: 20px;
       text-align: center;
     }
+
+    .UserAdmin {
+      .userCell {
+        display: flex;
+        justify-content: space-between;
+
+        .option {
+          .btn {
+            height: 15px;
+            font-size: 13px;
+            padding: 0;
+            border: 0;
+            vertical-align: unset;
+
+            &:focus {
+              box-shadow: none;
+            }
+          }
+
+        }
+      }
+
+      .success {
+        color: #0f9d58;
+      }
+
+      .failure {
+        color: #c5221f;
+      }
+    }
   }
 }
