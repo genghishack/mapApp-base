@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table';
 
 import {listUsers} from "../../libs/userLib";
@@ -7,12 +7,13 @@ import UserRow from "./UserRow";
 const UserAdmin = () => {
   const [userList, setUserList] = useState([]);
 
+  const getUserList = async () => {
+    const users = await listUsers()
+    setUserList(users.data);
+  }
+
   useEffect(() => {
-    const getUserList = async () => {
-      const users = await listUsers()
-      setUserList(users.data);
-    }
-    getUserList();
+    getUserList().then();
   }, [])
 
   return (
@@ -29,7 +30,13 @@ const UserAdmin = () => {
         </tr>
         </thead>
         <tbody>
-        {userList.map((user: any) => <UserRow initialUserData={user}/>)}
+        {userList.map((user: any) => (
+          <UserRow
+            key={user.id}
+            initialUserData={user}
+            getUserList={getUserList}
+          />
+        ))}
         </tbody>
       </Table>
     </div>
