@@ -1,19 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import Table from 'react-bootstrap/Table';
 
-import {listUsers} from "../../libs/userLib";
+import {listRoles, listUsers} from "../../libs/userLib";
 import UserRow from "./UserRow";
 
 const UserAdmin = () => {
   const [userList, setUserList] = useState([]);
+  const [roles, setRoles] = useState([]);
 
   const getUserList = async () => {
     const users = await listUsers()
     setUserList(users.data);
   }
 
+  const getRoles = async () => {
+    const cognitoRoles = await listRoles();
+    setRoles(cognitoRoles.data);
+  }
+
   useEffect(() => {
     getUserList().then();
+    getRoles().then();
   }, [])
 
   return (
@@ -35,6 +42,7 @@ const UserAdmin = () => {
             key={user.id}
             initialUserData={user}
             getUserList={getUserList}
+            roles={roles}
           />
         ))}
         </tbody>

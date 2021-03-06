@@ -7,10 +7,11 @@ import UserRolesCell from "./UserRolesCell";
 interface IUserRow {
   initialUserData: any;
   getUserList: Function;
+  roles: string[];
 }
 
 const UserRow = (props: IUserRow) => {
-  const {initialUserData, getUserList} = props;
+  const {initialUserData, getUserList, roles} = props;
   const [user, setUser] = useState(initialUserData);
 
   return (
@@ -20,7 +21,11 @@ const UserRow = (props: IUserRow) => {
       </td>
       <td>{user.name}</td>
       <td>
-        <UserRolesCell user={user}/>
+        <UserRolesCell
+          user={user}
+          setUser={setUser}
+          roles={roles}
+        />
       </td>
       <td>{user.status}</td>
       <td>

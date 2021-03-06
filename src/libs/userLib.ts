@@ -28,3 +28,15 @@ export const enableUser = async (id) => {
 export const disableUser = async (id) => {
   return API.patch('mapapp', `/user/disable/${id}`, {});
 }
+
+export const listRoles = async () => {
+  return API.get('mapapp', '/user/roles', {});
+}
+
+export const addUserToRole = async (id, role) => {
+  return API.put('mapapp', `/user/add_role/${id}`,{body: {role}});
+}
+
+export const removeUserFromRole = async (id, role) => {
+  return API.put('mapapp', `/user/remove_role/${id}`, {body: {role}});
+}
