@@ -13,6 +13,21 @@ interface IUserEnabledCell {
 const UserEnabledCell = (props: IUserEnabledCell) => {
   const {user, setUser, getUserList} = props;
 
+  const handleDeleteUser = async () => {
+    await deleteUser(user.id)
+    getUserList()
+  }
+
+  const handleEnableUser = async () => {
+    const updatedUser = await enableUser(user.id);
+    setUser(updatedUser.data);
+  }
+
+  const handleDisableUser = async () => {
+    const updatedUser = await disableUser(user.id);
+    setUser(updatedUser.data);
+  }
+
   const renderEnabled = () => {
     return (
       <>
@@ -25,10 +40,7 @@ const UserEnabledCell = (props: IUserEnabledCell) => {
           <div className="option">
             <Button
               variant="link"
-              onClick={async () => {
-                const updatedUser = await disableUser(user.id);
-                setUser(updatedUser.data);
-              }}
+              onClick={handleDisableUser}
             >Disable</Button>
           </div>
         </div>
@@ -48,19 +60,13 @@ const UserEnabledCell = (props: IUserEnabledCell) => {
           <div className="option">
             <Button
               variant="link"
-              onClick={async () => {
-                const updatedUser = await enableUser(user.id);
-                setUser(updatedUser.data);
-              }}
+              onClick={handleEnableUser}
             >Enable</Button>
           </div>
           <div className="option">
             <Button
               variant="link"
-              onClick={async () => {
-                await deleteUser(user.id)
-                getUserList()
-              }}
+              onClick={handleDeleteUser}
             >Delete</Button>
           </div>
         </div>
