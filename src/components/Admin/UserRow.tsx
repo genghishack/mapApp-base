@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import UserEnabledCell from "./UserEnabledCell";
 import UserEmailCell from "./UserEmailCell";
 import UserRolesCell from "./UserRolesCell";
+import UserNameCell from "./UserNameCell";
 
 interface IUserRow {
   initialUserData: any;
@@ -19,7 +20,9 @@ const UserRow = (props: IUserRow) => {
       <td>
         <UserEmailCell user={user}/>
       </td>
-      <td>{user.name}</td>
+      <td>
+        <UserNameCell user={user} setUser={setUser}/>
+      </td>
       <td>
         <UserRolesCell
           user={user}

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {addUserToRole, removeUserFromRole} from "../../libs/userLib";
-import {Button, Dropdown, DropdownButton} from "react-bootstrap";
+import {Dropdown, DropdownButton} from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 
 interface IUserRolesCell {
@@ -57,6 +57,7 @@ const UserRolesCell = (props: IUserRolesCell) => {
           >
             {roleSuggestions.map(role => (
               <DropdownItem
+                key={role}
                 onClick={() => handleAddRole(role)}
               >{role}</DropdownItem>
             ))}

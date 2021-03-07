@@ -34,9 +34,13 @@ export const listRoles = async () => {
 }
 
 export const addUserToRole = async (id, role) => {
-  return API.put('mapapp', `/user/add_role/${id}`,{body: {role}});
+  return API.put('mapapp', `/user/role/${id}`,{body: {role}});
 }
 
 export const removeUserFromRole = async (id, role) => {
-  return API.put('mapapp', `/user/remove_role/${id}`, {body: {role}});
+  return API.del('mapapp', `/user/role/${id}`, {body: {role}});
+}
+
+export const changeUsername = async (id, name) => {
+  return API.patch('mapapp', `/user/name/${id}`, {body: {name}});
 }
