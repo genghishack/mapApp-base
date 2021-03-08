@@ -9,8 +9,13 @@ export const getUser = async (id = null) => {
   }
 }
 
-export const createUser = async () => {
-  return API.post('mapapp', '/user', {});
+export const createUser = async (userData: null | any = null) => {
+  if (!userData) {
+    return API.post('mapapp', '/user', {});
+  }
+  else {
+    return API.post('mapapp', '/user', {body: userData});
+  }
 }
 
 export const listUsers = async () => {
