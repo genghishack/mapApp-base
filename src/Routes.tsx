@@ -10,6 +10,7 @@ import AboutView from "./components/views/AboutView";
 import CreateResourceView from "./components/views/CreateResourceView";
 import AuthContainer from "./containers/AuthContainer";
 import ProfileContainer from "./containers/ProfileContainer";
+import AdminContainer from './containers/AdminContainer';
 
 interface IRoutes {
   currentUser: any;
@@ -32,6 +33,10 @@ const Routes = (props: IRoutes) => {
       <AuthenticatedRoute exact path="/create-resource" >
         {currentUser.roles && (currentUser.roles.includes('Editor') || currentUser.roles.includes('Admin'))
         ? <CreateResourceView/> : <NotFound/>}
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path="/admin" >
+        {currentUser.roles && currentUser.roles.includes('Admin')
+        ? <AdminContainer /> : <NotFound/>}
       </AuthenticatedRoute>
       <Route exact path="/about" >
         <AboutView />

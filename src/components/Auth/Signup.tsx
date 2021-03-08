@@ -66,7 +66,6 @@ const Signup = () => {
       <Form.Group controlId="name" size="lg">
         <Form.Label>Name</Form.Label>
         <Form.Control
-          autoFocus
           type="text"
           value={fields.name}
           onChange={handleFieldChange}
