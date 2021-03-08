@@ -26,7 +26,7 @@ const Login = () => {
   }
 
   return (
-    <div className="Auth">
+    <div className="Auth Login">
       <Form onSubmit={handleSubmit}>
         <header>Login</header>
         {/*//@ts-ignore*/}
