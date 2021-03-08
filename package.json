@@ -1,6 +1,6 @@
 {
-  "name": "mapApp-base-frontend",
-  "version": "0.2.0",
+  "name": "mapapp-frontend",
+  "version": "0.3.0",
   "description": "Basic Map Front End Client",
   "author": "Chris Wade <genghishack@gmail.com>",
   "repository": "https://github.com/genghishack/goobledysnart.git",
