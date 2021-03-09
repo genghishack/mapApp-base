@@ -20,7 +20,7 @@ const AuthNav = (props: IAuthNav) => {
 
   const history = useHistory();
   //@ts-ignore
-  const { isAuthenticated, setIsAuthenticated } = useAppContext();
+  const { isAuthenticated, setIsAuthenticated, isAdmin } = useAppContext();
 
   const navigate = (destination) => {
     history.push(`/${destination}`);
@@ -54,11 +54,17 @@ const AuthNav = (props: IAuthNav) => {
               title={getUserDisplayName()}
               variant="link"
             >
-              {currentUser.roles && currentUser.roles.includes('Admin') ? (
-                <DropdownItem onClick={() => navigate('admin')}>Admin Tools</DropdownItem>
+              {isAdmin ? (
+                <DropdownItem onClick={() => navigate('admin')}>
+                  Admin Tools
+                </DropdownItem>
               ) : null}
-              <DropdownItem onClick={() => navigate('profile')}>Profile</DropdownItem>
-              <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+              <DropdownItem onClick={() => navigate('profile')}>
+                Profile
+              </DropdownItem>
+              <DropdownItem onClick={handleLogout}>
+                Logout
+              </DropdownItem>
             </DropdownButton>
           </Dropdown>
         </>
