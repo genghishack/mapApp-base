@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 
 import {AdminContext} from "../libs/contextLib";
 import UserAdmin from "../components/Admin/UserAdmin/UserAdmin";
+import ResourceAdmin from "../components/Admin/ResourceAdmin/ResourceAdmin";
 
 import './Admin.scss';
+import AdminMenu from "../components/Admin/AdminMenu";
 
 const AdminContainer = () => {
   const [adminPhase, setAdminPhase] = useState('user');
@@ -14,6 +16,9 @@ const AdminContainer = () => {
 
   const renderAdminPhase = () => {
     switch (adminPhase) {
+      case 'resource':
+        return <ResourceAdmin/>;
+      case 'user':
       default:
         return <UserAdmin/>;
     }
@@ -22,8 +27,13 @@ const AdminContainer = () => {
   return (
     <div className="Admin AdminContainer">
       {/*@ts-ignore*/}
-      <AdminContext.Provider value={{}} displayName="AdminContext">
-        {renderAdminPhase()}
+      <AdminContext.Provider value={{
+        adminPhaseTransition,
+      }} displayName="AdminContext">
+        <AdminMenu/>
+        <div className="AdminContent">
+          {renderAdminPhase()}
+        </div>
       </AdminContext.Provider>
     </div>
   )
