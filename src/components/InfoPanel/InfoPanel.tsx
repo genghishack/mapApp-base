@@ -1,6 +1,6 @@
 import React from 'react';
 
-import "./InfoBox.scss";
+import "./InfoPanel.scss";
 
 import closeSVG from "../../assets/close_icon.png"
 import { connect } from "react-redux";
@@ -12,7 +12,7 @@ interface IInfoBoxProps {
   setExpanded?: Function;
 }
 
-const InfoBox = (props: IInfoBoxProps) => {
+const InfoPanel = (props: IInfoBoxProps) => {
   const { resource, slide, expanded, setExpanded } = props;
 
   const handleCloseClick = (e) => {
@@ -28,33 +28,33 @@ const InfoBox = (props: IInfoBoxProps) => {
     } else {
       return (
         <div className="no-info">
-          Resources
+          Resource Information
         </div>
       );
     }
   };
 
   const renderContent = () => (
-    <div className="content">
+    <div className="infoBoxContent">
       {renderResourceInfo()}
     </div>
   );
 
   if (slide) {
     return (
-      <div className={`InfoBox slide ${expandedClass}`}>
+      <div className={`InfoPanel slide ${expandedClass}`}>
         <img
           className="closeIcon"
           src={closeSVG}
           alt="close"
           onClick={handleCloseClick}
-        ></img>
+        />
         {renderContent()}
       </div>
     )
   } else {
     return (
-      <div className="InfoBox">
+      <div className="InfoPanel">
         {renderContent()}
       </div>
     )
@@ -66,4 +66,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(InfoBox);
+export default connect(mapStateToProps)(InfoPanel);

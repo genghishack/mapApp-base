@@ -5,12 +5,12 @@ import {connect} from "react-redux";
 import AuthenticatedRoute from "./components/Routes/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/Routes/UnauthenticatedRoute";
 import NotFound from './components/views/NotFound';
-import ResourceView from "./components/views/ResourceView";
 import AboutView from "./components/views/AboutView";
 import CreateResourceView from "./components/views/CreateResourceView";
 import AuthContainer from "./containers/AuthContainer";
 import ProfileContainer from "./containers/ProfileContainer";
 import AdminContainer from './containers/AdminContainer';
+import ResourceContainer from './containers/ResourceContainer';
 
 interface IRoutes {
   currentUser: any;
@@ -22,27 +22,27 @@ const Routes = (props: IRoutes) => {
   return (
     <Switch>
       <Route exact path="/">
-        <ResourceView/>
+        <ResourceContainer/>
       </Route>
       <UnauthenticatedRoute exact path="/auth">
         <AuthContainer/>
       </UnauthenticatedRoute>
-      <AuthenticatedRoute exact path="/profile" >
-        <ProfileContainer />
+      <AuthenticatedRoute exact path="/profile">
+        <ProfileContainer/>
       </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/create-resource" >
+      <AuthenticatedRoute exact path="/create-resource">
         {currentUser.roles && (currentUser.roles.includes('Editor') || currentUser.roles.includes('Admin'))
-        ? <CreateResourceView/> : <NotFound/>}
+          ? <CreateResourceView/> : <NotFound/>}
       </AuthenticatedRoute>
-      <AuthenticatedRoute exact path="/admin" >
+      <AuthenticatedRoute exact path="/admin">
         {currentUser.roles && currentUser.roles.includes('Admin')
-        ? <AdminContainer /> : <NotFound/>}
+          ? <AdminContainer/> : <NotFound/>}
       </AuthenticatedRoute>
-      <Route exact path="/about" >
-        <AboutView />
+      <Route exact path="/about">
+        <AboutView/>
       </Route>
       <Route>
-        <NotFound />
+        <NotFound/>
       </Route>
     </Switch>
   )
