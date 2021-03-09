@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import {AdminContext} from "../libs/contextLib";
-import UserAdmin from "../components/Admin/UserAdmin";
+import UserAdmin from "../components/Admin/UserAdmin/UserAdmin";
 
 import './Admin.scss';
 

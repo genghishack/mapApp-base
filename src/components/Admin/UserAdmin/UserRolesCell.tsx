@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {addUserToRole, removeUserFromRole} from "../../libs/userLib";
+import {addUserToRole, removeUserFromRole} from "../../../libs/userLib";
 import {Dropdown, DropdownButton} from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 

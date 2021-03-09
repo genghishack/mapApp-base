@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {useFormFields} from "../../libs/hooksLib";
-import {createUser} from "../../libs/userLib";
+import {useFormFields} from "../../../libs/hooksLib";
+import {createUser} from "../../../libs/userLib";
 import {Button, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckSquare, faPlusSquare, faTimes} from "@fortawesome/free-solid-svg-icons";
