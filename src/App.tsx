@@ -21,12 +21,14 @@ interface IAppProps {
 const App = (props: IAppProps) => {
   const {dispatch, currentUser} = props;
   const [isAuthenticating, setIsAuthenticating] = useState(true);
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isEditor, setIsEditor] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const onLoad = useCallback(async () => {
     try {
       await Auth.currentSession();
-      userHasAuthenticated(true);
+      setIsAuthenticated(true);
       if (!currentUser.id) {
         const user = await getUser();
         dispatch(setCurrentUser(user.data));
@@ -43,6 +45,16 @@ const App = (props: IAppProps) => {
     onLoad();
   }, [onLoad]);
 
+  useEffect(() => {
+    if (isAuthenticated && currentUser.roles) {
+      setIsEditor(currentUser.roles.includes('Editor'));
+      setIsAdmin(currentUser.roles.includes('Admin'));
+    } else {
+      setIsEditor(false);
+      setIsAdmin(false);
+    }
+  }, [isAuthenticated, currentUser])
+
   return (
     <div className="App">
       {isAuthenticating ? (
@@ -52,7 +64,10 @@ const App = (props: IAppProps) => {
       ) : (
         <>
           {/*@ts-ignore*/}
-          <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}} displayName="AppContext">
+          <AppContext.Provider value={{
+            isAuthenticated, setIsAuthenticated,
+            isEditor, isAdmin
+          }} displayName="AppContext">
             <Router>
               <Header/>
               <Routes/>
