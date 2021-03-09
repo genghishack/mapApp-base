@@ -28,7 +28,7 @@ const AuthContainer = (props: IAuthContainerProps) => {
   const history = useHistory();
   const isMountedRef = useIsMountedRef();
   //@ts-ignore
-  const {userHasAuthenticated} = useAppContext()
+  const {setIsAuthenticated} = useAppContext()
   const [authPhase, setAuthPhase] = useState('login');
   const [isLoading, setIsLoading] = useState(false);
   const [newUser, setNewUser] = useState(null);
@@ -93,7 +93,7 @@ const AuthContainer = (props: IAuthContainerProps) => {
             alert(signin.challengeName);
         }
       } else {
-        userHasAuthenticated(true);
+        setIsAuthenticated(true);
         await updateStateWithCurrentUser();
       }
     } catch (e) {

@@ -20,7 +20,7 @@ const AuthNav = (props: IAuthNav) => {
 
   const history = useHistory();
   //@ts-ignore
-  const { isAuthenticated, userHasAuthenticated } = useAppContext();
+  const { isAuthenticated, setIsAuthenticated } = useAppContext();
 
   const navigate = (destination) => {
     history.push(`/${destination}`);
@@ -28,7 +28,7 @@ const AuthNav = (props: IAuthNav) => {
 
   const handleLogout = async () => {
     await Auth.signOut()
-    userHasAuthenticated(false);
+    setIsAuthenticated(false);
     dispatch(setCurrentUser({}));
     history.push('/');
   }

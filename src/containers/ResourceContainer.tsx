@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {API} from "aws-amplify";
 
@@ -22,7 +22,7 @@ const ResourceContainer = (props: IResourceContainer) => {
   const [selectedResource, setSelectedResource] = useState({});
   // const [infoPanelExpanded, setInfoPanelExpanded] = useState(false);
 
-  const getMapMarkers = async () => {
+  const getMapMarkers = useCallback(async () => {
     let resources = {data: []};
     try {
       resources = await API.get('mapapp', '/resource', {});
@@ -30,12 +30,12 @@ const ResourceContainer = (props: IResourceContainer) => {
     } catch (e) {
       dispatch(setError(e));
     }
-  }
+  }, [dispatch]);
 
   //@ts-ignore
   useEffect(() => {
     getMapMarkers().then();
-  }, []);
+  }, [getMapMarkers]);
 
   const resourcePhaseTransition = (phase) => {
     setResourcePhase(phase);
