@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {connect} from "react-redux";
 
-import {setCurrentUser} from "../../redux/actions/currentUser";
+import {setCurrentUser} from "../../../redux/actions/currentUser";
 import UserEnabledCell from "./UserEnabledCell";
 import UserEmailCell from "./UserEmailCell";
 import UserRolesCell from "./UserRolesCell";
