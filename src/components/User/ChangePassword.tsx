@@ -5,7 +5,7 @@ import Button from "react-bootstrap/esm/Button";
 
 import LoaderButton from "../LoaderButton/LoaderButton";
 import { onError } from "../../libs/errorLib";
-import {useProfileContext} from "../../libs/contextLib";
+import {useProfileContext} from "../../context/ProfileContext";
 
 const ChangePassword = () => {
   const {

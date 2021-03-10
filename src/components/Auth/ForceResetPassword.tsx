@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 
 import LoaderButton from "../LoaderButton/LoaderButton";
 import {onError} from "../../libs/errorLib";
-import {useAuthContext} from "../../libs/contextLib";
+import {useAuthContext} from "../../context/AuthContext";
 import Button from "react-bootstrap/esm/Button";
 
 const ForceResetPassword = () => {

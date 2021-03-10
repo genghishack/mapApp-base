@@ -3,7 +3,8 @@ import {Auth} from "aws-amplify";
 import {useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 
-import {AuthContext, useAppContext} from "../libs/contextLib";
+import {AuthContext} from "../context/AuthContext";
+import {useAppContext} from '../context/AppContext';
 import {useFormFields, useIsMountedRef} from "../libs/hooksLib";
 import {getUser} from "../libs/userLib";
 import {onError} from "../libs/errorLib";
@@ -131,13 +132,12 @@ const AuthContainer = (props: IAuthContainerProps) => {
 
   return (
     <div className="Auth AuthContainer">
-      {/*@ts-ignore*/}
       <AuthContext.Provider value={{
         isLoading, setIsLoading,
         fields, handleFieldChange,
         newUser, attemptSignin,
         authPhaseTransition,
-      }} displayName="AuthContext">
+      }}>
         {renderAuthPhase()}
       </AuthContext.Provider>
     </div>

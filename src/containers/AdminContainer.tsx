@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {AdminContext} from "../libs/contextLib";
+import {AdminContext} from "../context/AdminContext";
 import UserAdmin from "../components/Admin/UserAdmin/UserAdmin";
 import ResourceAdmin from "../components/Admin/ResourceAdmin/ResourceAdmin";
 

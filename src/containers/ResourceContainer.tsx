@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {connect} from "react-redux";
 import {API} from "aws-amplify";
 
-import {ResourceContext} from '../libs/contextLib';
+import {ResourceContext} from '../context/ResourceContext';
 import {setResources} from "../redux/actions/resources";
 import {setError} from "../redux/actions/errors";
 import MenuTree from "../components/MenuTree/MenuTree";

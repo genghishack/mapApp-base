@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { connect } from "react-redux";
 import {Nav} from "react-bootstrap";
 
-import {useAppContext} from "../../libs/contextLib";
+import {useAppContext} from "../../context/AppContext";
 import closeSVG from "../../assets/close_icon.png"
 import CreateResource from "../CreateResource/CreateResource";
 

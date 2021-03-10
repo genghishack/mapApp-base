@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 import LoaderButton from "../LoaderButton/LoaderButton";
 import {onError} from "../../libs/errorLib";
 import {getUser} from '../../libs/userLib';
-import {useProfileContext} from '../../libs/contextLib';
+import {useProfileContext} from "../../context/ProfileContext";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 
 interface IChangeNameProps {

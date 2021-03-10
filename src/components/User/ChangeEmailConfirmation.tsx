@@ -8,7 +8,7 @@ import LoaderButton from "../LoaderButton/LoaderButton";
 import {getUser} from "../../libs/userLib";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 import {onError} from "../../libs/errorLib";
-import {useProfileContext} from '../../libs/contextLib';
+import {useProfileContext} from "../../context/ProfileContext";
 
 interface IChangeEmailConfirmation {
   dispatch: Function;

@@ -3,7 +3,7 @@ import {Auth} from "aws-amplify";
 import Form from "react-bootstrap/Form";
 import Button from 'react-bootstrap/esm/Button';
 
-import {useAuthContext} from "../../libs/contextLib";
+import {useAuthContext} from "../../context/AuthContext";
 import {onError} from "../../libs/errorLib";
 import LoaderButton from "../LoaderButton/LoaderButton";
 

@@ -5,7 +5,7 @@ import Button from "react-bootstrap/esm/Button";
 
 import LoaderButton from "../LoaderButton/LoaderButton";
 import {onError} from "../../libs/errorLib";
-import {useAuthContext} from "../../libs/contextLib";
+import {useAuthContext} from "../../context/AuthContext";
 
 const ResetPassword = () => {
   const {
