@@ -7,7 +7,7 @@ import {AppContext} from "./libs/contextLib";
 import {onError} from "./libs/errorLib";
 import {getUser} from './libs/userLib';
 import {setCurrentUser} from "./redux/actions/currentUser";
-import Routes from './Routes';
+import Routes from './components/Routes/Routes';
 import Header from "./components/Header/Header";
 
 import './App.scss';
