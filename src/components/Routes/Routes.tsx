@@ -2,8 +2,8 @@ import React from 'react';
 import {Route, Switch} from "react-router-dom";
 
 import {UserRoute, GuestRoute, AdminRoute} from "./RouteLevels";
-import NotFound from '../views/NotFound';
-import AboutView from "../views/AboutView";
+import NotFound from '../NotFound';
+import About from "../../components/About/About";
 import AuthContainer from "../../containers/AuthContainer";
 import ProfileContainer from "../../containers/ProfileContainer";
 import AdminContainer from '../../containers/AdminContainer';
@@ -16,7 +16,7 @@ const Routes = () => {
         <ResourceContainer/>
       </Route>
       <Route exact path="/about">
-        <AboutView/>
+        <About/>
       </Route>
       <GuestRoute exact path="/auth">
         <AuthContainer/>

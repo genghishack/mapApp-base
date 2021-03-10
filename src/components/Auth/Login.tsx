@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form';
 
 import {useAuthContext} from "../../libs/contextLib";
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton/LoaderButton";
 
 const Login = () => {
   const {

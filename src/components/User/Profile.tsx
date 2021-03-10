@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 
 import {useProfileContext} from "../../libs/contextLib";
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton/LoaderButton";
 
 import './Profile.scss';
 

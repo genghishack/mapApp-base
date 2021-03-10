@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/esm/Button';
 import {connect} from "react-redux";
 import {Auth} from "aws-amplify";
 
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton/LoaderButton";
 import {getUser} from "../../libs/userLib";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 import {onError} from "../../libs/errorLib";

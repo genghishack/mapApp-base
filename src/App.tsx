@@ -11,7 +11,6 @@ import Routes from './components/Routes/Routes';
 import Header from "./components/Header/Header";
 
 import './App.scss';
-import './components/views/views.scss';
 
 interface IAppProps {
   dispatch: Function;
@@ -63,11 +62,12 @@ const App = (props: IAppProps) => {
         </>
       ) : (
         <>
-          {/*@ts-ignore*/}
-          <AppContext.Provider value={{
-            isAuthenticated, setIsAuthenticated,
-            isEditor, isAdmin
-          }} displayName="AppContext">
+          <AppContext.Provider
+            value={{
+              isAuthenticated, setIsAuthenticated,
+              isEditor, isAdmin,
+            }}
+          >
             <Router>
               <Header/>
               <Routes/>

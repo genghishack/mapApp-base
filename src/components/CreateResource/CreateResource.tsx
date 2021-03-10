@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import {API} from 'aws-amplify';
-import LoaderButton from '../LoaderButton';
+import LoaderButton from '../LoaderButton/LoaderButton';
 import {useFormFields} from '../../libs/hooksLib';
 import {onError} from '../../libs/errorLib';
 

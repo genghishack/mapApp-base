@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/esm/Button';
 
 import {useAuthContext} from "../../libs/contextLib";
 import {onError} from "../../libs/errorLib";
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton/LoaderButton";
 
 const Signup = () => {
   //@ts-ignore

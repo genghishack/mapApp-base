@@ -43,7 +43,7 @@ export const UserRoute = ({ children, ...rest }) => {
         children
       ) : (
         <Redirect to={
-          `/login?redirect=${pathname}${search}`
+          `/auth?redirect=${pathname}${search}`
         } />
       )}
     </Route>
@@ -60,7 +60,7 @@ export const EditorRoute = ({ children, ...rest }) => {
         children
       ) : (
         <Redirect to={
-          `/login?redirect=${pathname}${search}`
+          `/auth?redirect=${pathname}${search}`
         } />
       )}
     </Route>
@@ -77,7 +77,7 @@ export const AdminRoute = ({ children, ...rest }) => {
         children
       ) : (
         <Redirect to={
-          `/login?redirect=${pathname}${search}`
+          `/auth?redirect=${pathname}${search}`
         } />
       )}
     </Route>

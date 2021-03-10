@@ -1,6 +1,18 @@
 import { useContext, createContext } from 'react';
 
-export const AppContext = createContext(null);
+export const AppContext = createContext<{
+  isAuthenticated: boolean;
+  setIsAuthenticated: Function;
+  isEditor: boolean;
+  isAdmin: boolean;
+}>({
+  isAuthenticated: false,
+  setIsAuthenticated: () => {},
+  isEditor: false,
+  isAdmin: false,
+});
+AppContext.displayName = "AppContext";
+
 export const AuthContext = createContext(null);
 export const ProfileContext = createContext(null);
 export const AdminContext = createContext(null);
