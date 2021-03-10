@@ -49,4 +49,9 @@
       cursor: pointer;
     }
   }
+
+  &.ResetPassword {
+    display: flex;
+    flex-direction: column;
+  }
 }

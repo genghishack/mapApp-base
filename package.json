@@ -13,6 +13,7 @@
     "@mapbox/geo-viewport": "^0.4.1",
     "@material-ui/core": "^4.11.3",
     "@reduxjs/toolkit": "^1.1.0",
+    "@types/react-bootstrap": "^0.32.25",
     "@types/react-router-bootstrap": "^0.24.5",
     "aws-amplify": "^3.3.14",
     "leaflet": "^1.7.1",

@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
+import { connect } from "react-redux";
+import {Nav} from "react-bootstrap";
+
+import {useAppContext} from "../../libs/contextLib";
+import closeSVG from "../../assets/close_icon.png"
+import CreateResource from "../CreateResource/CreateResource";
 
 import "./InfoPanel.scss";
-
-import closeSVG from "../../assets/close_icon.png"
-import { connect } from "react-redux";
 
 interface IInfoBoxProps {
   resource: any;
@@ -14,6 +17,9 @@ interface IInfoBoxProps {
 
 const InfoPanel = (props: IInfoBoxProps) => {
   const { resource, slide, expanded, setExpanded } = props;
+  const [activeTab, setActiveTab] = useState('info');
+  //@ts-ignore
+  const {isEditor, isAdmin} = useAppContext();
 
   const handleCloseClick = (e) => {
     if (setExpanded) {
@@ -34,11 +40,35 @@ const InfoPanel = (props: IInfoBoxProps) => {
     }
   };
 
-  const renderContent = () => (
-    <div className="infoBoxContent">
-      {renderResourceInfo()}
-    </div>
+  const renderTabs = () => (
+    <>
+      {/*@ts-ignore*/}
+      <Nav variant="tabs" defaultActiveKey={activeTab} onSelect={(k) => setActiveTab(k)}>
+        <Nav.Item>
+          <Nav.Link eventKey="info">Resource Info</Nav.Link>
+        </Nav.Item>
+        {isEditor || isAdmin ? (
+          <Nav.Item>
+            <Nav.Link eventKey="create">Create Resource</Nav.Link>
+          </Nav.Item>
+        ) : null}
+      </Nav>
+    </>
   );
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'create':
+        if (isEditor || isAdmin) {
+          return <CreateResource/>;
+        } else {
+          return renderResourceInfo();
+        }
+      case 'info':
+      default:
+        return renderResourceInfo();
+    }
+  }
 
   if (slide) {
     return (
@@ -49,13 +79,19 @@ const InfoPanel = (props: IInfoBoxProps) => {
           alt="close"
           onClick={handleCloseClick}
         />
-        {renderContent()}
+        <div className="infoPanelContent">
+          {renderTabs()}
+          {renderContent()}
+        </div>
       </div>
     )
   } else {
     return (
       <div className="InfoPanel">
-        {renderContent()}
+        <div className="infoPanelContent">
+          {renderTabs()}
+          {renderContent()}
+        </div>
       </div>
     )
   }
