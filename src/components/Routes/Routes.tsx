@@ -3,7 +3,7 @@ import {Route, Switch} from "react-router-dom";
 
 import {UserRoute, GuestRoute, AdminRoute} from "./RouteLevels";
 import NotFound from '../NotFound';
-import About from "../../components/About/About";
+import About from "../About";
 import AuthContainer from "../../containers/AuthContainer";
 import ProfileContainer from "../../containers/ProfileContainer";
 import AdminContainer from '../../containers/AdminContainer';
