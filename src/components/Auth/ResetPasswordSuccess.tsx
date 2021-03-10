@@ -7,7 +7,6 @@ import {useAuthContext} from "../../context/AuthContext";
 
 const ResetPasswordSuccess = () => {
   const {
-    //@ts-ignore
     authPhaseTransition,
   } = useAuthContext();
 

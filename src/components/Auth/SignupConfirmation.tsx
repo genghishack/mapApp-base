@@ -9,11 +9,8 @@ import LoaderButton from "../LoaderButton/LoaderButton";
 
 const SignupConfirmation = () => {
   const {
-    // @ts-ignore
     authPhaseTransition, attemptSignin,
-    // @ts-ignore
     isLoading, setIsLoading,
-    // @ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();
 

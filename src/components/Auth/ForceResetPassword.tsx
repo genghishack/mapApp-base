@@ -9,11 +9,8 @@ import Button from "react-bootstrap/esm/Button";
 
 const ForceResetPassword = () => {
   const {
-    //@ts-ignore
     authPhaseTransition, newUser,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();
 

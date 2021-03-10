@@ -18,7 +18,6 @@ interface IInfoBoxProps {
 const InfoPanel = (props: IInfoBoxProps) => {
   const { resource, slide, expanded, setExpanded } = props;
   const [activeTab, setActiveTab] = useState('info');
-  //@ts-ignore
   const {isEditor, isAdmin} = useAppContext();
 
   const handleCloseClick = (e) => {

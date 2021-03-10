@@ -19,7 +19,6 @@ const AuthNav = (props: IAuthNav) => {
   const {dispatch, currentUser} = props;
 
   const history = useHistory();
-  //@ts-ignore
   const { isAuthenticated, setIsAuthenticated, isAdmin } = useAppContext();
 
   const navigate = (destination) => {

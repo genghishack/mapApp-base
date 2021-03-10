@@ -19,7 +19,6 @@ function querystring(name, url = window.location.href) {
 }
 
 export const GuestRoute = ({ children, ...rest }) => {
-  //@ts-ignore
   const { isAuthenticated } = useAppContext();
   const redirect = querystring("redirect");
   return (
@@ -35,7 +34,6 @@ export const GuestRoute = ({ children, ...rest }) => {
 
 export const UserRoute = ({ children, ...rest }) => {
   const { pathname, search } = useLocation();
-  //@ts-ignore
   const { isAuthenticated } = useAppContext();
   return (
     <Route {...rest}>
@@ -52,7 +50,6 @@ export const UserRoute = ({ children, ...rest }) => {
 
 export const EditorRoute = ({ children, ...rest }) => {
   const { pathname, search } = useLocation();
-  //@ts-ignore
   const { isAuthenticated, isEditor, isAdmin } = useAppContext();
   return (
     <Route {...rest}>
@@ -69,7 +66,6 @@ export const EditorRoute = ({ children, ...rest }) => {
 
 export const AdminRoute = ({ children, ...rest }) => {
   const { pathname, search } = useLocation();
-  //@ts-ignore
   const { isAuthenticated, isAdmin } = useAppContext();
   return (
     <Route {...rest}>

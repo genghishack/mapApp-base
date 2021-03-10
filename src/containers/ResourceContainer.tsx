@@ -47,10 +47,9 @@ const ResourceContainer = (props: IResourceContainer) => {
 
   return (
     <div className="ResourceContainer">
-      {/*@ts-ignore*/}
       <ResourceContext.Provider value={{
         resourcePhaseTransition,
-      }} displayName="ResourceContext">
+      }}>
         <MenuTree
           handleSelection={handleResourceSelection}
         />

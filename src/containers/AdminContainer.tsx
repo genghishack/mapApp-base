@@ -26,10 +26,9 @@ const AdminContainer = () => {
 
   return (
     <div className="Admin AdminContainer">
-      {/*@ts-ignore*/}
       <AdminContext.Provider value={{
         adminPhaseTransition,
-      }} displayName="AdminContext">
+      }}>
         <AdminMenu/>
         <div className="AdminContent">
           {renderAdminPhase()}

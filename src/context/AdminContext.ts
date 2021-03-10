@@ -1,5 +1,12 @@
-import {createContext, useContext} from "react";
+import {ChangeEventHandler, createContext, useContext} from "react";
 
-export const AdminContext = createContext(null);
+type AdminContextType = {
+  adminPhaseTransition: Function;
+}
+
+export const AdminContext = createContext<AdminContextType>({
+  adminPhaseTransition: () => {}
+});
+AdminContext.displayName = "AdminContext";
 
 export const useAdminContext = () => useContext(AdminContext);

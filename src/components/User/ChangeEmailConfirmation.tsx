@@ -17,11 +17,8 @@ interface IChangeEmailConfirmation {
 const ChangeEmailConfirmation = (props: IChangeEmailConfirmation) => {
   const {dispatch} = props;
   const {
-    //@ts-ignore
     profilePhaseTransition,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useProfileContext();
 

@@ -9,11 +9,8 @@ import {useAuthContext} from "../../context/AuthContext";
 
 const ResetPassword = () => {
   const {
-    //@ts-ignore
     authPhaseTransition,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();
 

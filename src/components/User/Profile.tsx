@@ -13,7 +13,6 @@ interface IProfileProps {
 const Profile = (props: IProfileProps) => {
   const {currentUser} = props;
   const {
-    //@ts-ignore
     profilePhaseTransition
   } = useProfileContext();
 

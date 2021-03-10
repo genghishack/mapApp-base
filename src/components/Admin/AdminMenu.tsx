@@ -5,7 +5,6 @@ import {useAdminContext} from "../../context/AdminContext";
 
 const AdminMenu = () => {
   const {
-    //@ts-ignore
     adminPhaseTransition,
   } = useAdminContext();
 

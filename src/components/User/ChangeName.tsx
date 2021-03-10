@@ -17,11 +17,8 @@ interface IChangeNameProps {
 const ChangeName = (props: IChangeNameProps) => {
   const {dispatch} = props;
   const {
-    //@ts-ignore
     profilePhaseTransition,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useProfileContext();
 

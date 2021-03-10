@@ -9,11 +9,8 @@ import {useProfileContext} from "../../context/ProfileContext";
 
 const ChangePassword = () => {
   const {
-    //@ts-ignore
     profilePhaseTransition,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useProfileContext();
 

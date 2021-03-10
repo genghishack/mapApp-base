@@ -28,12 +28,10 @@ const AuthContainer = (props: IAuthContainerProps) => {
   const {dispatch, currentUser} = props;
   const history = useHistory();
   const isMountedRef = useIsMountedRef();
-  //@ts-ignore
   const {setIsAuthenticated} = useAppContext()
   const [authPhase, setAuthPhase] = useState('login');
   const [isLoading, setIsLoading] = useState(false);
   const [newUser, setNewUser] = useState(null);
-  // const [user, setUser] = useState(null);
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     name: "",

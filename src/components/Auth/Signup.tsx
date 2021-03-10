@@ -8,13 +8,9 @@ import {onError} from "../../libs/errorLib";
 import LoaderButton from "../LoaderButton/LoaderButton";
 
 const Signup = () => {
-  //@ts-ignore
   const {
-    //@ts-ignore
     authPhaseTransition, attemptSignin,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();
 
