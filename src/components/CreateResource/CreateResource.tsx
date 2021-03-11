@@ -19,15 +19,17 @@ const CreateResource = () => {
     city: '',
     state: '',
     country: 'US',
-    postalCode: ''
+    postalCode: '',
+    description: '',
   });
 
   const validateForm = () => {
-    return fields.street_1.length > 0
-      || fields.city.length > 0
-      || fields.state.length > 0
-      || fields.country.length > 0
-      || fields.postalCode.length > 0;
+    return fields.name.length > 0
+      && (fields.street_1.length > 0
+        || fields.city.length > 0
+        || fields.state.length > 0
+        || fields.country.length > 0
+        || fields.postalCode.length > 0);
   }
 
   const handleSubmit = async (evt) => {
@@ -35,11 +37,16 @@ const CreateResource = () => {
 
     setIsLoading(true);
 
-    const {name, street_1, street_2, city, state, country, postalCode} = fields;
+    const {
+      name, street_1, street_2, city, state,
+      country, postalCode, description
+    } = fields;
+
     try {
       await createResource({
         name,
-        address: {street_1, street_2, city, state, country, postalCode}
+        address: {street_1, street_2, city, state, country, postalCode},
+        description,
       });
       await getMapMarkers();
       setIsLoading(false);
@@ -113,6 +120,15 @@ const CreateResource = () => {
           <Form.Control
             type="text"
             value={fields.postalCode}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        <Form.Group controlId="description">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={5}
+            value={fields.description}
             onChange={handleFieldChange}
           />
         </Form.Group>
