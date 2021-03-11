@@ -50,11 +50,10 @@ const CreateResource = () => {
   }
 
   return (
-    <div className="EnterInfo">
+    <div className="CreateResource">
       <Form onSubmit={handleSubmit}>
-        <header>Create a resource</header>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="name">
+        <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
             autoFocus
@@ -64,7 +63,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="street_1">
+        <Form.Group controlId="street_1">
           <Form.Label>Address 1 (e.g. Street)</Form.Label>
           <Form.Control
             type="text"
@@ -73,7 +72,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="street_2">
+        <Form.Group controlId="street_2">
           <Form.Label>Address 2 (e.g. Apt #)</Form.Label>
           <Form.Control
             type="text"
@@ -82,7 +81,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="city">
+        <Form.Group controlId="city">
           <Form.Label>City</Form.Label>
           <Form.Control
             type="text"
@@ -91,7 +90,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="state">
+        <Form.Group controlId="state">
           <Form.Label>State</Form.Label>
           <Form.Control
             type="text"
@@ -100,7 +99,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="country">
+        <Form.Group controlId="country">
           <Form.Label>Country</Form.Label>
           <Form.Control
             type="text"
@@ -109,7 +108,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="postalCode">
+        <Form.Group controlId="postalCode">
           <Form.Label>Postal Code</Form.Label>
           <Form.Control
             type="text"
@@ -119,7 +118,7 @@ const CreateResource = () => {
         </Form.Group>
         <LoaderButton
           block
-          size="lg"
+          size="sm"
           type="submit"
           isLoading={isLoading}
           disabled={!validateForm()}
