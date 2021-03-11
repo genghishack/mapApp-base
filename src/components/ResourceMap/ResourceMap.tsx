@@ -1,15 +1,14 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {connect} from 'react-redux';
 import {continentalViewport} from '../../libs/mapLib';
 import Map from '../Map';
 
 import './ResourceMap.scss';
 
-interface IResourceMapProps {
-  resources?: any;
+interface IResourceMap {
+  resources: any;
 }
 
-const ResourceMap = (props: IResourceMapProps) => {
+const ResourceMap = (props: IResourceMap) => {
   const {
     resources,
   } = props;
@@ -36,10 +35,4 @@ const ResourceMap = (props: IResourceMapProps) => {
   );
 }
 
-const mapStateToProps = state => {
-  return {
-    resources: state.resources,
-  };
-};
-
-export default connect(mapStateToProps)(ResourceMap);
+export default ResourceMap;

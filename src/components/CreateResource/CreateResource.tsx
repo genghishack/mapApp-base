@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
-import {API} from 'aws-amplify';
+
+import {useResourceContext} from "../../context/ResourceContext";
+import {createResource} from "../../libs/resourceLib";
 import LoaderButton from '../LoaderButton/LoaderButton';
 import {useFormFields} from '../../libs/hooksLib';
 import {onError} from '../../libs/errorLib';
@@ -8,6 +10,7 @@ import {onError} from '../../libs/errorLib';
 import './CreateResource.scss';
 
 const CreateResource = () => {
+  const {getMapMarkers} = useResourceContext();
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     name: '',
@@ -38,17 +41,12 @@ const CreateResource = () => {
         name,
         address: {street_1, street_2, city, state, country, postalCode}
       });
+      await getMapMarkers();
       setIsLoading(false);
     } catch (e) {
       onError(e);
       setIsLoading(false);
     }
-  }
-
-  const createResource = (resource) => {
-    return API.post('mapapp', '/resource', {
-      body: resource
-    });
   }
 
   return (

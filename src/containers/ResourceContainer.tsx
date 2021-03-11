@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {connect} from "react-redux";
-import {API} from "aws-amplify";
 
+import {getResources} from "../libs/resourceLib";
 import {ResourceContext} from '../context/ResourceContext';
 import {setResources} from "../redux/actions/resources";
 import {setError} from "../redux/actions/errors";
@@ -13,20 +13,21 @@ import './Resource.scss';
 
 interface IResourceContainer {
   dispatch: Function;
+  resources?: any;
 }
 
 const ResourceContainer = (props: IResourceContainer) => {
-  const {dispatch} = props;
+  const {dispatch, resources} = props;
 
   const [resourcePhase, setResourcePhase] = useState('info');
   const [selectedResource, setSelectedResource] = useState({});
   // const [infoPanelExpanded, setInfoPanelExpanded] = useState(false);
 
   const getMapMarkers = useCallback(async () => {
-    let resources = {data: []};
+    let markers = {data: []};
     try {
-      resources = await API.get('mapapp', '/resource', {});
-      dispatch(setResources(resources.data));
+      markers = await getResources();
+      dispatch(setResources(markers.data));
     } catch (e) {
       dispatch(setError(e));
     }
@@ -48,12 +49,12 @@ const ResourceContainer = (props: IResourceContainer) => {
   return (
     <div className="ResourceContainer">
       <ResourceContext.Provider value={{
-        resourcePhaseTransition,
+        resourcePhaseTransition, getMapMarkers,
       }}>
         <MenuTree
           handleSelection={handleResourceSelection}
         />
-        <ResourceMap />
+        <ResourceMap resources={resources}/>
         <InfoPanel
           resource={selectedResource}
           // slide={true}

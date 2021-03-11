@@ -2,10 +2,12 @@ import {createContext, useContext} from "react";
 
 type ResourceContextType = {
   resourcePhaseTransition: Function;
+  getMapMarkers: Function;
 }
 
 export const ResourceContext = createContext<ResourceContextType>({
-  resourcePhaseTransition: () => {}
+  resourcePhaseTransition: () => {},
+  getMapMarkers: () => {},
 });
 ResourceContext.displayName = 'ResourceContext';
 
