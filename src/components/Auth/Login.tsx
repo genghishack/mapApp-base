@@ -2,16 +2,13 @@ import React from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form';
 
-import {useAuthContext} from "../../libs/contextLib";
-import LoaderButton from "../LoaderButton";
+import {useAuthContext} from "../../context/AuthContext";
+import LoaderButton from "../LoaderButton/LoaderButton";
 
 const Login = () => {
   const {
-    //@ts-ignore
     authPhaseTransition, attemptSignin,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();
 
@@ -29,7 +26,7 @@ const Login = () => {
     <div className="Auth Login">
       <Form onSubmit={handleSubmit}>
         <header>Login</header>
-        {/*//@ts-ignore*/}
+        {/*@ts-ignore*/}
         <Form.Group size="lg" controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
@@ -39,7 +36,7 @@ const Login = () => {
             onChange={handleFieldChange}
           />
         </Form.Group>
-        {/*//@ts-ignore*/}
+        {/*@ts-ignore*/}
         <Form.Group size="lg" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control

@@ -3,11 +3,10 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import Button from "react-bootstrap/Button";
 
-import {useAuthContext} from "../../libs/contextLib";
+import {useAuthContext} from "../../context/AuthContext";
 
 const ResetPasswordSuccess = () => {
   const {
-    //@ts-ignore
     authPhaseTransition,
   } = useAuthContext();
 

@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {Button, Dropdown, DropdownButton} from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 
-import {useAppContext} from "../../libs/contextLib";
+import {useAppContext} from "../../context/AppContext";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 
 import './AuthNav.scss';
@@ -19,7 +19,6 @@ const AuthNav = (props: IAuthNav) => {
   const {dispatch, currentUser} = props;
 
   const history = useHistory();
-  //@ts-ignore
   const { isAuthenticated, setIsAuthenticated, isAdmin } = useAppContext();
 
   const navigate = (destination) => {

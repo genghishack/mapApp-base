@@ -1,11 +1,10 @@
 import React from 'react';
 import {Button} from "react-bootstrap";
 
-import {useAdminContext} from "../../libs/contextLib";
+import {useAdminContext} from "../../context/AdminContext";
 
 const AdminMenu = () => {
   const {
-    //@ts-ignore
     adminPhaseTransition,
   } = useAdminContext();
 

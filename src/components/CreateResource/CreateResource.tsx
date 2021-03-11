@@ -1,13 +1,16 @@
 import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
-import {API} from 'aws-amplify';
-import LoaderButton from '../LoaderButton';
+
+import {useResourceContext} from "../../context/ResourceContext";
+import {createResource} from "../../libs/resourceLib";
+import LoaderButton from '../LoaderButton/LoaderButton';
 import {useFormFields} from '../../libs/hooksLib';
 import {onError} from '../../libs/errorLib';
 
 import './CreateResource.scss';
 
 const CreateResource = () => {
+  const {getMapMarkers} = useResourceContext();
   const [isLoading, setIsLoading] = useState(false);
   const [fields, handleFieldChange] = useFormFields({
     name: '',
@@ -38,6 +41,7 @@ const CreateResource = () => {
         name,
         address: {street_1, street_2, city, state, country, postalCode}
       });
+      await getMapMarkers();
       setIsLoading(false);
     } catch (e) {
       onError(e);
@@ -45,18 +49,11 @@ const CreateResource = () => {
     }
   }
 
-  const createResource = (resource) => {
-    return API.post('mapapp', '/resource', {
-      body: resource
-    });
-  }
-
   return (
-    <div className="EnterInfo">
+    <div className="CreateResource">
       <Form onSubmit={handleSubmit}>
-        <header>Create a resource</header>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="name">
+        <Form.Group controlId="name">
           <Form.Label>Name</Form.Label>
           <Form.Control
             autoFocus
@@ -66,7 +63,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="street_1">
+        <Form.Group controlId="street_1">
           <Form.Label>Address 1 (e.g. Street)</Form.Label>
           <Form.Control
             type="text"
@@ -75,7 +72,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="street_2">
+        <Form.Group controlId="street_2">
           <Form.Label>Address 2 (e.g. Apt #)</Form.Label>
           <Form.Control
             type="text"
@@ -84,7 +81,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="city">
+        <Form.Group controlId="city">
           <Form.Label>City</Form.Label>
           <Form.Control
             type="text"
@@ -93,7 +90,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="state">
+        <Form.Group controlId="state">
           <Form.Label>State</Form.Label>
           <Form.Control
             type="text"
@@ -102,7 +99,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="country">
+        <Form.Group controlId="country">
           <Form.Label>Country</Form.Label>
           <Form.Control
             type="text"
@@ -111,7 +108,7 @@ const CreateResource = () => {
           />
         </Form.Group>
         {/*@ts-ignore*/}
-        <Form.Group size="lg" controlId="postalCode">
+        <Form.Group controlId="postalCode">
           <Form.Label>Postal Code</Form.Label>
           <Form.Control
             type="text"
@@ -121,7 +118,7 @@ const CreateResource = () => {
         </Form.Group>
         <LoaderButton
           block
-          size="lg"
+          size="sm"
           type="submit"
           isLoading={isLoading}
           disabled={!validateForm()}

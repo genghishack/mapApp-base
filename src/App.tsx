@@ -3,15 +3,14 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 import {connect} from "react-redux";
 
-import {AppContext} from "./libs/contextLib";
+import {AppContext} from "./context/AppContext";
 import {onError} from "./libs/errorLib";
 import {getUser} from './libs/userLib';
 import {setCurrentUser} from "./redux/actions/currentUser";
-import Routes from './Routes';
+import Routes from './components/Routes/Routes';
 import Header from "./components/Header/Header";
 
 import './App.scss';
-import './components/views/views.scss';
 
 interface IAppProps {
   dispatch: Function;
@@ -63,11 +62,10 @@ const App = (props: IAppProps) => {
         </>
       ) : (
         <>
-          {/*@ts-ignore*/}
           <AppContext.Provider value={{
             isAuthenticated, setIsAuthenticated,
-            isEditor, isAdmin
-          }} displayName="AppContext">
+            isEditor, isAdmin,
+          }}>
             <Router>
               <Header/>
               <Routes/>

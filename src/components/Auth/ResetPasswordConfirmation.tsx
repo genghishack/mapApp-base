@@ -3,17 +3,14 @@ import Form from "react-bootstrap/Form";
 import {Auth} from "aws-amplify";
 import Button from 'react-bootstrap/esm/Button';
 
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton/LoaderButton";
 import {onError} from "../../libs/errorLib";
-import {useAuthContext} from "../../libs/contextLib";
+import {useAuthContext} from "../../context/AuthContext";
 
 const ResetPasswordConfirmation = () => {
   const {
-    //@ts-ignore
     authPhaseTransition,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();
 

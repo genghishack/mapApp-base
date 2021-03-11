@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 import {useFormFields} from "../libs/hooksLib";
-import {ProfileContext} from '../libs/contextLib';
+import {ProfileContext} from '../context/ProfileContext';
 import Profile from "../components/User/Profile";
 import ChangeEmail from "../components/User/ChangeEmail";
 import ChangeEmailConfirmation from "../components/User/ChangeEmailConfirmation";
@@ -57,12 +57,11 @@ const ProfileContainer = () => {
   }
   return (
     <div className="Profile ProfileContainer">
-      {/*@ts-ignore*/}
       <ProfileContext.Provider value={{
         isLoading, setIsLoading,
         fields, handleFieldChange,
         profilePhaseTransition,
-      }} displayName="ProfileContext">
+      }}>
         {renderProfilePhase()}
       </ProfileContext.Provider>
     </div>
