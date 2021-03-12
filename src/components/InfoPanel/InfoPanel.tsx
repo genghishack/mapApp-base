@@ -3,11 +3,11 @@ import {connect} from "react-redux";
 import {Nav} from "react-bootstrap";
 
 import {useAppContext} from "../../context/AppContext";
-import {useResourceContext} from "../../context/ResourceContext";
 import closeSVG from "../../assets/close_icon.png"
 import CreateResource from "../CreateResource/CreateResource";
 
 import "./InfoPanel.scss";
+import ResourceInfo from "./ResourceInfo";
 
 interface IInfoBoxProps {
   slide?: boolean;
@@ -19,7 +19,6 @@ const InfoPanel = (props: IInfoBoxProps) => {
   const {slide, expanded, setExpanded} = props;
   const [activeTab, setActiveTab] = useState('info');
   const {isEditor, isAdmin} = useAppContext();
-  const {selectedResource} = useResourceContext();
 
   const handleCloseClick = (e) => {
     if (setExpanded) {
@@ -28,17 +27,6 @@ const InfoPanel = (props: IInfoBoxProps) => {
   };
 
   const expandedClass = expanded ? "expanded" : "";
-
-  const renderResourceInfo = () => {
-    if (selectedResource.id) {
-    } else {
-      return (
-        <div className="no-info">
-          Resource Information
-        </div>
-      );
-    }
-  };
 
   const renderTabs = () => (
     <>
@@ -62,11 +50,11 @@ const InfoPanel = (props: IInfoBoxProps) => {
         if (isEditor || isAdmin) {
           return <CreateResource/>;
         } else {
-          return renderResourceInfo();
+          return <ResourceInfo/>;
         }
       case 'info':
       default:
-        return renderResourceInfo();
+        return <ResourceInfo/>;
     }
   }
 
