@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { Amplify } from 'aws-amplify';
-import {debugContextDevtool} from 'react-context-devtool';
+// import {debugContextDevtool} from 'react-context-devtool';
 
 import config from './config';
 import './index.scss';
@@ -40,7 +40,7 @@ ReactDOM.render(
   container
 );
 
-// /*// This causes console errors, so it's commented until needed for debugging
+/*// This causes console errors, so it's commented until needed for debugging
 debugContextDevtool(container, {
   disable: process.env.REACT_APP_STAGE === 'prod'
 });

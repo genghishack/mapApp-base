@@ -5,9 +5,9 @@ import {getResources} from "../libs/resourceLib";
 import {ResourceContext} from '../context/ResourceContext';
 import {setResources} from "../redux/actions/resources";
 import {setError} from "../redux/actions/errors";
-import MenuTree from "../components/MenuTree/MenuTree";
 import ResourceMap from "../components/ResourceMap/ResourceMap";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
+import NavPanel from '../components/NavPanel/NavPanel';
 
 import './Resource.scss';
 
@@ -42,21 +42,17 @@ const ResourceContainer = (props: IResourceContainer) => {
     setResourcePhase(phase);
   }
 
-  const handleResourceSelection = () => {
-    //no-op
-  };
-
   return (
     <div className="ResourceContainer">
       <ResourceContext.Provider value={{
         resourcePhaseTransition, getMapMarkers,
+        selectedResource, setSelectedResource,
       }}>
-        <MenuTree
-          handleSelection={handleResourceSelection}
+        <NavPanel
+          resources={resources}
         />
         <ResourceMap resources={resources}/>
         <InfoPanel
-          resource={selectedResource}
           // slide={true}
           // expanded={infoPanelExpanded}
           // setExpanded={setInfoPanelExpanded}

@@ -1,24 +1,25 @@
 import React, {useState} from 'react';
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import {Nav} from "react-bootstrap";
 
 import {useAppContext} from "../../context/AppContext";
+import {useResourceContext} from "../../context/ResourceContext";
 import closeSVG from "../../assets/close_icon.png"
 import CreateResource from "../CreateResource/CreateResource";
 
 import "./InfoPanel.scss";
 
 interface IInfoBoxProps {
-  resource: any;
   slide?: boolean;
   expanded?: boolean;
   setExpanded?: Function;
 }
 
 const InfoPanel = (props: IInfoBoxProps) => {
-  const { resource, slide, expanded, setExpanded } = props;
+  const {slide, expanded, setExpanded} = props;
   const [activeTab, setActiveTab] = useState('info');
   const {isEditor, isAdmin} = useAppContext();
+  const {selectedResource} = useResourceContext();
 
   const handleCloseClick = (e) => {
     if (setExpanded) {
@@ -29,7 +30,7 @@ const InfoPanel = (props: IInfoBoxProps) => {
   const expandedClass = expanded ? "expanded" : "";
 
   const renderResourceInfo = () => {
-    if (resource.properties) {
+    if (selectedResource.id) {
     } else {
       return (
         <div className="no-info">
@@ -97,8 +98,7 @@ const InfoPanel = (props: IInfoBoxProps) => {
 };
 
 function mapStateToProps(state) {
-  return {
-  }
+  return {}
 }
 
 export default connect(mapStateToProps)(InfoPanel);
