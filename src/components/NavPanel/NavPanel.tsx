@@ -1,7 +1,8 @@
 import React from 'react';
 
-import './NavPanel.scss';
 import NavItem from "./NavItem";
+
+import './NavPanel.scss';
 
 interface INavPanel {
   resources: any;
@@ -16,7 +17,8 @@ const NavPanel = (props: INavPanel) => {
       {resources.map(resource => (
         <NavItem
           key={resource.id}
-          resource={resource}/>
+          resource={resource}
+        />
       ))}
     </div>
   )

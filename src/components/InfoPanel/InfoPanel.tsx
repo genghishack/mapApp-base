@@ -3,11 +3,12 @@ import {connect} from "react-redux";
 import {Nav} from "react-bootstrap";
 
 import {useAppContext} from "../../context/AppContext";
+import {useResourceContext} from "../../context/ResourceContext";
 import closeSVG from "../../assets/close_icon.png"
 import CreateResource from "../CreateResource/CreateResource";
+import ResourceInfo from "./ResourceInfo";
 
 import "./InfoPanel.scss";
-import ResourceInfo from "./ResourceInfo";
 
 interface IInfoBoxProps {
   slide?: boolean;
@@ -17,8 +18,8 @@ interface IInfoBoxProps {
 
 const InfoPanel = (props: IInfoBoxProps) => {
   const {slide, expanded, setExpanded} = props;
-  const [activeTab, setActiveTab] = useState('info');
   const {isEditor, isAdmin} = useAppContext();
+  const {activeTab, setActiveTab} = useResourceContext();
 
   const handleCloseClick = (e) => {
     if (setExpanded) {

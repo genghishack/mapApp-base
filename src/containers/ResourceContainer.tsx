@@ -19,6 +19,7 @@ interface IResourceContainer {
 const ResourceContainer = (props: IResourceContainer) => {
   const {dispatch, resources} = props;
 
+  const [activeTab, setActiveTab] = useState('info');
   const [resourcePhase, setResourcePhase] = useState('info');
   const [selectedResource, setSelectedResource] = useState({});
   // const [infoPanelExpanded, setInfoPanelExpanded] = useState(false);
@@ -47,6 +48,7 @@ const ResourceContainer = (props: IResourceContainer) => {
       <ResourceContext.Provider value={{
         resourcePhaseTransition, getMapMarkers,
         selectedResource, setSelectedResource,
+        activeTab, setActiveTab
       }}>
         <NavPanel
           resources={resources}

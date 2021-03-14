@@ -7,7 +7,7 @@ interface INavItem {
 
 const NavItem = (props: INavItem) => {
   const {resource} = props;
-  const {setSelectedResource} = useResourceContext();
+  const {setSelectedResource, setActiveTab} = useResourceContext();
 
   const resourceLocation = () => {
     const address = resource.address_json;
@@ -26,6 +26,7 @@ const NavItem = (props: INavItem) => {
 
   const handleClick = (evt) => {
     evt.preventDefault();
+    setActiveTab('info');
     setSelectedResource(resource);
   }
 

@@ -5,6 +5,8 @@ type ResourceContextType = {
   getMapMarkers: Function;
   selectedResource: any;
   setSelectedResource: Function;
+  activeTab: string;
+  setActiveTab: Function;
 }
 
 export const ResourceContext = createContext<ResourceContextType>({
@@ -12,6 +14,8 @@ export const ResourceContext = createContext<ResourceContextType>({
   getMapMarkers: () => {},
   selectedResource: {},
   setSelectedResource: () => {},
+  activeTab: '',
+  setActiveTab: () => {},
 });
 ResourceContext.displayName = 'ResourceContext';
 
