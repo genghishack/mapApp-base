@@ -4,11 +4,11 @@ import Button from 'react-bootstrap/esm/Button';
 import {connect} from "react-redux";
 import {Auth} from "aws-amplify";
 
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton/LoaderButton";
 import {getUser} from "../../libs/userLib";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 import {onError} from "../../libs/errorLib";
-import {useProfileContext} from '../../libs/contextLib';
+import {useProfileContext} from "../../context/ProfileContext";
 
 interface IChangeEmailConfirmation {
   dispatch: Function;
@@ -17,11 +17,8 @@ interface IChangeEmailConfirmation {
 const ChangeEmailConfirmation = (props: IChangeEmailConfirmation) => {
   const {dispatch} = props;
   const {
-    //@ts-ignore
     profilePhaseTransition,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useProfileContext();
 

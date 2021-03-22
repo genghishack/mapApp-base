@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {Button, Dropdown, DropdownButton} from "react-bootstrap";
 import DropdownItem from "react-bootstrap/DropdownItem";
 
-import {useAppContext} from "../../libs/contextLib";
+import {useAppContext} from "../../context/AppContext";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 
 import './AuthNav.scss';
@@ -19,8 +19,7 @@ const AuthNav = (props: IAuthNav) => {
   const {dispatch, currentUser} = props;
 
   const history = useHistory();
-  //@ts-ignore
-  const { isAuthenticated, userHasAuthenticated } = useAppContext();
+  const { isAuthenticated, setIsAuthenticated, isAdmin } = useAppContext();
 
   const navigate = (destination) => {
     history.push(`/${destination}`);
@@ -28,7 +27,7 @@ const AuthNav = (props: IAuthNav) => {
 
   const handleLogout = async () => {
     await Auth.signOut()
-    userHasAuthenticated(false);
+    setIsAuthenticated(false);
     dispatch(setCurrentUser({}));
     history.push('/');
   }
@@ -54,11 +53,17 @@ const AuthNav = (props: IAuthNav) => {
               title={getUserDisplayName()}
               variant="link"
             >
-              {currentUser.roles && currentUser.roles.includes('Admin') ? (
-                <DropdownItem onClick={() => navigate('admin')}>Admin Tools</DropdownItem>
+              {isAdmin ? (
+                <DropdownItem onClick={() => navigate('admin')}>
+                  Admin Tools
+                </DropdownItem>
               ) : null}
-              <DropdownItem onClick={() => navigate('profile')}>Profile</DropdownItem>
-              <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+              <DropdownItem onClick={() => navigate('profile')}>
+                Profile
+              </DropdownItem>
+              <DropdownItem onClick={handleLogout}>
+                Logout
+              </DropdownItem>
             </DropdownButton>
           </Dropdown>
         </>

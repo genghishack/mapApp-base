@@ -1,9 +1,9 @@
 {
   "name": "mapapp-frontend",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Basic Map Front End Client",
   "author": "Chris Wade <genghishack@gmail.com>",
-  "repository": "https://github.com/genghishack/goobledysnart.git",
+  "repository": "https://github.com/genghishack/mapapp-frontend.git",
   "license": "GPL-3.0-or-later",
   "private": true,
   "dependencies": {
@@ -13,6 +13,7 @@
     "@mapbox/geo-viewport": "^0.4.1",
     "@material-ui/core": "^4.11.3",
     "@reduxjs/toolkit": "^1.1.0",
+    "@types/react-bootstrap": "^0.32.25",
     "@types/react-router-bootstrap": "^0.24.5",
     "aws-amplify": "^3.3.14",
     "leaflet": "^1.7.1",

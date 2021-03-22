@@ -2,18 +2,15 @@ import React from "react";
 import {Auth} from "aws-amplify";
 import Form from "react-bootstrap/Form";
 
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton/LoaderButton";
 import {onError} from "../../libs/errorLib";
-import {useAuthContext} from "../../libs/contextLib";
+import {useAuthContext} from "../../context/AuthContext";
 import Button from "react-bootstrap/esm/Button";
 
 const ForceResetPassword = () => {
   const {
-    //@ts-ignore
     authPhaseTransition, newUser,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useAuthContext();
 

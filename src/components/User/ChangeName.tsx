@@ -4,10 +4,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/esm/Button";
 import {connect} from "react-redux";
 
-import LoaderButton from "../LoaderButton";
+import LoaderButton from "../LoaderButton/LoaderButton";
 import {onError} from "../../libs/errorLib";
 import {getUser} from '../../libs/userLib';
-import {useProfileContext} from '../../libs/contextLib';
+import {useProfileContext} from "../../context/ProfileContext";
 import {setCurrentUser} from "../../redux/actions/currentUser";
 
 interface IChangeNameProps {
@@ -17,11 +17,8 @@ interface IChangeNameProps {
 const ChangeName = (props: IChangeNameProps) => {
   const {dispatch} = props;
   const {
-    //@ts-ignore
     profilePhaseTransition,
-    //@ts-ignore
     isLoading, setIsLoading,
-    //@ts-ignore
     fields, handleFieldChange,
   } = useProfileContext();
 

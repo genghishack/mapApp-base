@@ -34,7 +34,6 @@ const container = document.getElementById('root');
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      {/*@ts-ignore*/}
       <App />
     </Provider>
   </React.StrictMode>,

@@ -3,15 +3,14 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {Auth} from 'aws-amplify';
 import {connect} from "react-redux";
 
-import {AppContext} from "./libs/contextLib";
+import {AppContext} from "./context/AppContext";
 import {onError} from "./libs/errorLib";
 import {getUser} from './libs/userLib';
 import {setCurrentUser} from "./redux/actions/currentUser";
-import Routes from './Routes';
+import Routes from './components/Routes/Routes';
 import Header from "./components/Header/Header";
 
 import './App.scss';
-import './components/views/views.scss';
 
 interface IAppProps {
   dispatch: Function;
@@ -21,12 +20,14 @@ interface IAppProps {
 const App = (props: IAppProps) => {
   const {dispatch, currentUser} = props;
   const [isAuthenticating, setIsAuthenticating] = useState(true);
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isEditor, setIsEditor] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const onLoad = useCallback(async () => {
     try {
       await Auth.currentSession();
-      userHasAuthenticated(true);
+      setIsAuthenticated(true);
       if (!currentUser.id) {
         const user = await getUser();
         dispatch(setCurrentUser(user.data));
@@ -43,6 +44,16 @@ const App = (props: IAppProps) => {
     onLoad();
   }, [onLoad]);
 
+  useEffect(() => {
+    if (isAuthenticated && currentUser.roles) {
+      setIsEditor(currentUser.roles.includes('Editor'));
+      setIsAdmin(currentUser.roles.includes('Admin'));
+    } else {
+      setIsEditor(false);
+      setIsAdmin(false);
+    }
+  }, [isAuthenticated, currentUser])
+
   return (
     <div className="App">
       {isAuthenticating ? (
@@ -51,11 +62,15 @@ const App = (props: IAppProps) => {
         </>
       ) : (
         <>
-          {/*@ts-ignore*/}
-          <AppContext.Provider value={{isAuthenticated, userHasAuthenticated}} displayName="AppContext">
+          <AppContext.Provider value={{
+            isAuthenticated, setIsAuthenticated,
+            isEditor, isAdmin,
+          }}>
             <Router>
               <Header/>
-              <Routes/>
+              <div id="main-container">
+                <Routes/>
+              </div>
             </Router>
           </AppContext.Provider>
         </>

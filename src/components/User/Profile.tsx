@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
 
-import {useProfileContext} from "../../libs/contextLib";
-import LoaderButton from "../LoaderButton";
+import {useProfileContext} from "../../context/ProfileContext";
+import LoaderButton from "../LoaderButton/LoaderButton";
 
 import './Profile.scss';
 
@@ -13,7 +13,6 @@ interface IProfileProps {
 const Profile = (props: IProfileProps) => {
   const {currentUser} = props;
   const {
-    //@ts-ignore
     profilePhaseTransition
   } = useProfileContext();
 

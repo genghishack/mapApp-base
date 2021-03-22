@@ -1,0 +1,31 @@
+.NavPanel {
+  width: 350px;
+  height: calc(100% - 20px);
+  padding: 20px;
+  overflow: hidden;
+
+  header {
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .navItems {
+    height: 100%;
+    overflow: auto;
+
+    .NavItem {
+      margin-bottom: 15px;
+      font-size: 14px;
+
+      .resourceName {
+        font-weight: bold;
+      }
+
+      .resourceLocation {
+        color: #999;
+        font-size: 12px;
+      }
+    }
+  }
+}
