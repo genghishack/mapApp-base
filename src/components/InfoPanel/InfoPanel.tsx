@@ -32,7 +32,7 @@ const InfoPanel = (props: IInfoBoxProps) => {
   const renderTabs = () => (
     <>
       {/*@ts-ignore*/}
-      <Nav variant="tabs" defaultActiveKey={activeTab} onSelect={(k) => setActiveTab(k)}>
+      <Nav variant="tabs" activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
         <Nav.Item>
           <Nav.Link eventKey="info">Resource Info</Nav.Link>
         </Nav.Item>
@@ -68,8 +68,10 @@ const InfoPanel = (props: IInfoBoxProps) => {
           alt="close"
           onClick={handleCloseClick}
         />
-        <div className="infoPanelContent">
+        <div className="infoPanelTabs">
           {renderTabs()}
+        </div>
+        <div className="infoPanelContent">
           {renderContent()}
         </div>
       </div>
@@ -77,8 +79,10 @@ const InfoPanel = (props: IInfoBoxProps) => {
   } else {
     return (
       <div className="InfoPanel">
-        <div className="infoPanelContent">
+        <div className="infoPanelTabs">
           {renderTabs()}
+        </div>
+        <div className="infoPanelContent">
           {renderContent()}
         </div>
       </div>

@@ -14,12 +14,14 @@ const NavPanel = (props: INavPanel) => {
   return (
     <div className="NavPanel">
       <header>Resources</header>
-      {resources.map(resource => (
-        <NavItem
-          key={resource.id}
-          resource={resource}
-        />
-      ))}
+      <div className="navItems">
+        {resources.map(resource => (
+          <NavItem
+            key={resource.id}
+            resource={resource}
+          />
+        ))}
+      </div>
     </div>
   )
 }
