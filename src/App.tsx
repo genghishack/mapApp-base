@@ -68,7 +68,9 @@ const App = (props: IAppProps) => {
           }}>
             <Router>
               <Header/>
-              <Routes/>
+              <div id="main-container">
+                <Routes/>
+              </div>
             </Router>
           </AppContext.Provider>
         </>

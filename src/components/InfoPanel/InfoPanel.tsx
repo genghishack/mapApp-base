@@ -1,24 +1,25 @@
 import React, {useState} from 'react';
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import {Nav} from "react-bootstrap";
 
 import {useAppContext} from "../../context/AppContext";
+import {useResourceContext} from "../../context/ResourceContext";
 import closeSVG from "../../assets/close_icon.png"
 import CreateResource from "../CreateResource/CreateResource";
+import ResourceInfo from "./ResourceInfo";
 
 import "./InfoPanel.scss";
 
 interface IInfoBoxProps {
-  resource: any;
   slide?: boolean;
   expanded?: boolean;
   setExpanded?: Function;
 }
 
 const InfoPanel = (props: IInfoBoxProps) => {
-  const { resource, slide, expanded, setExpanded } = props;
-  const [activeTab, setActiveTab] = useState('info');
+  const {slide, expanded, setExpanded} = props;
   const {isEditor, isAdmin} = useAppContext();
+  const {activeTab, setActiveTab} = useResourceContext();
 
   const handleCloseClick = (e) => {
     if (setExpanded) {
@@ -28,21 +29,10 @@ const InfoPanel = (props: IInfoBoxProps) => {
 
   const expandedClass = expanded ? "expanded" : "";
 
-  const renderResourceInfo = () => {
-    if (resource.properties) {
-    } else {
-      return (
-        <div className="no-info">
-          Resource Information
-        </div>
-      );
-    }
-  };
-
   const renderTabs = () => (
     <>
       {/*@ts-ignore*/}
-      <Nav variant="tabs" defaultActiveKey={activeTab} onSelect={(k) => setActiveTab(k)}>
+      <Nav variant="tabs" activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
         <Nav.Item>
           <Nav.Link eventKey="info">Resource Info</Nav.Link>
         </Nav.Item>
@@ -61,11 +51,11 @@ const InfoPanel = (props: IInfoBoxProps) => {
         if (isEditor || isAdmin) {
           return <CreateResource/>;
         } else {
-          return renderResourceInfo();
+          return <ResourceInfo/>;
         }
       case 'info':
       default:
-        return renderResourceInfo();
+        return <ResourceInfo/>;
     }
   }
 
@@ -78,8 +68,10 @@ const InfoPanel = (props: IInfoBoxProps) => {
           alt="close"
           onClick={handleCloseClick}
         />
-        <div className="infoPanelContent">
+        <div className="infoPanelTabs">
           {renderTabs()}
+        </div>
+        <div className="infoPanelContent">
           {renderContent()}
         </div>
       </div>
@@ -87,8 +79,10 @@ const InfoPanel = (props: IInfoBoxProps) => {
   } else {
     return (
       <div className="InfoPanel">
-        <div className="infoPanelContent">
+        <div className="infoPanelTabs">
           {renderTabs()}
+        </div>
+        <div className="infoPanelContent">
           {renderContent()}
         </div>
       </div>
@@ -97,8 +91,7 @@ const InfoPanel = (props: IInfoBoxProps) => {
 };
 
 function mapStateToProps(state) {
-  return {
-  }
+  return {}
 }
 
 export default connect(mapStateToProps)(InfoPanel);

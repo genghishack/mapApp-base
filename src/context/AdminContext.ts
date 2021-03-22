@@ -1,4 +1,4 @@
-import {ChangeEventHandler, createContext, useContext} from "react";
+import {createContext, useContext} from "react";
 
 type AdminContextType = {
   adminPhaseTransition: Function;
