@@ -43,13 +43,19 @@ const CreateResource = () => {
     setIsLoading(true);
 
     const {
-      name, street_1, street_2, city, state,
-      country, postalCode, description
+      name, business, website, email, phone, fax,
+      street_1, street_2, city, state, country, postalCode,
+      description
     } = fields;
 
     try {
       await createResource({
         name,
+        business,
+        website,
+        email,
+        phone,
+        fax,
         address: {street_1, street_2, city, state, country, postalCode},
         description,
       });
