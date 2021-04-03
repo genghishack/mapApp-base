@@ -16,13 +16,13 @@ const ResourceInfo = () => {
     }
 
     return (
-      <div className="address">
+      <>
         <div className="street">{street}</div>
         <div className="locality">
           {`${locality.join(', ')} ${address.postalCode}`}
         </div>
         <div className="country">{address.country}</div>
-      </div>
+      </>
     );
   }
 
@@ -33,8 +33,32 @@ const ResourceInfo = () => {
           <div className="name">
             {resource.name}
           </div>
-          {renderAddress()}
-          <div className="description">
+          <div className="infoSection business">
+            <div className="label">Business</div>
+            {resource.business_name}
+          </div>
+          <div className="infoSection website">
+            <div className="label">Website</div>
+            {resource.website}
+          </div>
+          <div className="infoSection email">
+            <div className="label">Email</div>
+            {resource.email}
+          </div>
+          <div className="infoSection phone">
+            <div className="label">Phone</div>
+            {resource.phone}
+          </div>
+          <div className="infoSection fax">
+            <div className="label">Fax</div>
+            {resource.fax}
+          </div>
+          <div className="infoSection address">
+            <div className="label">Location</div>
+            {renderAddress()}
+          </div>
+          <div className="infoSection description">
+            <div className="label">Description</div>
             {resource.description}
           </div>
         </>
