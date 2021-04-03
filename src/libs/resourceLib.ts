@@ -1,21 +1,21 @@
 import {API} from "aws-amplify";
 
 export type ResourceType = {
-  name: any;
-  business: any;
-  website: any;
-  email: any;
-  phone: any;
-  fax: any;
+  name: string;
+  business: string;
+  website: string;
+  email: string;
+  phone: string;
+  fax: string;
   address: {
-    street_1: any;
-    street_2: any;
-    city: any;
-    state: any;
-    country: any;
-    postalCode: any;
+    street_1: string;
+    street_2: string;
+    city: string;
+    state: string;
+    country: string;
+    postalCode: string;
   },
-  description: any;
+  description: string;
 };
 
 export const getResources = async () => {
