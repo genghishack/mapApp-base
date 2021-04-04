@@ -21,6 +21,11 @@ const CreateResource = () => {
     country: 'US',
     postalCode: '',
     description: '',
+    website: '',
+    phone: '',
+    fax: '',
+    email: '',
+    business: '',
   });
 
   const validateForm = () => {
@@ -38,13 +43,19 @@ const CreateResource = () => {
     setIsLoading(true);
 
     const {
-      name, street_1, street_2, city, state,
-      country, postalCode, description
+      name, business, website, email, phone, fax,
+      street_1, street_2, city, state, country, postalCode,
+      description
     } = fields;
 
     try {
       await createResource({
         name,
+        business,
+        website,
+        email,
+        phone,
+        fax,
         address: {street_1, street_2, city, state, country, postalCode},
         description,
       });
@@ -66,6 +77,51 @@ const CreateResource = () => {
             autoFocus
             type="text"
             value={fields.name}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group controlId="business">
+          <Form.Label>Business Name</Form.Label>
+          <Form.Control
+            type="text"
+            value={fields.business}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group controlId="website">
+          <Form.Label>Website</Form.Label>
+          <Form.Control
+            type="text"
+            value={fields.website}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group controlId="email">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="text"
+            value={fields.email}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group controlId="phone">
+          <Form.Label>Phone</Form.Label>
+          <Form.Control
+            type="text"
+            value={fields.phone}
+            onChange={handleFieldChange}
+          />
+        </Form.Group>
+        {/*@ts-ignore*/}
+        <Form.Group controlId="fax">
+          <Form.Label>Fax</Form.Label>
+          <Form.Control
+            type="text"
+            value={fields.fax}
             onChange={handleFieldChange}
           />
         </Form.Group>
