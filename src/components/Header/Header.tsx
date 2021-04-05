@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './Header.scss';
-import Nav from '../Navigation/Nav';
+import MainNav from '../Navigation/MainNav';
 import AuthNav from '../Navigation/AuthNav';
 
 interface IHeaderProps {
@@ -24,7 +24,7 @@ const Header = (props: IHeaderProps) => {
 
       </a>
 
-      <Nav/>
+      <MainNav/>
 
       <div className="controls">
       </div>

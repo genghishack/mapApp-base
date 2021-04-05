@@ -4,11 +4,11 @@ import {connect} from 'react-redux';
 import {useAppContext} from "../../context/AppContext";
 import NavItem from './NavItem';
 
-interface INav {
+interface IMainNav {
   currentUser: any;
 }
 
-const Nav = (props: INav) => {
+const MainNav = (props: IMainNav) => {
   const {currentUser} = props;
   const {isAuthenticated} = useAppContext();
 
@@ -30,4 +30,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps)(MainNav);

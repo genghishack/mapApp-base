@@ -18,7 +18,10 @@ export type ResourceType = {
   description: string;
 };
 
-export const getResources = async () => {
+export const getResources = async (userId: string | null) => {
+  if (userId) {
+    return API.get('mapapp', `/resource/user/${userId}`, {});
+  }
   return API.get('mapapp', '/resource', {});
 }
 
