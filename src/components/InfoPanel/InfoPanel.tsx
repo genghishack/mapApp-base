@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from "react-redux";
 import {Nav} from "react-bootstrap";
 
@@ -14,11 +14,12 @@ interface IInfoBoxProps {
   slide?: boolean;
   expanded?: boolean;
   setExpanded?: Function;
+  userId: string | null;
 }
 
 const InfoPanel = (props: IInfoBoxProps) => {
-  const {slide, expanded, setExpanded} = props;
-  const {isEditor, isAdmin} = useAppContext();
+  const {slide, expanded, setExpanded, userId} = props;
+  const {isAuthenticated} = useAppContext();
   const {activeTab, setActiveTab} = useResourceContext();
 
   const handleCloseClick = (e) => {
@@ -36,7 +37,7 @@ const InfoPanel = (props: IInfoBoxProps) => {
         <Nav.Item>
           <Nav.Link eventKey="info">Resource Info</Nav.Link>
         </Nav.Item>
-        {isEditor || isAdmin ? (
+        {isAuthenticated && userId ? (
           <Nav.Item>
             <Nav.Link eventKey="create">Create Resource</Nav.Link>
           </Nav.Item>
@@ -48,7 +49,7 @@ const InfoPanel = (props: IInfoBoxProps) => {
   const renderContent = () => {
     switch (activeTab) {
       case 'create':
-        if (isEditor || isAdmin) {
+        if (isAuthenticated) {
           return <CreateResource/>;
         } else {
           return <ResourceInfo/>;

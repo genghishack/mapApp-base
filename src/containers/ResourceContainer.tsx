@@ -63,6 +63,7 @@ const ResourceContainer = (props: IResourceContainer) => {
           slide={false}
           expanded={infoPanelExpanded}
           setExpanded={setInfoPanelExpanded}
+          userId={userId}
         />
       </ResourceContext.Provider>
     </div>
