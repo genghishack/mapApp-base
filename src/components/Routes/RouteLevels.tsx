@@ -32,7 +32,7 @@ export const GuestRoute = ({ children, ...rest }) => {
   );
 }
 
-export const UserRoute = ({ children, ...rest }) => {
+export const UserRoute = ({children, ...rest }) => {
   const { pathname, search } = useLocation();
   const { isAuthenticated } = useAppContext();
   return (

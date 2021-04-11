@@ -17,14 +17,41 @@
     .NavItem {
       margin-bottom: 15px;
       font-size: 14px;
+      display: flex;
+      justify-content: space-between;
 
-      .resourceName {
-        font-weight: bold;
+      .resourceInfo {
+        .resourceName {
+          font-weight: bold;
+        }
+
+        .resourceLocation {
+          color: #999;
+          font-size: 12px;
+        }
       }
 
-      .resourceLocation {
-        color: #999;
-        font-size: 12px;
+      .resourceControls {
+        .control, .info {
+          font-size: 16px;
+          margin: 0 2px;
+        }
+
+        .control {
+          cursor: pointer;
+        }
+
+        .edit {
+          color: gray;
+        }
+
+        .delete {
+          color: red;
+        }
+
+        .submit {
+          color: green;
+        }
       }
     }
   }

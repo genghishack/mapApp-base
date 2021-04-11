@@ -14,20 +14,25 @@ import './Resource.scss';
 interface IResourceContainer {
   dispatch: Function;
   resources?: any;
+  match?: any;
 }
 
 const ResourceContainer = (props: IResourceContainer) => {
-  const {dispatch, resources} = props;
+  const {dispatch, resources, match} = props;
 
   const [activeTab, setActiveTab] = useState('info');
   const [resourcePhase, setResourcePhase] = useState('info');
   const [selectedResource, setSelectedResource] = useState({});
-  // const [infoPanelExpanded, setInfoPanelExpanded] = useState(false);
+  const [infoPanelExpanded, setInfoPanelExpanded] = useState(true);
 
+  let userId = null;
+  if (match) {
+    ({userId} = match.params);
+  }
   const getMapMarkers = useCallback(async () => {
     let markers = {data: []};
     try {
-      markers = await getResources();
+      markers = await getResources(userId);
       dispatch(setResources(markers.data));
     } catch (e) {
       dispatch(setError(e));
@@ -55,9 +60,10 @@ const ResourceContainer = (props: IResourceContainer) => {
         />
         <ResourceMap resources={resources}/>
         <InfoPanel
-          // slide={true}
-          // expanded={infoPanelExpanded}
-          // setExpanded={setInfoPanelExpanded}
+          slide={false}
+          expanded={infoPanelExpanded}
+          setExpanded={setInfoPanelExpanded}
+          userId={userId}
         />
       </ResourceContext.Provider>
     </div>
