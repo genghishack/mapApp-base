@@ -8,6 +8,7 @@ import {setError} from "../redux/actions/errors";
 import ResourceMap from "../components/ResourceMap/ResourceMap";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
 import NavPanel from '../components/NavPanel/NavPanel';
+import DeleteResourceModal from "../components/Modal/DeleteResourceModal";
 
 import './Resource.scss';
 
@@ -22,7 +23,9 @@ const ResourceContainer = (props: IResourceContainer) => {
 
   const [activeTab, setActiveTab] = useState('info');
   const [resourcePhase, setResourcePhase] = useState('info');
+  const [displayedResource, setDisplayedResource] = useState({});
   const [selectedResource, setSelectedResource] = useState({});
+  const [showDeleteResourceModal, setShowDeleteResourceModal] = useState(false);
   const [infoPanelExpanded, setInfoPanelExpanded] = useState(true);
 
   let userId = null;
@@ -52,7 +55,9 @@ const ResourceContainer = (props: IResourceContainer) => {
     <div className="ResourceContainer">
       <ResourceContext.Provider value={{
         resourcePhaseTransition, getMapMarkers,
+        displayedResource, setDisplayedResource,
         selectedResource, setSelectedResource,
+        showDeleteResourceModal, setShowDeleteResourceModal,
         activeTab, setActiveTab
       }}>
         <NavPanel
@@ -64,6 +69,11 @@ const ResourceContainer = (props: IResourceContainer) => {
           expanded={infoPanelExpanded}
           setExpanded={setInfoPanelExpanded}
           userId={userId}
+        />
+        <DeleteResourceModal
+          show={showDeleteResourceModal}
+          setShow={setShowDeleteResourceModal}
+          resource={selectedResource}
         />
       </ResourceContext.Provider>
     </div>

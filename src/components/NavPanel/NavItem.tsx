@@ -8,7 +8,6 @@ import {
   faMinusSquare
 } from "@fortawesome/free-solid-svg-icons";
 import {useResourceContext} from "../../context/ResourceContext";
-import DeleteResourceModal from "../Modal/DeleteResourceModal";
 
 interface INavItem {
   resource: any;
@@ -16,9 +15,13 @@ interface INavItem {
 
 const NavItem = (props: INavItem) => {
   const {resource} = props;
-  const {setSelectedResource, setActiveTab} = useResourceContext();
   const [currentResource, setCurrentResource] = useState(resource);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const {
+    setDisplayedResource,
+    setSelectedResource,
+    setShowDeleteResourceModal,
+    setActiveTab
+  } = useResourceContext();
 
   const resourceLocation = () => {
     const address = currentResource.address_json;
@@ -38,7 +41,7 @@ const NavItem = (props: INavItem) => {
   const handleResourceClick = (evt) => {
     evt.preventDefault();
     setActiveTab('info');
-    setSelectedResource(currentResource);
+    setDisplayedResource(currentResource);
   }
 
   const handleSubmitClick = async () => {
@@ -54,6 +57,11 @@ const NavItem = (props: INavItem) => {
 
   const handleEditClick = () => {
     console.log('edit resource');
+  }
+
+  const handleDeleteClick = () => {
+    setSelectedResource(currentResource);
+    setShowDeleteResourceModal(true);
   }
 
   return (
@@ -79,7 +87,7 @@ const NavItem = (props: INavItem) => {
           className="control delete"
           icon={faMinusSquare}
           title="delete resource"
-          onClick={() => setShowDeleteModal(true)}
+          onClick={handleDeleteClick}
         />
         {currentResource.submitted_for_approval ? (
           <FontAwesomeIcon
@@ -96,11 +104,6 @@ const NavItem = (props: INavItem) => {
           />
         )}
       </div>
-      <DeleteResourceModal
-        show={showDeleteModal}
-        setShow={setShowDeleteModal}
-        resource={currentResource}
-      />
     </div>
   )
 }
