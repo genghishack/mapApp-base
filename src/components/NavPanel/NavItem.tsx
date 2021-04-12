@@ -1,15 +1,14 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React, {useState} from 'react';
-import {useResourceContext} from "../../context/ResourceContext";
+import {API} from "aws-amplify";
 import {
   faArrowAltCircleRight,
   faCheck,
-  faCheckSquare,
   faEdit,
-  faMinusCircle,
   faMinusSquare
 } from "@fortawesome/free-solid-svg-icons";
-import {API} from "aws-amplify";
+import {useResourceContext} from "../../context/ResourceContext";
+import DeleteResourceModal from "../Modal/DeleteResourceModal";
 
 interface INavItem {
   resource: any;
@@ -19,6 +18,7 @@ const NavItem = (props: INavItem) => {
   const {resource} = props;
   const {setSelectedResource, setActiveTab} = useResourceContext();
   const [currentResource, setCurrentResource] = useState(resource);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const resourceLocation = () => {
     const address = currentResource.address_json;
@@ -56,18 +56,6 @@ const NavItem = (props: INavItem) => {
     console.log('edit resource');
   }
 
-  const handleDeleteClick = async () => {
-    console.log('delete resource');
-    try {
-      const deletedResource = await API.del('mapapp', `/resource/${currentResource.id}`, {});
-      console.log({deletedResource});
-      // todo: reload list
-    } catch (e) {
-      // todo: handle error
-      console.log('error deleting')
-    }
-  }
-
   return (
     <div className="NavItem">
       <div className="resourceInfo">
@@ -91,7 +79,7 @@ const NavItem = (props: INavItem) => {
           className="control delete"
           icon={faMinusSquare}
           title="delete resource"
-          onClick={handleDeleteClick}
+          onClick={() => setShowDeleteModal(true)}
         />
         {currentResource.submitted_for_approval ? (
           <FontAwesomeIcon
@@ -108,6 +96,11 @@ const NavItem = (props: INavItem) => {
           />
         )}
       </div>
+      <DeleteResourceModal
+        show={showDeleteModal}
+        setShow={setShowDeleteModal}
+        resource={currentResource}
+      />
     </div>
   )
 }
