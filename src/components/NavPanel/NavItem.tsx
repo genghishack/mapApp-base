@@ -1,15 +1,13 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React, {useState} from 'react';
-import {useResourceContext} from "../../context/ResourceContext";
+import React from 'react';
 import {
   faArrowAltCircleRight,
   faCheck,
-  faCheckSquare,
   faEdit,
-  faMinusCircle,
   faMinusSquare
 } from "@fortawesome/free-solid-svg-icons";
-import {API} from "aws-amplify";
+import {useResourceContext} from "../../context/ResourceContext";
+import {submitResource} from "../../libs/resourceLib";
 
 interface INavItem {
   resource: any;
@@ -17,11 +15,16 @@ interface INavItem {
 
 const NavItem = (props: INavItem) => {
   const {resource} = props;
-  const {setSelectedResource, setActiveTab} = useResourceContext();
-  const [currentResource, setCurrentResource] = useState(resource);
+  const {
+    setDisplayedResource,
+    setSelectedResource,
+    setShowDeleteResourceModal,
+    setActiveTab,
+    getMapMarkers,
+  } = useResourceContext();
 
   const resourceLocation = () => {
-    const address = currentResource.address_json;
+    const address = resource.address_json;
     const display: string[] = [];
     if (address.city) {
       display.push(address.city);
@@ -38,16 +41,16 @@ const NavItem = (props: INavItem) => {
   const handleResourceClick = (evt) => {
     evt.preventDefault();
     setActiveTab('info');
-    setSelectedResource(currentResource);
+    setDisplayedResource(resource.id);
   }
 
   const handleSubmitClick = async () => {
-    console.log('submitted for approval');
     try {
-      const updatedResource = await API.patch('mapapp', `/resource/submit/${currentResource.id}`, {})
-      setCurrentResource(updatedResource.data);
+      await submitResource(resource.id);
+      await getMapMarkers();
     } catch (e) {
-      console.log('error submitting');
+      // TODO: handle error
+      console.log('error submitting resource');
     }
   }
 
@@ -56,7 +59,8 @@ const NavItem = (props: INavItem) => {
   }
 
   const handleDeleteClick = () => {
-    console.log('delete resource');
+    setSelectedResource(resource);
+    setShowDeleteResourceModal(true);
   }
 
   return (
@@ -64,7 +68,7 @@ const NavItem = (props: INavItem) => {
       <div className="resourceInfo">
         <div className="resourceName">
           <a href="#" onClick={handleResourceClick}>
-            {currentResource.name}
+            {resource.name}
           </a>
         </div>
         <div className="resourceLocation">
@@ -84,7 +88,7 @@ const NavItem = (props: INavItem) => {
           title="delete resource"
           onClick={handleDeleteClick}
         />
-        {currentResource.submitted_for_approval ? (
+        {resource.submitted_for_approval ? (
           <FontAwesomeIcon
             className="info submit"
             icon={faCheck}

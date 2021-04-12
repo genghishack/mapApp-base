@@ -2,7 +2,7 @@ import React from 'react';
 import {useResourceContext} from "../../context/ResourceContext";
 
 const ResourceInfo = () => {
-  const {selectedResource: resource} = useResourceContext();
+  const {displayedResource: resource} = useResourceContext();
 
   const renderAddress = () => {
     const {address_json: address} = resource;

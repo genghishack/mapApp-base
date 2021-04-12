@@ -63,8 +63,7 @@ const App = (props: IAppProps) => {
       ) : (
         <>
           <AppContext.Provider value={{
-            isAuthenticated, setIsAuthenticated,
-            isEditor, isAdmin,
+            isAuthenticated, setIsAuthenticated, isEditor, isAdmin,
           }}>
             <Router>
               <Header/>
