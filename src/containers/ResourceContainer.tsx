@@ -22,7 +22,6 @@ const ResourceContainer = (props: IResourceContainer) => {
   const {dispatch, resources, match} = props;
 
   const [activeTab, setActiveTab] = useState('info');
-  const [resourcePhase, setResourcePhase] = useState('info');
   const [displayedResource, setDisplayedResource] = useState({});
   const [selectedResource, setSelectedResource] = useState({});
   const [showDeleteResourceModal, setShowDeleteResourceModal] = useState(false);
@@ -47,18 +46,13 @@ const ResourceContainer = (props: IResourceContainer) => {
     getMapMarkers().then();
   }, [getMapMarkers]);
 
-  const resourcePhaseTransition = (phase) => {
-    setResourcePhase(phase);
-  }
-
   return (
     <div className="ResourceContainer">
       <ResourceContext.Provider value={{
-        resourcePhaseTransition, getMapMarkers,
         displayedResource, setDisplayedResource,
         selectedResource, setSelectedResource,
         showDeleteResourceModal, setShowDeleteResourceModal,
-        activeTab, setActiveTab
+        activeTab, setActiveTab, getMapMarkers,
       }}>
         <NavPanel
           resources={resources}

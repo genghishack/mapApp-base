@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Modal} from 'react-bootstrap';
-import {API} from "aws-amplify";
+import {deleteResource} from "../../libs/resourceLib";
+import {useResourceContext} from "../../context/ResourceContext";
 
 interface IDeleteResourceModal {
   show: boolean;
@@ -10,22 +11,23 @@ interface IDeleteResourceModal {
 
 const DeleteResourceModal = (props: IDeleteResourceModal) => {
   const { show, setShow, resource } = props;
+  const { getMapMarkers } = useResourceContext();
 
   const handleClose = () => setShow(false);
 
   const handleDelete = async () => {
     try {
-      await API.del('mapapp', `/resource/${resource.id}`, {});
+      await deleteResource(resource.id);
+      await getMapMarkers();
       handleClose();
-      // todo: reload list
     } catch (e) {
-      // todo: handle error
-      console.log('error deleting')
+      // TODO: handle error
+      console.log('error deleting resource')
     }
   }
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} animation={false} centered>
       <Modal.Header closeButton>
         <Modal.Title>Delete Resource</Modal.Title>
       </Modal.Header>

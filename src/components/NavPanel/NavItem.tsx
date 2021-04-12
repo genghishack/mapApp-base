@@ -1,6 +1,5 @@
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import React, {useState} from 'react';
-import {API} from "aws-amplify";
+import React from 'react';
 import {
   faArrowAltCircleRight,
   faCheck,
@@ -8,6 +7,7 @@ import {
   faMinusSquare
 } from "@fortawesome/free-solid-svg-icons";
 import {useResourceContext} from "../../context/ResourceContext";
+import {submitResource} from "../../libs/resourceLib";
 
 interface INavItem {
   resource: any;
@@ -15,16 +15,16 @@ interface INavItem {
 
 const NavItem = (props: INavItem) => {
   const {resource} = props;
-  const [currentResource, setCurrentResource] = useState(resource);
   const {
     setDisplayedResource,
     setSelectedResource,
     setShowDeleteResourceModal,
-    setActiveTab
+    setActiveTab,
+    getMapMarkers,
   } = useResourceContext();
 
   const resourceLocation = () => {
-    const address = currentResource.address_json;
+    const address = resource.address_json;
     const display: string[] = [];
     if (address.city) {
       display.push(address.city);
@@ -41,17 +41,16 @@ const NavItem = (props: INavItem) => {
   const handleResourceClick = (evt) => {
     evt.preventDefault();
     setActiveTab('info');
-    setDisplayedResource(currentResource);
+    setDisplayedResource(resource.id);
   }
 
   const handleSubmitClick = async () => {
-    console.log('submitted for approval');
     try {
-      const updatedResource = await API.patch('mapapp', `/resource/submit/${currentResource.id}`, {})
-      setCurrentResource(updatedResource.data);
+      await submitResource(resource.id);
+      await getMapMarkers();
     } catch (e) {
-      // todo: handle error
-      console.log('error submitting');
+      // TODO: handle error
+      console.log('error submitting resource');
     }
   }
 
@@ -60,7 +59,7 @@ const NavItem = (props: INavItem) => {
   }
 
   const handleDeleteClick = () => {
-    setSelectedResource(currentResource);
+    setSelectedResource(resource);
     setShowDeleteResourceModal(true);
   }
 
@@ -69,7 +68,7 @@ const NavItem = (props: INavItem) => {
       <div className="resourceInfo">
         <div className="resourceName">
           <a href="#" onClick={handleResourceClick}>
-            {currentResource.name}
+            {resource.name}
           </a>
         </div>
         <div className="resourceLocation">
@@ -89,7 +88,7 @@ const NavItem = (props: INavItem) => {
           title="delete resource"
           onClick={handleDeleteClick}
         />
-        {currentResource.submitted_for_approval ? (
+        {resource.submitted_for_approval ? (
           <FontAwesomeIcon
             className="info submit"
             icon={faCheck}
