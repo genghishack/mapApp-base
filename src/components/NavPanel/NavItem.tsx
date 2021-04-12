@@ -47,6 +47,7 @@ const NavItem = (props: INavItem) => {
       const updatedResource = await API.patch('mapapp', `/resource/submit/${currentResource.id}`, {})
       setCurrentResource(updatedResource.data);
     } catch (e) {
+      // todo: handle error
       console.log('error submitting');
     }
   }
@@ -55,8 +56,16 @@ const NavItem = (props: INavItem) => {
     console.log('edit resource');
   }
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = async () => {
     console.log('delete resource');
+    try {
+      const deletedResource = await API.del('mapapp', `/resource/${currentResource.id}`, {});
+      console.log({deletedResource});
+      // todo: reload list
+    } catch (e) {
+      // todo: handle error
+      console.log('error deleting')
+    }
   }
 
   return (
