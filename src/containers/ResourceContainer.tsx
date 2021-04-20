@@ -62,6 +62,7 @@ const ResourceContainer = (props: IResourceContainer) => {
       }}>
         <NavPanel
           resources={resources}
+          userId={userId}
         />
         <ResourceMap resources={resources}/>
         <InfoPanel

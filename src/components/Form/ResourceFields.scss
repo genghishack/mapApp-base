@@ -1,6 +1,10 @@
 .ResourceFields {
   .form-group {
     display: flex;
+
+    #description {
+      height: 70px;
+    }
   }
 
   .form-label {

@@ -10,10 +10,11 @@ import {useResourceContext} from "../../context/ResourceContext";
 
 interface INavItem {
   resource: any;
+  userId: string | null;
 }
 
 const NavItem = (props: INavItem) => {
-  const {resource} = props;
+  const {resource, userId} = props;
   const {
     setDisplayedResource,
     setSelectedResource,
@@ -71,34 +72,36 @@ const NavItem = (props: INavItem) => {
           {resourceLocation()}
         </div>
       </div>
-      <div className="resourceControls">
-        <FontAwesomeIcon
-          className="control edit"
-          icon={faEdit}
-          title="edit resource"
-          onClick={handleEditClick}
-        />
-        <FontAwesomeIcon
-          className="control delete"
-          icon={faMinusSquare}
-          title="delete resource"
-          onClick={handleDeleteClick}
-        />
-        {resource.submitted_for_approval ? (
+      {userId ? (
+        <div className="resourceControls">
           <FontAwesomeIcon
-            className="info submit"
-            icon={faCheck}
-            title="submitted"
+            className="control edit"
+            icon={faEdit}
+            title="edit resource"
+            onClick={handleEditClick}
           />
-        ) : (
           <FontAwesomeIcon
-            className="control submit"
-            icon={faArrowAltCircleRight}
-            title="submit for approval"
-            onClick={handleSubmitClick}
+            className="control delete"
+            icon={faMinusSquare}
+            title="delete resource"
+            onClick={handleDeleteClick}
           />
-        )}
-      </div>
+          {resource.submitted_for_approval ? (
+            <FontAwesomeIcon
+              className="info submit"
+              icon={faCheck}
+              title="submitted"
+            />
+          ) : (
+            <FontAwesomeIcon
+              className="control submit"
+              icon={faArrowAltCircleRight}
+              title="submit for approval"
+              onClick={handleSubmitClick}
+            />
+          )}
+        </div>
+      ) : null}
     </div>
   )
 }
