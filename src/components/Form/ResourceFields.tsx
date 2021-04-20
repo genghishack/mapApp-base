@@ -21,6 +21,7 @@ const ResourceFields = (props: IResourceFields) => {
           type="text"
           value={fields.name}
           onChange={handleFieldChange}
+          tabIndex={1}
         />
       </Form.Group>
       {/*@ts-ignore*/}
@@ -30,6 +31,7 @@ const ResourceFields = (props: IResourceFields) => {
           type="text"
           value={fields.business}
           onChange={handleFieldChange}
+          tabIndex={2}
         />
       </Form.Group>
       <Form.Group controlId="description">
@@ -39,6 +41,7 @@ const ResourceFields = (props: IResourceFields) => {
           rows={5}
           value={fields.description}
           onChange={handleFieldChange}
+          tabIndex={3}
         />
       </Form.Group>
 
@@ -53,6 +56,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.website}
               onChange={handleFieldChange}
+              tabIndex={4}
             />
           </Form.Group>
           {/*@ts-ignore*/}
@@ -62,6 +66,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.phone}
               onChange={handleFieldChange}
+              tabIndex={6}
             />
           </Form.Group>
         </div>
@@ -74,6 +79,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.email}
               onChange={handleFieldChange}
+              tabIndex={5}
             />
           </Form.Group>
           {/*@ts-ignore*/}
@@ -83,6 +89,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.fax}
               onChange={handleFieldChange}
+              tabIndex={7}
             />
           </Form.Group>
         </div>
@@ -99,6 +106,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.street_1}
               onChange={handleFieldChange}
+              tabIndex={8}
             />
           </Form.Group>
           {/*@ts-ignore*/}
@@ -108,6 +116,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.city}
               onChange={handleFieldChange}
+              tabIndex={10}
             />
           </Form.Group>
           {/*@ts-ignore*/}
@@ -117,6 +126,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.country}
               onChange={handleFieldChange}
+              tabIndex={12}
             />
           </Form.Group>
         </div>
@@ -129,6 +139,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.street_2}
               onChange={handleFieldChange}
+              tabIndex={9}
             />
           </Form.Group>
           {/*@ts-ignore*/}
@@ -138,6 +149,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.state}
               onChange={handleFieldChange}
+              tabIndex={11}
             />
           </Form.Group>
           {/*@ts-ignore*/}
@@ -147,6 +159,7 @@ const ResourceFields = (props: IResourceFields) => {
               type="text"
               value={fields.postalCode}
               onChange={handleFieldChange}
+              tabIndex={13}
             />
           </Form.Group>
         </div>

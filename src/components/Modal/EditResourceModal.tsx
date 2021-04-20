@@ -124,6 +124,7 @@ const EditResourceModal = () => {
             size="sm"
             variant="secondary"
             onClick={handleClose}
+            tabIndex={14}
           >
             Cancel
           </Button>
@@ -132,6 +133,7 @@ const EditResourceModal = () => {
             type="submit"
             isLoading={isLoading}
             disabled={!validateForm()}
+            tabIndex={15}
           >
             Save Changes
           </LoaderButton>
