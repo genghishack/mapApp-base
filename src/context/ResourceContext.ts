@@ -8,6 +8,10 @@ type ResourceContextType = {
   setSelectedResource: Function;
   showDeleteResourceModal: boolean;
   setShowDeleteResourceModal: Function;
+  showEditResourceModal: boolean;
+  setShowEditResourceModal: Function;
+  showSubmitResourceModal: boolean;
+  setShowSubmitResourceModal: Function;
   activeTab: string;
   setActiveTab: Function;
 }
@@ -20,6 +24,10 @@ export const ResourceContext = createContext<ResourceContextType>({
   setSelectedResource: () => {},
   showDeleteResourceModal: false,
   setShowDeleteResourceModal: () => {},
+  showEditResourceModal: false,
+  setShowEditResourceModal: () => {},
+  showSubmitResourceModal: false,
+  setShowSubmitResourceModal: () => {},
   activeTab: '',
   setActiveTab: () => {},
 });

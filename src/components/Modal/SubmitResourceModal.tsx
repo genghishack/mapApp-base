@@ -1,47 +1,47 @@
-import React from 'react';
-import {Button, Modal} from 'react-bootstrap';
-import {deleteResource} from "../../libs/resourceLib";
+import React from 'react'
+import {Button, Modal } from 'react-bootstrap';
 import {useResourceContext} from "../../context/ResourceContext";
+import {submitResource} from "../../libs/resourceLib";
 
-const DeleteResourceModal = () => {
+const SubmitResourceModal = () => {
   const {
     getMapMarkers,
-    showDeleteResourceModal: show,
-    setShowDeleteResourceModal: setShow,
+    showSubmitResourceModal: show,
+    setShowSubmitResourceModal: setShow,
     selectedResource: resource,
   } = useResourceContext();
 
   const handleClose = () => setShow(false);
 
-  const handleDelete = async () => {
+  const handleSubmit = async () => {
     try {
-      await deleteResource(resource.id);
+      await submitResource(resource.id);
       await getMapMarkers();
-      handleClose();
+      handleClose()
     } catch (e) {
       // TODO: handle error
-      console.log('error deleting resource')
+      console.log('error submitting resource');
     }
   }
 
   return (
     <Modal show={show} onHide={handleClose} animation={false} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Delete Resource</Modal.Title>
+        <Modal.Title>Submit Resource for Approval</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        Are you sure you want to delete the resource {resource.name}?
+        Submit resource {resource.name} for approval?
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cancel
         </Button>
-        <Button variant="primary" onClick={handleDelete}>
-          Delete
+        <Button variant="primary" onClick={handleSubmit}>
+          Submit
         </Button>
       </Modal.Footer>
     </Modal>
-  );
+  )
 }
 
-export default DeleteResourceModal;
+export default SubmitResourceModal;

@@ -7,7 +7,6 @@ import {
   faMinusSquare
 } from "@fortawesome/free-solid-svg-icons";
 import {useResourceContext} from "../../context/ResourceContext";
-import {submitResource} from "../../libs/resourceLib";
 
 interface INavItem {
   resource: any;
@@ -19,8 +18,9 @@ const NavItem = (props: INavItem) => {
     setDisplayedResource,
     setSelectedResource,
     setShowDeleteResourceModal,
+    setShowEditResourceModal,
+    setShowSubmitResourceModal,
     setActiveTab,
-    getMapMarkers,
   } = useResourceContext();
 
   const resourceLocation = () => {
@@ -45,17 +45,13 @@ const NavItem = (props: INavItem) => {
   }
 
   const handleSubmitClick = async () => {
-    try {
-      await submitResource(resource.id);
-      await getMapMarkers();
-    } catch (e) {
-      // TODO: handle error
-      console.log('error submitting resource');
-    }
+    setSelectedResource(resource);
+    setShowSubmitResourceModal(true);
   }
 
   const handleEditClick = () => {
-    console.log('edit resource');
+    setSelectedResource(resource);
+    setShowEditResourceModal(true);
   }
 
   const handleDeleteClick = () => {
