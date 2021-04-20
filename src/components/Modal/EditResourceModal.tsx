@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useResourceContext} from "../../context/ResourceContext";
 import {Button, Form, Modal} from "react-bootstrap";
 import {createResource} from "../../libs/resourceLib";
@@ -6,6 +6,8 @@ import {onError} from "../../libs/errorLib";
 import ResourceFields from "../Form/ResourceFields";
 import LoaderButton from "../LoaderButton/LoaderButton";
 import {useFormFields} from "../../libs/hooksLib";
+
+import "./EditResource.scss";
 
 const EditResourceModal = () => {
   const {
@@ -100,7 +102,13 @@ const EditResourceModal = () => {
   }
 
   return (
-    <Modal show={showModal} onHide={handleClose} animation={false} centered>
+    <Modal
+      className="EditResourceModal"
+      show={showModal}
+      onHide={handleClose}
+      animation={false}
+      centered
+    >
       <Modal.Header closeButton>
         <Modal.Title>Edit Resource</Modal.Title>
       </Modal.Header>
@@ -112,17 +120,20 @@ const EditResourceModal = () => {
           />
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={handleClose}
+          >
             Cancel
           </Button>
           <LoaderButton
-            block
             size="sm"
             type="submit"
             isLoading={isLoading}
             disabled={!validateForm()}
           >
-            Add Resource
+            Save Changes
           </LoaderButton>
         </Modal.Footer>
       </Form>
