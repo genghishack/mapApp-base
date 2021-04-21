@@ -1,13 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useResourceContext} from "../../context/ResourceContext";
 import {Button, Form, Modal} from "react-bootstrap";
-import {createResource} from "../../libs/resourceLib";
+import {editResource} from "../../libs/resourceLib";
 import {onError} from "../../libs/errorLib";
 import ResourceFields from "../Form/ResourceFields";
 import LoaderButton from "../LoaderButton/LoaderButton";
 import {useFormFields} from "../../libs/hooksLib";
-
-import "./EditResource.scss";
 
 const EditResourceModal = () => {
   const {
@@ -37,36 +35,38 @@ const EditResourceModal = () => {
   const [showModal, setShowModal] = useState(false);
   const [fields, handleFieldChange] = useFormFields(emptyFormFields);
 
+  const setFieldsToResource = useCallback(() => {
+    fields.name = resource.name;
+    fields.street_1 = resource.address_json.street_1;
+    fields.street_2 = resource.address_json.street_2;
+    fields.city = resource.address_json.city;
+    fields.state = resource.address_json.state;
+    fields.country = resource.address_json.country;
+    fields.postalCode = resource.address_json.postalCode;
+    fields.description = resource.description;
+    fields.website = resource.website;
+    fields.phone = resource.phone;
+    fields.fax = resource.fax;
+    fields.email = resource.email;
+    fields.business = resource.business;
+  }, [fields, resource])
 
   useEffect(() => {
     if (show && resource.id) {
-      fields.name = resource.name;
-      fields.street_1 = resource.address_json.street_1;
-      fields.street_2 = resource.address_json.street_2;
-      fields.city = resource.address_json.city;
-      fields.state = resource.address_json.state;
-      fields.country = resource.address_json.country;
-      fields.postalCode = resource.address_json.postalCode;
-      fields.description = resource.description;
-      fields.website = resource.website;
-      fields.phone = resource.phone;
-      fields.fax = resource.fax;
-      fields.email = resource.email;
-      fields.business = resource.business;
+      setFieldsToResource();
       setShowModal(true);
     } else {
       setShowModal(false);
     }
-  }, [resource, fields, show, setShow])
+  }, [resource, show, setShowModal])
 
   const validateForm = () => {
-    // return fields.name.length > 0
-    //   && (fields.street_1.length > 0
-    //     || fields.city.length > 0
-    //     || fields.state.length > 0
-    //     || fields.country.length > 0
-    //     || fields.postalCode.length > 0);
-    return 0;
+    return fields.name.length > 0
+      && (fields.street_1.length > 0
+        || fields.city.length > 0
+        || fields.state.length > 0
+        || fields.country.length > 0
+        || fields.postalCode.length > 0);
   }
 
   const handleClose = () => setShow(false);
@@ -83,7 +83,7 @@ const EditResourceModal = () => {
     } = fields;
 
     try {
-      await createResource({
+      await editResource(resource.id, {
         name,
         business,
         website,

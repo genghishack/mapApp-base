@@ -31,6 +31,12 @@ export const createResource = async (resource: ResourceType) => {
   });
 }
 
+export const editResource = async (resourceId: string, resource: ResourceType) => {
+  return API.patch('mapapp', `/resource/${resourceId}`, {
+    body: resource
+  });
+}
+
 export const submitResource = async (resourceId: string) => {
   return API.patch('mapapp', `/resource/submit/${resourceId}`, {});
 }
