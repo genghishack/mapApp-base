@@ -58,7 +58,12 @@ const EditResourceModal = () => {
     } else {
       setShowModal(false);
     }
-  }, [resource, show, setShowModal, setFieldsToResource])
+    // TODO: adding setFieldsToResource as a dependency
+    //  causes the submit to always send the original resource,
+    //  rather than the edited one.  But not setting it gives
+    //  a compile warning.  Is there a better way?
+    // eslint-disable-next-line
+  }, [resource, show, setShowModal])
 
   const validateForm = () => {
     return fields.name.length > 0
