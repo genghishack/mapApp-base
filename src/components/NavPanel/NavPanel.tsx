@@ -6,10 +6,11 @@ import './NavPanel.scss';
 
 interface INavPanel {
   resources: any;
+  userId: string | null;
 }
 
 const NavPanel = (props: INavPanel) => {
-  const {resources} = props;
+  const {resources, userId} = props;
 
   return (
     <div className="NavPanel">
@@ -19,6 +20,7 @@ const NavPanel = (props: INavPanel) => {
           <NavItem
             key={resource.id}
             resource={resource}
+            userId={userId}
           />
         ))}
       </div>
