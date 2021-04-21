@@ -20,7 +20,7 @@ const AddResourceModal = () => {
     street_2: '',
     city: '',
     state: '',
-    country: '',
+    country: 'US',
     postalCode: '',
     description: '',
     website: '',

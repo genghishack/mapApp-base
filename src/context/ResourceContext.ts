@@ -14,8 +14,6 @@ type ResourceContextType = {
   setShowEditResourceModal: Function;
   showSubmitResourceModal: boolean;
   setShowSubmitResourceModal: Function;
-  activeTab: string;
-  setActiveTab: Function;
 }
 
 export const ResourceContext = createContext<ResourceContextType>({
@@ -32,8 +30,6 @@ export const ResourceContext = createContext<ResourceContextType>({
   setShowEditResourceModal: () => {},
   showSubmitResourceModal: false,
   setShowSubmitResourceModal: () => {},
-  activeTab: '',
-  setActiveTab: () => {},
 });
 ResourceContext.displayName = 'ResourceContext';
 

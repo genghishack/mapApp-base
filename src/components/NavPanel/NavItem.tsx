@@ -21,7 +21,6 @@ const NavItem = (props: INavItem) => {
     setShowDeleteResourceModal,
     setShowEditResourceModal,
     setShowSubmitResourceModal,
-    setActiveTab,
   } = useResourceContext();
 
   const resourceLocation = () => {
@@ -41,7 +40,6 @@ const NavItem = (props: INavItem) => {
 
   const handleResourceClick = (evt) => {
     evt.preventDefault();
-    setActiveTab('info');
     setDisplayedResource(resource);
   }
 

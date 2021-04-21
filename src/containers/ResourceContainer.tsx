@@ -24,7 +24,6 @@ interface IResourceContainer {
 const ResourceContainer = (props: IResourceContainer) => {
   const {dispatch, resources, match} = props;
 
-  const [activeTab, setActiveTab] = useState('info');
   const [displayedResource, setDisplayedResource] = useState({});
   const [selectedResource, setSelectedResource] = useState({});
   const [showDeleteResourceModal, setShowDeleteResourceModal] = useState(false);
@@ -55,13 +54,13 @@ const ResourceContainer = (props: IResourceContainer) => {
   return (
     <div className="ResourceContainer">
       <ResourceContext.Provider value={{
+        getMapMarkers,
         displayedResource, setDisplayedResource,
         selectedResource, setSelectedResource,
         showDeleteResourceModal, setShowDeleteResourceModal,
         showAddResourceModal, setShowAddResourceModal,
         showEditResourceModal, setShowEditResourceModal,
         showSubmitResourceModal, setShowSubmitResourceModal,
-        activeTab, setActiveTab, getMapMarkers,
       }}>
         <NavPanel
           resources={resources}
@@ -72,7 +71,6 @@ const ResourceContainer = (props: IResourceContainer) => {
           slide={false}
           expanded={infoPanelExpanded}
           setExpanded={setInfoPanelExpanded}
-          userId={userId}
         />
         <DeleteResourceModal/>
         <AddResourceModal/>
