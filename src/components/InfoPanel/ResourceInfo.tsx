@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useResourceContext} from "../../context/ResourceContext";
 
 const ResourceInfo = () => {
@@ -64,7 +64,7 @@ const ResourceInfo = () => {
         </>
       ) : (
         <div className="no-info">
-          Click on a resource to display information
+          Click on a resource to display information.
         </div>
       )}
     </div>

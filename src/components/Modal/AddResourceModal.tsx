@@ -1,18 +1,17 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useResourceContext} from "../../context/ResourceContext";
-import {Button, Form, Modal} from "react-bootstrap";
-import {editResource} from "../../libs/resourceLib";
-import {onError} from "../../libs/errorLib";
+import React, {useState} from 'react';
+import {Button, Form, Modal} from 'react-bootstrap';
 import ResourceFields from "../Form/ResourceFields";
 import LoaderButton from "../LoaderButton/LoaderButton";
+import {useResourceContext} from "../../context/ResourceContext";
 import {useFormFields} from "../../libs/hooksLib";
+import {createResource} from "../../libs/resourceLib";
+import {onError} from "../../libs/errorLib";
 
-const EditResourceModal = () => {
+const AddResourceModal = () => {
   const {
     getMapMarkers,
-    showEditResourceModal: show,
-    setShowEditResourceModal: setShow,
-    selectedResource: resource,
+    showAddResourceModal: show,
+    setShowAddResourceModal: setShow,
   } = useResourceContext();
 
   const emptyFormFields = {
@@ -21,7 +20,7 @@ const EditResourceModal = () => {
     street_2: '',
     city: '',
     state: '',
-    country: '',
+    country: 'US',
     postalCode: '',
     description: '',
     website: '',
@@ -32,38 +31,7 @@ const EditResourceModal = () => {
   }
 
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [fields, handleFieldChange] = useFormFields(emptyFormFields);
-
-  const setFieldsToResource = useCallback(() => {
-    fields.name = resource.name;
-    fields.street_1 = resource.address_json.street_1;
-    fields.street_2 = resource.address_json.street_2;
-    fields.city = resource.address_json.city;
-    fields.state = resource.address_json.state;
-    fields.country = resource.address_json.country;
-    fields.postalCode = resource.address_json.postalCode;
-    fields.description = resource.description;
-    fields.website = resource.website;
-    fields.phone = resource.phone;
-    fields.fax = resource.fax;
-    fields.email = resource.email;
-    fields.business = resource.business_name;
-  }, [fields, resource])
-
-  useEffect(() => {
-    if (show && resource.id) {
-      setFieldsToResource();
-      setShowModal(true);
-    } else {
-      setShowModal(false);
-    }
-    // TODO: adding setFieldsToResource as a dependency
-    //  causes the submit to always send the original resource,
-    //  rather than the edited one.  But not setting it gives
-    //  a compile warning.  Is there a better way?
-    // eslint-disable-next-line
-  }, [resource, show, setShowModal])
 
   const validateForm = () => {
     return fields.name.length > 0
@@ -88,7 +56,7 @@ const EditResourceModal = () => {
     } = fields;
 
     try {
-      await editResource(resource.id, {
+      await createResource({
         name,
         business,
         website,
@@ -109,14 +77,14 @@ const EditResourceModal = () => {
 
   return (
     <Modal
-      className="EditResourceModal"
-      show={showModal}
+      className="AddResourceModal"
+      show={show}
       onHide={handleClose}
       animation={false}
       centered
     >
       <Modal.Header closeButton>
-        <Modal.Title>Edit Resource</Modal.Title>
+        <Modal.Title>Add Resource</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
         <Modal.Body>
@@ -141,12 +109,12 @@ const EditResourceModal = () => {
             disabled={!validateForm()}
             tabIndex={15}
           >
-            Save Changes
+            Save
           </LoaderButton>
         </Modal.Footer>
       </Form>
     </Modal>
-  );
+  )
 }
 
-export default EditResourceModal;
+export default AddResourceModal;

@@ -1,5 +1,5 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faArrowAltCircleRight,
   faCheck,
@@ -7,6 +7,7 @@ import {
   faMinusSquare
 } from "@fortawesome/free-solid-svg-icons";
 import {useResourceContext} from "../../context/ResourceContext";
+import {Button} from "react-bootstrap";
 
 interface INavItem {
   resource: any;
@@ -21,7 +22,6 @@ const NavItem = (props: INavItem) => {
     setShowDeleteResourceModal,
     setShowEditResourceModal,
     setShowSubmitResourceModal,
-    setActiveTab,
   } = useResourceContext();
 
   const resourceLocation = () => {
@@ -41,7 +41,6 @@ const NavItem = (props: INavItem) => {
 
   const handleResourceClick = (evt) => {
     evt.preventDefault();
-    setActiveTab('info');
     setDisplayedResource(resource);
   }
 
@@ -64,9 +63,9 @@ const NavItem = (props: INavItem) => {
     <div className="NavItem">
       <div className="resourceInfo">
         <div className="resourceName">
-          <a href="#" onClick={handleResourceClick}>
+          <Button variant="link" onClick={handleResourceClick}>
             {resource.name}
-          </a>
+          </Button>
         </div>
         <div className="resourceLocation">
           {resourceLocation()}

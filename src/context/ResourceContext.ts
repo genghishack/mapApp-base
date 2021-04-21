@@ -8,12 +8,12 @@ type ResourceContextType = {
   setSelectedResource: Function;
   showDeleteResourceModal: boolean;
   setShowDeleteResourceModal: Function;
+  showAddResourceModal: boolean;
+  setShowAddResourceModal: Function;
   showEditResourceModal: boolean;
   setShowEditResourceModal: Function;
   showSubmitResourceModal: boolean;
   setShowSubmitResourceModal: Function;
-  activeTab: string;
-  setActiveTab: Function;
 }
 
 export const ResourceContext = createContext<ResourceContextType>({
@@ -24,12 +24,12 @@ export const ResourceContext = createContext<ResourceContextType>({
   setSelectedResource: () => {},
   showDeleteResourceModal: false,
   setShowDeleteResourceModal: () => {},
+  showAddResourceModal: false,
+  setShowAddResourceModal: () => {},
   showEditResourceModal: false,
   setShowEditResourceModal: () => {},
   showSubmitResourceModal: false,
   setShowSubmitResourceModal: () => {},
-  activeTab: '',
-  setActiveTab: () => {},
 });
 ResourceContext.displayName = 'ResourceContext';
 

@@ -9,10 +9,11 @@ import ResourceMap from "../components/ResourceMap/ResourceMap";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
 import NavPanel from '../components/NavPanel/NavPanel';
 import DeleteResourceModal from "../components/Modal/DeleteResourceModal";
-
-import './Resource.scss';
 import EditResourceModal from "../components/Modal/EditResourceModal";
 import SubmitResourceModal from "../components/Modal/SubmitResourceModal";
+import AddResourceModal from "../components/Modal/AddResourceModal";
+
+import './Resource.scss';
 
 interface IResourceContainer {
   dispatch: Function;
@@ -23,10 +24,10 @@ interface IResourceContainer {
 const ResourceContainer = (props: IResourceContainer) => {
   const {dispatch, resources, match} = props;
 
-  const [activeTab, setActiveTab] = useState('info');
   const [displayedResource, setDisplayedResource] = useState({});
   const [selectedResource, setSelectedResource] = useState({});
   const [showDeleteResourceModal, setShowDeleteResourceModal] = useState(false);
+  const [showAddResourceModal, setShowAddResourceModal] = useState(false);
   const [showEditResourceModal, setShowEditResourceModal] = useState(false);
   const [showSubmitResourceModal, setShowSubmitResourceModal] = useState(false);
   const [infoPanelExpanded, setInfoPanelExpanded] = useState(true);
@@ -43,7 +44,7 @@ const ResourceContainer = (props: IResourceContainer) => {
     } catch (e) {
       dispatch(setError(e));
     }
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   //@ts-ignore
   useEffect(() => {
@@ -53,12 +54,13 @@ const ResourceContainer = (props: IResourceContainer) => {
   return (
     <div className="ResourceContainer">
       <ResourceContext.Provider value={{
+        getMapMarkers,
         displayedResource, setDisplayedResource,
         selectedResource, setSelectedResource,
         showDeleteResourceModal, setShowDeleteResourceModal,
+        showAddResourceModal, setShowAddResourceModal,
         showEditResourceModal, setShowEditResourceModal,
         showSubmitResourceModal, setShowSubmitResourceModal,
-        activeTab, setActiveTab, getMapMarkers,
       }}>
         <NavPanel
           resources={resources}
@@ -69,9 +71,9 @@ const ResourceContainer = (props: IResourceContainer) => {
           slide={false}
           expanded={infoPanelExpanded}
           setExpanded={setInfoPanelExpanded}
-          userId={userId}
         />
         <DeleteResourceModal/>
+        <AddResourceModal/>
         <EditResourceModal/>
         <SubmitResourceModal/>
       </ResourceContext.Provider>
