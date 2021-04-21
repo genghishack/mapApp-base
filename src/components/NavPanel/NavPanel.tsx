@@ -25,14 +25,16 @@ const NavPanel = (props: INavPanel) => {
     <div className="NavPanel">
       <div className="navHeader">
         <header>Resources</header>
-        <div className="navControls">
-          <FontAwesomeIcon
-            className="control add"
-            icon={faPlusSquare}
-            title="add resource"
-            onClick={handleAddClick}
-          />
-        </div>
+        {userId ? (
+          <div className="navControls">
+            <FontAwesomeIcon
+              className="control add"
+              icon={faPlusSquare}
+              title="add resource"
+              onClick={handleAddClick}
+            />
+          </div>
+        ) : null}
       </div>
 
       <div className="navItems">
