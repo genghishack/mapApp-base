@@ -27,6 +27,9 @@ const Routes = () => {
       <AdminRoute exact path="/admin">
         <AdminContainer/>
       </AdminRoute>
+      <UserRoute exact path="/:userId" component={ResourceContainer}>
+        {null}
+      </UserRoute>
       <Route>
         <NotFound/>
       </Route>

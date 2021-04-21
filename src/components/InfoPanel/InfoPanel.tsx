@@ -1,11 +1,6 @@
-import React, {useState} from 'react';
-import {connect} from "react-redux";
-import {Nav} from "react-bootstrap";
+import React from 'react';
 
-import {useAppContext} from "../../context/AppContext";
-import {useResourceContext} from "../../context/ResourceContext";
 import closeSVG from "../../assets/close_icon.png"
-import CreateResource from "../CreateResource/CreateResource";
 import ResourceInfo from "./ResourceInfo";
 
 import "./InfoPanel.scss";
@@ -18,8 +13,6 @@ interface IInfoBoxProps {
 
 const InfoPanel = (props: IInfoBoxProps) => {
   const {slide, expanded, setExpanded} = props;
-  const {isEditor, isAdmin} = useAppContext();
-  const {activeTab, setActiveTab} = useResourceContext();
 
   const handleCloseClick = (e) => {
     if (setExpanded) {
@@ -28,36 +21,6 @@ const InfoPanel = (props: IInfoBoxProps) => {
   };
 
   const expandedClass = expanded ? "expanded" : "";
-
-  const renderTabs = () => (
-    <>
-      {/*@ts-ignore*/}
-      <Nav variant="tabs" activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
-        <Nav.Item>
-          <Nav.Link eventKey="info">Resource Info</Nav.Link>
-        </Nav.Item>
-        {isEditor || isAdmin ? (
-          <Nav.Item>
-            <Nav.Link eventKey="create">Create Resource</Nav.Link>
-          </Nav.Item>
-        ) : null}
-      </Nav>
-    </>
-  );
-
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'create':
-        if (isEditor || isAdmin) {
-          return <CreateResource/>;
-        } else {
-          return <ResourceInfo/>;
-        }
-      case 'info':
-      default:
-        return <ResourceInfo/>;
-    }
-  }
 
   if (slide) {
     return (
@@ -68,30 +31,20 @@ const InfoPanel = (props: IInfoBoxProps) => {
           alt="close"
           onClick={handleCloseClick}
         />
-        <div className="infoPanelTabs">
-          {renderTabs()}
-        </div>
         <div className="infoPanelContent">
-          {renderContent()}
+          <ResourceInfo/>
         </div>
       </div>
     )
   } else {
     return (
       <div className="InfoPanel">
-        <div className="infoPanelTabs">
-          {renderTabs()}
-        </div>
         <div className="infoPanelContent">
-          {renderContent()}
+          <ResourceInfo/>
         </div>
       </div>
     )
   }
 };
 
-function mapStateToProps(state) {
-  return {}
-}
-
-export default connect(mapStateToProps)(InfoPanel);
+export default InfoPanel;

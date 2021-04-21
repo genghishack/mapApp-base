@@ -1,21 +1,35 @@
 import {createContext, useContext} from "react";
 
 type ResourceContextType = {
-  resourcePhaseTransition: Function;
   getMapMarkers: Function;
+  displayedResource: any;
+  setDisplayedResource: Function;
   selectedResource: any;
   setSelectedResource: Function;
-  activeTab: string;
-  setActiveTab: Function;
+  showDeleteResourceModal: boolean;
+  setShowDeleteResourceModal: Function;
+  showAddResourceModal: boolean;
+  setShowAddResourceModal: Function;
+  showEditResourceModal: boolean;
+  setShowEditResourceModal: Function;
+  showSubmitResourceModal: boolean;
+  setShowSubmitResourceModal: Function;
 }
 
 export const ResourceContext = createContext<ResourceContextType>({
-  resourcePhaseTransition: () => {},
   getMapMarkers: () => {},
+  displayedResource: {},
+  setDisplayedResource: () => {},
   selectedResource: {},
   setSelectedResource: () => {},
-  activeTab: '',
-  setActiveTab: () => {},
+  showDeleteResourceModal: false,
+  setShowDeleteResourceModal: () => {},
+  showAddResourceModal: false,
+  setShowAddResourceModal: () => {},
+  showEditResourceModal: false,
+  setShowEditResourceModal: () => {},
+  showSubmitResourceModal: false,
+  setShowSubmitResourceModal: () => {},
 });
 ResourceContext.displayName = 'ResourceContext';
 
