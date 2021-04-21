@@ -48,7 +48,7 @@ const EditResourceModal = () => {
     fields.phone = resource.phone;
     fields.fax = resource.fax;
     fields.email = resource.email;
-    fields.business = resource.business;
+    fields.business = resource.business_name;
   }, [fields, resource])
 
   useEffect(() => {
@@ -95,6 +95,7 @@ const EditResourceModal = () => {
       });
       await getMapMarkers();
       setIsLoading(false);
+      setShow(false);
     } catch (e) {
       onError(e);
       setIsLoading(false);
