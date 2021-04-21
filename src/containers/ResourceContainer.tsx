@@ -9,10 +9,11 @@ import ResourceMap from "../components/ResourceMap/ResourceMap";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
 import NavPanel from '../components/NavPanel/NavPanel';
 import DeleteResourceModal from "../components/Modal/DeleteResourceModal";
-
-import './Resource.scss';
 import EditResourceModal from "../components/Modal/EditResourceModal";
 import SubmitResourceModal from "../components/Modal/SubmitResourceModal";
+import AddResourceModal from "../components/Modal/AddResourceModal";
+
+import './Resource.scss';
 
 interface IResourceContainer {
   dispatch: Function;
@@ -27,6 +28,7 @@ const ResourceContainer = (props: IResourceContainer) => {
   const [displayedResource, setDisplayedResource] = useState({});
   const [selectedResource, setSelectedResource] = useState({});
   const [showDeleteResourceModal, setShowDeleteResourceModal] = useState(false);
+  const [showAddResourceModal, setShowAddResourceModal] = useState(false);
   const [showEditResourceModal, setShowEditResourceModal] = useState(false);
   const [showSubmitResourceModal, setShowSubmitResourceModal] = useState(false);
   const [infoPanelExpanded, setInfoPanelExpanded] = useState(true);
@@ -56,6 +58,7 @@ const ResourceContainer = (props: IResourceContainer) => {
         displayedResource, setDisplayedResource,
         selectedResource, setSelectedResource,
         showDeleteResourceModal, setShowDeleteResourceModal,
+        showAddResourceModal, setShowAddResourceModal,
         showEditResourceModal, setShowEditResourceModal,
         showSubmitResourceModal, setShowSubmitResourceModal,
         activeTab, setActiveTab, getMapMarkers,
@@ -72,6 +75,7 @@ const ResourceContainer = (props: IResourceContainer) => {
           userId={userId}
         />
         <DeleteResourceModal/>
+        <AddResourceModal/>
         <EditResourceModal/>
         <SubmitResourceModal/>
       </ResourceContext.Provider>

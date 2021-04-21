@@ -8,6 +8,8 @@ type ResourceContextType = {
   setSelectedResource: Function;
   showDeleteResourceModal: boolean;
   setShowDeleteResourceModal: Function;
+  showAddResourceModal: boolean;
+  setShowAddResourceModal: Function;
   showEditResourceModal: boolean;
   setShowEditResourceModal: Function;
   showSubmitResourceModal: boolean;
@@ -24,6 +26,8 @@ export const ResourceContext = createContext<ResourceContextType>({
   setSelectedResource: () => {},
   showDeleteResourceModal: false,
   setShowDeleteResourceModal: () => {},
+  showAddResourceModal: false,
+  setShowAddResourceModal: () => {},
   showEditResourceModal: false,
   setShowEditResourceModal: () => {},
   showSubmitResourceModal: false,
