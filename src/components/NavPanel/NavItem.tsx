@@ -42,7 +42,7 @@ const NavItem = (props: INavItem) => {
   const handleResourceClick = (evt) => {
     evt.preventDefault();
     setActiveTab('info');
-    setDisplayedResource(resource.id);
+    setDisplayedResource(resource);
   }
 
   const handleSubmitClick = async () => {
