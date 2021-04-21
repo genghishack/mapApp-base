@@ -58,7 +58,7 @@ const EditResourceModal = () => {
     } else {
       setShowModal(false);
     }
-  }, [resource, show, setShowModal])
+  }, [resource, show, setShowModal, setFieldsToResource])
 
   const validateForm = () => {
     return fields.name.length > 0

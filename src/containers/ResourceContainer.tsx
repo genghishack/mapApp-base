@@ -44,7 +44,7 @@ const ResourceContainer = (props: IResourceContainer) => {
     } catch (e) {
       dispatch(setError(e));
     }
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   //@ts-ignore
   useEffect(() => {
