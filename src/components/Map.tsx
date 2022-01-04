@@ -1,6 +1,7 @@
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import Config from '../config';
+import {LatLngExpression} from "leaflet";
 
 interface IMapProps {
   viewport: any;
@@ -33,11 +34,18 @@ const Map = (props: IMapProps) => {
         <TileLayer
             url={tileUrl}
         />
-        {markers && markers.map((marker) => (
-          <Marker key={marker.id} position={marker.latlng}>
-            <Popup>{marker.name}</Popup>
-          </Marker>
-        ))}
+        {markers && markers.map((marker) => {
+          if (marker.lat) {
+            const latlng: LatLngExpression = [marker.lat, marker.lng];
+            return (
+              <Marker key={marker.id} position={latlng}>
+                <Popup>{marker.name_json.first} {marker.name_json.last}</Popup>
+              </Marker>
+            )
+          } else {
+            return null;
+          }
+        })}
       </MapContainer>
   );
 }
