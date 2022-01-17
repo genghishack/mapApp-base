@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {AdminContext} from "../context/AdminContext";
 import UserAdmin from "../components/Admin/UserAdmin/UserAdmin";
 import ResourceAdmin from "../components/Admin/ResourceAdmin/ResourceAdmin";
+import CategoryAdmin from "../components/Admin/CategoryAdmin/CategoryAdmin";
 
 import './Admin.scss';
 import AdminMenu from "../components/Admin/AdminMenu";
@@ -16,6 +17,8 @@ const AdminContainer = () => {
 
   const renderAdminPhase = () => {
     switch (adminPhase) {
+      case 'category':
+        return <CategoryAdmin/>;
       case 'resource':
         return <ResourceAdmin/>;
       case 'user':

@@ -2,8 +2,10 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {connect} from "react-redux";
 
 import {getResources} from "../libs/resourceLib";
+import {getCategories} from "../libs/categoryLib";
 import {ResourceContext} from '../context/ResourceContext';
 import {setResources} from "../redux/actions/resources";
+import {setCategories} from "../redux/actions/categories";
 import {setError} from "../redux/actions/errors";
 import ResourceMap from "../components/ResourceMap/ResourceMap";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
@@ -46,8 +48,19 @@ const ResourceContainer = (props: IResourceContainer) => {
     }
   }, [dispatch, userId]);
 
+  const getCategoryList = useCallback(async () => {
+    let categories = {data: []};
+    try {
+      categories = await getCategories();
+      dispatch(setCategories(categories.data));
+    } catch (e) {
+      dispatch(setError(e));
+    }
+  }, [dispatch]);
+
   //@ts-ignore
   useEffect(() => {
+    getCategoryList().then();
     getMapMarkers().then();
   }, [getMapMarkers]);
 
