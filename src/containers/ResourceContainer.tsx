@@ -63,7 +63,7 @@ const ResourceContainer = (props: IResourceContainer) => {
   useEffect(() => {
     getCategoryList().then();
     getMapMarkers().then();
-  }, [getMapMarkers]);
+  }, [getCategoryList, getMapMarkers]);
 
   return (
     <div className="ResourceContainer">
@@ -81,7 +81,7 @@ const ResourceContainer = (props: IResourceContainer) => {
           categories={categories}
           userId={userId}
         />
-        <ResourceMap resources={resources}/>
+        <ResourceMap/>
         <InfoPanel
           slide={false}
           expanded={infoPanelExpanded}

@@ -1,17 +1,21 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {continentalViewport} from '../../libs/mapLib';
+import {connect} from "react-redux";
+
+import {continentalViewport, markerViewport} from '../../libs/mapLib';
+import {useResourceContext} from "../../context/ResourceContext";
 import Map from '../Map';
 
 import './ResourceMap.scss';
 
 interface IResourceMap {
-  resources: any;
+  dispatch: Function;
+  resources?: any;
+  categories?: any;
 }
 
 const ResourceMap = (props: IResourceMap) => {
-  const {
-    resources,
-  } = props;
+  const {resources, categories, dispatch} = props;
+  const {displayedResource, setDisplayedResource} = useResourceContext()
 
   const mapWindowRef = useRef(null);
 
@@ -25,14 +29,28 @@ const ResourceMap = (props: IResourceMap) => {
     setViewport(continentalViewport(width, height));
   }, []);
 
+  const handleMarkerClick = (evt: MouseEvent, marker: any) => {
+    setDisplayedResource(marker);
+    setViewport(markerViewport(marker.lat, marker.lng));
+  }
+
   return (
     <div className="ResourceMap" ref={mapWindowRef}>
       <Map
         viewport={viewport}
         markers={resources}
+        onMarkerClick={handleMarkerClick}
       />
     </div>
   );
 }
 
-export default ResourceMap;
+function mapStateToProps(state: { errors: any; resources: any; categories: any}) {
+  return {
+    resources: state.resources,
+    categories: state.categories,
+    errors: state.errors,
+  };
+}
+
+export default connect(mapStateToProps)(ResourceMap);

@@ -3,7 +3,7 @@ import { continentalBbox } from '../constants';
 
 // const AKBbox = [-190, 51.214183, -129, 71.365162];
 
-const getViewport = (bbox, w, h) => {
+const getViewportFromBBox = (bbox, w, h) => {
   return geoViewport.viewport(
     bbox,
     [w, h],
@@ -14,9 +14,19 @@ const getViewport = (bbox, w, h) => {
   );
 }
 
+export const markerViewport = (lat, lng) => {
+  return {
+    longitude: lng,
+    latitude: lat,
+    zoom: 2,
+    bearing: 0,
+    pitch: 0,
+  }
+}
+
 export const continentalViewport = ((width = window.innerWidth, height = window.innerHeight) => {
   // Determine an appropriate center and zoom for the continental US
-  const continental = getViewport(continentalBbox, width / 2, height / 2);
+  const continental = getViewportFromBBox(continentalBbox, width / 2, height / 2);
 
   return {
     longitude: continental.center[0],

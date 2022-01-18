@@ -6,6 +6,7 @@ import {LatLngExpression} from "leaflet";
 interface IMapProps {
   viewport: any;
   markers?: [any];
+  onMarkerClick: Function;
 }
 
 const mapConf = Config.mapbox;
@@ -17,6 +18,7 @@ const Map = (props: IMapProps) => {
   const {
     viewport,
     markers,
+    onMarkerClick,
   } = props;
 
   // console.log({markers});
@@ -26,7 +28,7 @@ const Map = (props: IMapProps) => {
   return (
       <MapContainer
           center={[latitude, longitude]}
-          zoom={zoom}
+          zoom={10}
           zoomSnap={0.1}
           scrollWheelZoom={true}
           style={{ width: '100%', height: 'calc(100vh - 70px)' }}
@@ -38,8 +40,14 @@ const Map = (props: IMapProps) => {
           if (marker.lat) {
             const latlng: LatLngExpression = [marker.lat, marker.lng];
             return (
-              <Marker key={marker.id} position={latlng}>
-                <Popup>{marker.name_json.first} {marker.name_json.last}</Popup>
+              <Marker
+                key={marker.id}
+                position={latlng}
+                eventHandlers={{
+                  click: (e) => onMarkerClick(e, marker)
+                }}
+              >
+                {/*<Popup>{marker.name_json.first} {marker.name_json.last}</Popup>*/}
               </Marker>
             )
           } else {
