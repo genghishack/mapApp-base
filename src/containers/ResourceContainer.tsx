@@ -20,11 +20,12 @@ import './Resource.scss';
 interface IResourceContainer {
   dispatch: Function;
   resources?: any;
+  categories?: any;
   match?: any;
 }
 
 const ResourceContainer = (props: IResourceContainer) => {
-  const {dispatch, resources, match} = props;
+  const {dispatch, resources, categories, match} = props;
 
   const [displayedResource, setDisplayedResource] = useState({});
   const [selectedResource, setSelectedResource] = useState({});
@@ -49,10 +50,10 @@ const ResourceContainer = (props: IResourceContainer) => {
   }, [dispatch, userId]);
 
   const getCategoryList = useCallback(async () => {
-    let categories = {data: []};
+    let categoryList = {data: []};
     try {
-      categories = await getCategories();
-      dispatch(setCategories(categories.data));
+      categoryList = await getCategories();
+      dispatch(setCategories(categoryList.data));
     } catch (e) {
       dispatch(setError(e));
     }
@@ -77,6 +78,7 @@ const ResourceContainer = (props: IResourceContainer) => {
       }}>
         <NavPanel
           resources={resources}
+          categories={categories}
           userId={userId}
         />
         <ResourceMap resources={resources}/>
@@ -94,9 +96,10 @@ const ResourceContainer = (props: IResourceContainer) => {
   )
 }
 
-function mapStateToProps(state: { errors: any; resources: any; }) {
+function mapStateToProps(state: { errors: any; resources: any; categories: any;}) {
   return {
     resources: state.resources,
+    categories: state.categories,
     errors: state.errors,
   };
 }

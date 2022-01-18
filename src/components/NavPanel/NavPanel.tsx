@@ -3,16 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlusSquare} from "@fortawesome/free-solid-svg-icons";
 import { useResourceContext } from '../../context/ResourceContext';
 import NavItem from "./NavItem";
+import CategoryItem from './CategoryItem';
 
 import './NavPanel.scss';
 
 interface INavPanel {
   resources: any;
+  categories: any;
   userId: string | null;
 }
 
 const NavPanel = (props: INavPanel) => {
-  const {resources, userId} = props;
+  const {resources, categories, userId} = props;
   const {
     setShowAddResourceModal,
   } = useResourceContext();
@@ -37,15 +39,17 @@ const NavPanel = (props: INavPanel) => {
         ) : null}
       </div>
 
-      <div className="navItems">
-        {resources.map(resource => (
-          <NavItem
-            key={resource.id}
-            resource={resource}
+      <div className="categoryItems">
+        {categories.map(category => (
+          <CategoryItem
+            key={category.id}
+            resources={resources}
+            category={category}
             userId={userId}
           />
         ))}
       </div>
+
     </div>
   )
 }

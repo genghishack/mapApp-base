@@ -64,7 +64,7 @@ const NavItem = (props: INavItem) => {
       <div className="resourceInfo">
         <div className="resourceName">
           <Button variant="link" onClick={handleResourceClick}>
-            {resource.name}
+            {resource.name_json.business ? resource.name_json.business : `${resource.name_json.first} ${resource.name_json.last}`}
           </Button>
         </div>
         <div className="resourceLocation">
