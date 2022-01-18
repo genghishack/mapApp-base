@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import NavItem from "./NavItem";
 
 interface ICategoryItem {
@@ -9,6 +9,7 @@ interface ICategoryItem {
 
 const CategoryItem = (props: ICategoryItem) => {
   const {category, resources, userId} = props;
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const getFilteredResources = (() => {
     return resources.filter(resource => {
@@ -21,9 +22,12 @@ const CategoryItem = (props: ICategoryItem) => {
 
   return (
     <div className="CategoryItem">
-      {category.name}
+      <span
+        className="category-link"
+        onClick={() => {setIsExpanded(!isExpanded)}}
+      >{category.name}</span>
       <div className="navItems">
-        {categoryResources.map(resource => (
+        {isExpanded && categoryResources.map(resource => (
           <NavItem
             key={resource.id}
             resource={resource}
