@@ -3,9 +3,10 @@ import {connect} from "react-redux";
 
 import {continentalViewport, markerViewport} from '../../libs/mapLib';
 import {useResourceContext} from "../../context/ResourceContext";
-import Map from '../Map';
+import Map from '../Map/Map';
 
 import './ResourceMap.scss';
+import {useMap} from "react-leaflet";
 
 interface IResourceMap {
   dispatch: Function;
@@ -21,6 +22,8 @@ const ResourceMap = (props: IResourceMap) => {
 
   const [viewport, setViewport] = useState(continentalViewport());
 
+  const [map, setMap] = useState<any>(null);
+
   useEffect(() => {
     //@ts-ignore
     const width = mapWindowRef.current ? mapWindowRef.current.offsetWidth : 0;
@@ -29,9 +32,15 @@ const ResourceMap = (props: IResourceMap) => {
     setViewport(continentalViewport(width, height));
   }, []);
 
+  useEffect(() => {
+    if (map) {
+      map.setView([displayedResource.lat, displayedResource.lng], 10);
+    }
+  }, [displayedResource]);
+
   const handleMarkerClick = (evt: MouseEvent, marker: any) => {
     setDisplayedResource(marker);
-    setViewport(markerViewport(marker.lat, marker.lng));
+    // setViewport(markerViewport(marker.lat, marker.lng));
   }
 
   return (
@@ -40,6 +49,7 @@ const ResourceMap = (props: IResourceMap) => {
         viewport={viewport}
         markers={resources}
         onMarkerClick={handleMarkerClick}
+        setMap={setMap}
       />
     </div>
   );

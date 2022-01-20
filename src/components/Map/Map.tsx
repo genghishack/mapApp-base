@@ -1,12 +1,14 @@
 import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import Config from '../config';
+import {MapContainer, TileLayer, Marker, Popup, useMap} from 'react-leaflet'
+import Config from '../../config';
 import {LatLngExpression} from "leaflet";
+import Markers from './Markers';
 
 interface IMapProps {
   viewport: any;
   markers?: [any];
   onMarkerClick: Function;
+  setMap: Function;
 }
 
 const mapConf = Config.mapbox;
@@ -19,6 +21,7 @@ const Map = (props: IMapProps) => {
     viewport,
     markers,
     onMarkerClick,
+    setMap,
   } = props;
 
   // console.log({markers});
@@ -36,24 +39,7 @@ const Map = (props: IMapProps) => {
         <TileLayer
             url={tileUrl}
         />
-        {markers && markers.map((marker) => {
-          if (marker.lat) {
-            const latlng: LatLngExpression = [marker.lat, marker.lng];
-            return (
-              <Marker
-                key={marker.id}
-                position={latlng}
-                eventHandlers={{
-                  click: (e) => onMarkerClick(e, marker)
-                }}
-              >
-                {/*<Popup>{marker.name_json.first} {marker.name_json.last}</Popup>*/}
-              </Marker>
-            )
-          } else {
-            return null;
-          }
-        })}
+        <Markers markers={markers} onMarkerClick={onMarkerClick} setMap={setMap}/>
       </MapContainer>
   );
 }
