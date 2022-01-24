@@ -2,7 +2,6 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faPlusSquare} from "@fortawesome/free-solid-svg-icons";
 import { useResourceContext } from '../../context/ResourceContext';
-import NavItem from "./NavItem";
 import CategoryItem from './CategoryItem';
 
 import './NavPanel.scss';

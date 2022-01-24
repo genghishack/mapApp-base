@@ -1,8 +1,8 @@
 import React from 'react';
 
 import './Header.scss';
-import MainNav from '../Navigation/MainNav';
-import AuthNav from '../Navigation/AuthNav';
+import MainNav from '../NavBar/MainNav';
+import AuthNav from '../NavBar/AuthNav';
 
 interface IHeaderProps {
 }

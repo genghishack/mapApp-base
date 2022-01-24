@@ -3,9 +3,11 @@ import {connect} from "react-redux";
 
 import {getResources} from "../libs/resourceLib";
 import {getCategories} from "../libs/categoryLib";
+import {getStates} from "../libs/stateLib";
 import {ResourceContext} from '../context/ResourceContext';
 import {setResources} from "../redux/actions/resources";
 import {setCategories} from "../redux/actions/categories";
+import {setStates} from "../redux/actions/states";
 import {setError} from "../redux/actions/errors";
 import ResourceMap from "../components/ResourceMap/ResourceMap";
 import InfoPanel from "../components/InfoPanel/InfoPanel";
@@ -39,7 +41,7 @@ const ResourceContainer = (props: IResourceContainer) => {
   if (match) {
     ({userId} = match.params);
   }
-  const getMapMarkers = useCallback(async () => {
+  const getResourceList = useCallback(async () => {
     let markers = {data: []};
     try {
       markers = await getResources(userId);
@@ -59,16 +61,27 @@ const ResourceContainer = (props: IResourceContainer) => {
     }
   }, [dispatch]);
 
+  const getStateList = useCallback(async () => {
+    let stateList = {data: []};
+    try {
+      stateList = await getStates();
+      dispatch(setStates(stateList.data));
+    } catch (e) {
+      dispatch(setError(e));
+    }
+  }, []);
+
   //@ts-ignore
   useEffect(() => {
     getCategoryList().then();
-    getMapMarkers().then();
-  }, [getCategoryList, getMapMarkers]);
+    getResourceList().then();
+    getStateList().then();
+  }, [getCategoryList, getResourceList]);
 
   return (
     <div className="ResourceContainer">
       <ResourceContext.Provider value={{
-        getMapMarkers,
+        getMapMarkers: getResourceList,
         displayedResource, setDisplayedResource,
         selectedResource, setSelectedResource,
         showDeleteResourceModal, setShowDeleteResourceModal,
