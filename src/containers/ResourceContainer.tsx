@@ -21,13 +21,11 @@ import './Resource.scss';
 
 interface IResourceContainer {
   dispatch: Function;
-  resources?: any;
-  categories?: any;
   match?: any;
 }
 
 const ResourceContainer = (props: IResourceContainer) => {
-  const {dispatch, resources, categories, match} = props;
+  const {dispatch, match} = props;
 
   const [displayedResource, setDisplayedResource] = useState({});
   const [selectedResource, setSelectedResource] = useState({});
@@ -90,8 +88,6 @@ const ResourceContainer = (props: IResourceContainer) => {
         showSubmitResourceModal, setShowSubmitResourceModal,
       }}>
         <NavPanel
-          resources={resources}
-          categories={categories}
           userId={userId}
         />
         <ResourceMap/>
@@ -109,10 +105,8 @@ const ResourceContainer = (props: IResourceContainer) => {
   )
 }
 
-function mapStateToProps(state: { errors: any; resources: any; categories: any;}) {
+function mapStateToProps(state: { errors: any; }) {
   return {
-    resources: state.resources,
-    categories: state.categories,
     errors: state.errors,
   };
 }

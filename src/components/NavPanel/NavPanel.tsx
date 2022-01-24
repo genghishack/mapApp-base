@@ -5,12 +5,18 @@ import { useResourceContext } from '../../context/ResourceContext';
 import CategoryItem from './CategoryItem';
 
 import './NavPanel.scss';
+import {connect} from "react-redux";
 
 interface INavPanel {
   resources: any;
   categories: any;
+  states: any;
   userId: string | null;
 }
+
+/* TODO: build tree menu array using states, categories and resources
+    as in https://www.npmjs.com/package/react-simple-tree-menu
+ */
 
 const NavPanel = (props: INavPanel) => {
   const {resources, categories, userId} = props;
@@ -53,4 +59,20 @@ const NavPanel = (props: INavPanel) => {
   )
 }
 
-export default NavPanel;
+function mapStateToProps(
+  state: {
+    errors: any;
+    resources: any;
+    categories: any;
+    states: any;
+  }
+) {
+  return {
+    resources: state.resources,
+    categories: state.categories,
+    states: state.states,
+    errors: state.errors,
+  };
+}
+
+export default connect(mapStateToProps)(NavPanel);
